@@ -103,12 +103,12 @@ export interface LeadPayload {
   mode: "inquiry" | "quote";
   name: string;
   email: string;
-  phone?: string;
-  company?: string;
-  budget?: string;
-  timeline?: string;
+  phone?: string | undefined;
+  company?: string | undefined;
+  budget?: string | undefined;
+  timeline?: string | undefined;
   message: string;
-  buildSelection?: BuildSelection;
-  honeypot?: string;
-  turnstileToken?: string;
+  buildSelection?: BuildSelection | undefined;
+  honeypot?: string | undefined;
+  turnstileToken?: string | undefined;
 }

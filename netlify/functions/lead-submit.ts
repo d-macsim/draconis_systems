@@ -2,6 +2,7 @@ import type { Handler } from "@netlify/functions";
 import { createClient } from "@supabase/supabase-js";
 import { Resend } from "resend";
 import { leadSchema, sanitizeLeadPayload } from "../../src/lib/lead/validation";
+import type { LeadPayload } from "../../src/lib/types";
 
 const RATE_LIMIT_WINDOW_MS = 60_000;
 const RATE_LIMIT_MAX = 8;
@@ -77,12 +78,12 @@ function buildEmailText(payload: {
   mode: string;
   name: string;
   email: string;
-  phone?: string;
-  company?: string;
-  budget?: string;
-  timeline?: string;
+  phone?: string | undefined;
+  company?: string | undefined;
+  budget?: string | undefined;
+  timeline?: string | undefined;
   message: string;
-  buildSelection?: Record<string, string>;
+  buildSelection?: Record<string, string> | undefined;
 }): string {
   const lines = [
     `Mode: ${payload.mode}`,
@@ -134,7 +135,7 @@ export const handler: Handler = async (event) => {
     return json(400, { ok: false, code: "invalid_json", message: "Request body must be valid JSON." });
   }
 
-  const sanitized = sanitizeLeadPayload(parsedBody as any);
+  const sanitized = sanitizeLeadPayload(parsedBody as Partial<LeadPayload>);
   const parsed = leadSchema.safeParse(sanitized);
   if (!parsed.success) {
     return json(400, {

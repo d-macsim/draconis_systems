@@ -5,6 +5,8 @@
     "paths": {
       "@/*": ["src/*"]
     },
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact",
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true

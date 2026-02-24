@@ -3,6 +3,10 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import ConfiguratorApp from "@/components/configurator/ConfiguratorApp";
 import catalog from "@/data/configurator/components.json";
 import rules from "@/data/configurator/rules.json";
+import type { ComponentCatalog, ConfiguratorRules } from "@/lib/types";
+
+const typedCatalog = catalog as ComponentCatalog;
+const typedRules = rules as ConfiguratorRules;
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -30,7 +34,7 @@ const jsonLd = {
         Estimates are non-binding and finalized during sourcing.
       </p>
 
-      <ConfiguratorApp client:visible catalog={catalog} rules={rules} />
+      <ConfiguratorApp client:visible catalog={typedCatalog} rules={typedRules} />
     </div>
   </section>
 </BaseLayout>
