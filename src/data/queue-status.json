@@ -1,10 +1,12 @@
 {
   "queue_capacity": 85,
   "estimated_lead_time": "14-21 Days",
-  "current_stage": "Testing/Validation",
-  "current_focus": "Current focus: Thermal stress testing for Batch 22A.",
+  "current_stage": "Stage 3: Cable Artistry",
+  "current_stage_id": "cable-artistry",
+  "current_focus": "Current focus: precision cable routing and acoustic balancing for creator-tier commissions.",
   "current_queue_label": "February Queue",
   "next_queue_label": "March Queue",
+  "current_workshop_summary": "We are currently moving 4 Creator Tier builds through Stage 3: Cable Artistry.",
   "bottlenecks": {
     "RTX_5090": {
       "label": "RTX 5090 / 5080-class GPUs",

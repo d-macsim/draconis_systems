@@ -90,6 +90,9 @@ function sanitizeSelection(
   profileId?: string
 ): BuildSelection {
   const next: BuildSelection = {};
+  const designerNote = typeof selection.designerNote === "string"
+    ? selection.designerNote.trim().slice(0, 900)
+    : undefined;
 
   for (const category of catalog.categories) {
     const selectedId = selection[category.id];
@@ -119,6 +122,9 @@ function sanitizeSelection(
   const selectedMotherboard = getComponentById(catalog, next.motherboard);
   if (selectedCpu?.socket && selectedMotherboard?.socket && selectedCpu.socket !== selectedMotherboard.socket) {
     delete next.motherboard;
+  }
+  if (designerNote) {
+    next.designerNote = designerNote;
   }
 
   return next;
@@ -378,6 +384,13 @@ export default function ConfiguratorApp({
       const nextSelection: BuildSelection = { ...previous, [categoryId]: componentId };
       return sanitizeSelection(nextSelection, catalog, nextSelection.profile);
     });
+  }
+
+  function setDesignerNote(value: string): void {
+    setSelection((previous) => ({
+      ...previous,
+      designerNote: value.slice(0, 900)
+    }));
   }
 
   function resetSelection(): void {
@@ -687,6 +700,26 @@ export default function ConfiguratorApp({
               </ul>
             </div>
           )}
+
+          <div className="surface stack" style={{ padding: "0.8rem" }}>
+            <label htmlFor="designer-note" style={{ margin: 0 }}>
+              Designer&apos;s Note
+            </label>
+            <p className="small" style={{ margin: 0 }}>
+              Tell us about your space. Is this for a minimalist studio or a high-octane gaming setup?
+            </p>
+            <textarea
+              id="designer-note"
+              rows={4}
+              maxLength={900}
+              value={selection.designerNote ?? ""}
+              onInput={(event) => setDesignerNote(event.currentTarget.value)}
+              placeholder="Share preferred aesthetics, noise goals, cable style, lighting mood, or room context."
+            />
+            <p className="small" style={{ margin: 0 }}>
+              {(selection.designerNote ?? "").length}/900 characters
+            </p>
+          </div>
 
           <a className="button primary" href={quoteHref}>
             Export to Quote Request

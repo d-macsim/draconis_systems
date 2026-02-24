@@ -1,0 +1,99 @@
+---
+import type { QueueStatus, WorkshopStage } from "@/lib/types";
+
+interface Props {
+  status: QueueStatus;
+  stages: WorkshopStage[];
+}
+
+const { status, stages } = Astro.props as Props;
+const activeId = status.current_stage_id;
+const activeIndex = Math.max(0, stages.findIndex((stage) => stage.id === activeId));
+---
+
+<article class="surface workshop-status">
+  <p class="eyebrow" style="margin:0;">Currently In The Workshop</p>
+  <h3 style="margin:0.2rem 0 0.35rem;">Live Commission Flow</h3>
+  <p style="margin:0;">{status.current_workshop_summary || `Now working through ${status.current_stage}.`}</p>
+
+  <ol class="workshop-stepper" aria-label="Workshop build stages">
+    {stages.map((stage, index) => {
+      const stateClass =
+        index < activeIndex
+          ? "is-complete"
+          : index === activeIndex
+            ? "is-active"
+            : "is-pending";
+
+      return (
+        <li class={stateClass}>
+          <span class="step-dot" aria-hidden="true">{stage.stage}</span>
+          <span class="step-label">{stage.title}</span>
+        </li>
+      );
+    })}
+  </ol>
+</article>
+
+<style>
+  .workshop-status {
+    padding: 1rem;
+    border-color: color-mix(in srgb, var(--brand) 35%, var(--line));
+    background: linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--bg-soft) 60%, var(--bg-elev)),
+      var(--bg-elev)
+    );
+  }
+
+  .workshop-stepper {
+    list-style: none;
+    margin: 0.85rem 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.5rem;
+  }
+
+  .workshop-stepper li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.45rem;
+    align-items: center;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.35rem 0.6rem;
+    background: var(--bg-elev);
+    color: var(--text-muted);
+  }
+
+  .workshop-stepper li.is-complete {
+    border-color: color-mix(in srgb, var(--ok) 55%, var(--line));
+    color: var(--text-soft);
+  }
+
+  .workshop-stepper li.is-active {
+    border-color: color-mix(in srgb, var(--brand) 55%, var(--line));
+    background: color-mix(in srgb, var(--brand) 12%, var(--bg-elev));
+    color: var(--text);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .step-dot {
+    width: 1.35rem;
+    height: 1.35rem;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    font-size: 0.72rem;
+    font-weight: 700;
+    border: 1px solid currentColor;
+    color: inherit;
+  }
+
+  .step-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+</style>

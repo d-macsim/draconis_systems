@@ -109,10 +109,21 @@ export interface QueueStatus {
   queue_capacity: number;
   estimated_lead_time: string;
   current_stage: string;
+  current_stage_id?: string;
   current_focus: string;
   current_queue_label: string;
   next_queue_label: string;
+  current_workshop_summary?: string;
   bottlenecks: Record<string, QueueStatusBottleneck>;
+}
+
+export interface WorkshopStage {
+  id: string;
+  stage: number;
+  title: string;
+  strapline: string;
+  description: string;
+  detail: string;
 }
 
 export interface MarketPriceOverride {
@@ -136,6 +147,7 @@ export interface BuildSelection {
   psu?: string;
   case?: string;
   cooling?: string;
+  designerNote?: string;
 }
 
 export interface LeadPayload {

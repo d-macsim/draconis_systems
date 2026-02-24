@@ -74,6 +74,7 @@ Use `.env.example` as the source of truth.
 - Services: `src/data/services.json`
 - FAQ: `src/data/faq.json`
 - Live queue dashboard: `src/data/queue-status.json`
+- Workshop journey stages: `src/data/workshop-stages.json`
 - Configurator catalog/rules: `src/data/configurator/*.json`
 
 ## Performance and QA

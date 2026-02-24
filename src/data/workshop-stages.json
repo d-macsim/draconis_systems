@@ -1,0 +1,42 @@
+[
+  {
+    "id": "component-curation",
+    "stage": 1,
+    "title": "Component Curation",
+    "strapline": "Silicon pairing and aesthetic harmony.",
+    "description": "We hand-select the final component mix around your workload goals, acoustic targets, and visual direction.",
+    "detail": "Each build is curated to balance thermals, reliability, and design language before we commit it to the bench."
+  },
+  {
+    "id": "foundation",
+    "stage": 2,
+    "title": "The Foundation",
+    "strapline": "Chassis prep with clean-room discipline.",
+    "description": "Case, airflow path, and mounting surfaces are prepared before paste and cooler contact are finalised.",
+    "detail": "This stage sets baseline thermal behaviour and reduces downstream tuning time."
+  },
+  {
+    "id": "cable-artistry",
+    "stage": 3,
+    "title": "Cable Artistry",
+    "strapline": "Routing, combing, and visual refinement.",
+    "description": "Power and signal paths are routed for clean front presentation and serviceable internal access.",
+    "detail": "Our cable pass prioritises airflow clarity and the boutique look clients expect."
+  },
+  {
+    "id": "stress-stability",
+    "stage": 4,
+    "title": "Stress & Stability",
+    "strapline": "24-hour burn-in and edge-case validation.",
+    "description": "Each commissioned build enters sustained load and mixed workload testing to catch zero-day instability.",
+    "detail": "Voltage behaviour, fan curves, and memory stability are tuned for dependable long-session operation."
+  },
+  {
+    "id": "handoff",
+    "stage": 5,
+    "title": "The Hand-off",
+    "strapline": "Bespoke packing and concierge dispatch.",
+    "description": "Final photography, documentation, and protective packaging are completed before white-glove shipment.",
+    "detail": "You receive setup notes, warranty terms, and direct support channels with your system."
+  }
+]

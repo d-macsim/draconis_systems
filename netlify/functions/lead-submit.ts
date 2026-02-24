@@ -85,6 +85,7 @@ function buildEmailText(payload: {
   message: string;
   buildSelection?: Record<string, string> | undefined;
 }): string {
+  const designerNote = payload.buildSelection?.designerNote;
   const lines = [
     `Mode: ${payload.mode}`,
     `Name: ${payload.name}`,
@@ -96,6 +97,8 @@ function buildEmailText(payload: {
     "",
     "Message:",
     payload.message,
+    "",
+    `Designer Note: ${designerNote || "N/A"}`,
     "",
     "Build Selection:",
     payload.buildSelection ? JSON.stringify(payload.buildSelection, null, 2) : "None"
@@ -192,6 +195,10 @@ export const handler: Handler = async (event) => {
   if (supabaseUrl && supabaseKey) {
     try {
       const supabase = createClient(supabaseUrl, supabaseKey);
+      const designerNote =
+        typeof payload.buildSelection?.designerNote === "string"
+          ? payload.buildSelection.designerNote
+          : null;
       const { error } = await supabase.from(supabaseTable).insert({
         lead_id: leadId,
         submitted_at: new Date().toISOString(),
@@ -204,6 +211,7 @@ export const handler: Handler = async (event) => {
         budget: payload.budget || null,
         timeline: payload.timeline || null,
         message: payload.message,
+        designer_note: designerNote,
         build_selection: payload.buildSelection || null,
         email_sent: emailSent
       });

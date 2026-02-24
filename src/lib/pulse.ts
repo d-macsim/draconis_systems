@@ -68,7 +68,7 @@ export function getUpdatesCta(status: QueueStatus): { label: string; href: strin
   }
 
   return {
-    label: "Get a Quote",
+    label: "Begin Bespoke Inquiry",
     href: "/contact?mode=quote"
   };
 }

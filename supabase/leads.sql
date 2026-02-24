@@ -12,6 +12,7 @@ create table if not exists public.leads (
   budget text,
   timeline text,
   message text not null,
+  designer_note text,
   build_selection jsonb,
   email_sent boolean not null default false
 );

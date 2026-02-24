@@ -1,8 +1,9 @@
 ---
-title: "Shop Update: February Build Queue"
-summary: "Current queue windows and expected turnaround for new custom build requests."
+title: "Workshop Window: February Commission Slots"
+summary: "Current intake is focused on curated creator and high-refresh gaming builds with boutique finishing."
 date: 2026-02-10
 category: "company"
 featured: true
 ---
-Current estimate is **7-12 working days** for standard custom builds, with rush options available for selected configurations.
+We are currently allocating the final February bench slots to systems that require custom cable presentation and quiet thermal tuning.
+If your brief includes specialised aesthetic requests, concierge intake can reserve the next queue window directly.

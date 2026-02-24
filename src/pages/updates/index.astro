@@ -2,25 +2,28 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import DraconisPulse from "@/components/updates/DraconisPulse.astro";
+import WorkshopStatusStepper from "@/components/updates/WorkshopStatusStepper.astro";
 import queueStatusData from "@/data/queue-status.json";
-import { formatDate } from "@/lib/format";
-import type { QueueStatus } from "@/lib/types";
+import workshopStagesData from "@/data/workshop-stages.json";
+import type { QueueStatus, WorkshopStage } from "@/lib/types";
 
 const updates = (await getCollection("updates")).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const queueStatus = queueStatusData as QueueStatus;
+const workshopStages = workshopStagesData as WorkshopStage[];
 ---
 <BaseLayout
   title="Updates | Draconis Systems"
-  description="Operational updates, build logs, and inventory notices from Draconis Systems."
+  description="Workshop dispatches, live commission flow, and component notes from Draconis Systems."
   breadcrumbs={[{ label: "Home", href: "/" }, { label: "Updates" }]}
 >
   <section class="section">
     <div class="container stack">
-      <p class="eyebrow">What Is Going On</p>
-      <h1>Updates</h1>
-      <p>Latest queue windows, build methodology notes, and component availability updates.</p>
+      <p class="eyebrow">Inside The Workshop</p>
+      <h1>Latest Commissions</h1>
+      <p>Live workshop context, queue signals, and build notes from currently active commissions.</p>
 
       <DraconisPulse status={queueStatus} />
+      <WorkshopStatusStepper status={queueStatus} stages={workshopStages} />
 
       <div class="grid grid-2">
         {updates.map((entry) => (
@@ -28,10 +31,34 @@ const queueStatus = queueStatusData as QueueStatus;
             <p class="badge">{entry.data.category}</p>
             <h2 style="font-size:1.4rem;margin:0;">{entry.data.title}</h2>
             <p>{entry.data.summary}</p>
-            <p class="small">{formatDate(entry.data.date)}</p>
+            <p class="small">Workshop note</p>
           </article>
         ))}
       </div>
     </div>
   </section>
+  <a href="/configurator" class="button primary updates-fab">
+    Start Your Bespoke Build
+  </a>
+
+  <style>
+    .updates-fab {
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      z-index: 65;
+      padding: 0.85rem 1rem;
+      border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--line));
+      box-shadow: var(--shadow-md);
+      background: linear-gradient(135deg, var(--accent), var(--brand));
+    }
+
+    @media (max-width: 700px) {
+      .updates-fab {
+        left: 1rem;
+        right: 1rem;
+        bottom: 0.85rem;
+      }
+    }
+  </style>
 </BaseLayout>

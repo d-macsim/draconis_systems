@@ -8,7 +8,7 @@ describe("lead payload validation", () => {
       name: "Alex Builder",
       email: "alex@example.com",
       message: "Need a hybrid build for gaming and 4K editing.",
-      budget: "£2500-£3500"
+      budget: "GBP 2500-3500"
     };
 
     const result = leadSchema.safeParse(payload);
@@ -37,5 +37,20 @@ describe("lead payload validation", () => {
 
     expect(cleaned.name).toBe("Alice");
     expect(cleaned.message.includes("<script>")).toBe(false);
+  });
+
+  it("preserves designer note in build selection payload", () => {
+    const cleaned = sanitizeLeadPayload({
+      mode: "quote",
+      name: "Alice",
+      email: "alice@example.com",
+      message: "Please quote this build with custom styling.",
+      buildSelection: {
+        profile: "profile-high-end",
+        designerNote: "Matte black finish with low-noise fan curve."
+      }
+    });
+
+    expect(cleaned.buildSelection?.designerNote).toBe("Matte black finish with low-noise fan curve.");
   });
 });

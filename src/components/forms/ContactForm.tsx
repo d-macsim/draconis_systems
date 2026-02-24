@@ -59,6 +59,7 @@ export default function ContactForm({ turnstileSiteKey }: Props) {
     }
     return JSON.stringify(buildSelection, null, 2);
   }, [buildSelection]);
+  const designerNote = buildSelection?.designerNote;
 
   type TextField =
     | "name"
@@ -113,14 +114,14 @@ export default function ContactForm({ turnstileSiteKey }: Props) {
   return (
     <form className="card stack" onSubmit={handleSubmit}>
       <div className="row" style={{ justifyContent: "space-between" }}>
-        <h2 style={{ marginBottom: 0 }}>Contact Draconis Systems</h2>
+        <h2 style={{ marginBottom: 0 }}>Speak With Draconis Concierge</h2>
         <div className="row">
           <button
             type="button"
             className={`button ${payload.mode === "inquiry" ? "primary" : "secondary"}`}
             onClick={() => setMode("inquiry")}
           >
-            Enquiry
+            Bespoke Inquiry
           </button>
           <button
             type="button"
@@ -200,6 +201,11 @@ export default function ContactForm({ turnstileSiteKey }: Props) {
       {serializedBuild && (
         <div>
           <label>Configurator Selection</label>
+          {designerNote && (
+            <p className="small" style={{ marginBottom: "0.45rem", color: "var(--text-soft)" }}>
+              Designer's Note: {designerNote}
+            </p>
+          )}
           <textarea readOnly rows={8} value={serializedBuild} />
         </div>
       )}

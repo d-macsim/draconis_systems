@@ -1,6 +1,8 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap");
+
 :root {
-  --font-display: "Space Grotesk", "Segoe UI", sans-serif;
-  --font-body: "Manrope", "Segoe UI", sans-serif;
+  --font-display: "Playfair Display", "Times New Roman", serif;
+  --font-body: "Montserrat", "Segoe UI", sans-serif;
 
   --bg: #f4f6fb;
   --bg-elev: #ffffff;
@@ -39,9 +41,9 @@
 }
 
 :root[data-theme="dark"] {
-  --bg: #090d14;
-  --bg-elev: #101725;
-  --bg-soft: #141d2c;
+  --bg: #0f172a;
+  --bg-elev: #111b31;
+  --bg-soft: #17233d;
   --text: #edf2ff;
   --text-soft: #bac8e0;
   --text-muted: #8ea0bd;

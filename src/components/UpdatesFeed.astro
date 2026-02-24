@@ -1,6 +1,5 @@
 ---
 import type { UpdateEntry } from "@/lib/types";
-import { formatDate } from "@/lib/format";
 
 interface Props {
   updates: UpdateEntry[];
@@ -12,8 +11,8 @@ const { updates } = Astro.props;
   <div class="container">
     <div class="row" style="justify-content:space-between;margin-bottom:1rem;">
       <div>
-        <p class="eyebrow">What Is Going On</p>
-        <h2>Shop updates and build logs</h2>
+        <p class="eyebrow">Inside The Workshop</p>
+        <h2>Latest commissions and build notes</h2>
       </div>
       <a href="/updates" class="button secondary">All Updates</a>
     </div>
@@ -23,7 +22,7 @@ const { updates } = Astro.props;
           <p class="badge" style="margin-bottom:0.8rem;">{entry.category}</p>
           <h3>{entry.title}</h3>
           <p>{entry.summary}</p>
-          <p class="small">{formatDate(entry.date)}</p>
+          <p class="small">Recent workshop dispatch</p>
         </article>
       ))}
     </div>
