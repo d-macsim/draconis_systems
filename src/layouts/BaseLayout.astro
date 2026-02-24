@@ -28,7 +28,7 @@ const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN;
 const analyticsRequiresConsent = import.meta.env.PUBLIC_ANALYTICS_REQUIRE_CONSENT === "true";
 ---
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -56,8 +56,7 @@ const analyticsRequiresConsent = import.meta.env.PUBLIC_ANALYTICS_REQUIRE_CONSEN
       (() => {
         const key = "draconis-theme";
         const stored = window.localStorage.getItem(key);
-        const autoDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        const theme = stored === "light" || stored === "dark" ? stored : autoDark ? "dark" : "light";
+        const theme = stored === "light" || stored === "dark" ? stored : "dark";
         document.documentElement.setAttribute("data-theme", theme);
       })();
     </script>
