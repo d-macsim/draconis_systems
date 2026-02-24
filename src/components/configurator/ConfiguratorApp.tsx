@@ -31,6 +31,7 @@ interface MarketPriceResponse {
 
 const STORAGE_KEY = "draconis-configurator-selection";
 const MARKET_PRICES_ENDPOINT = "/.netlify/functions/market-prices";
+const APPLY_PROFILE_EVENT = "draconis:apply-profile";
 
 interface PriceRange {
   min: number;
@@ -140,6 +141,16 @@ function mergeCatalogPrices(
   };
 }
 
+function updateProfileQuery(profileId: string | undefined): void {
+  const url = new URL(window.location.href);
+  if (profileId) {
+    url.searchParams.set("profile", profileId);
+  } else {
+    url.searchParams.delete("profile");
+  }
+  window.history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
+}
+
 export default function ConfiguratorApp({ catalog, rules }: Props) {
   const [selection, setSelection] = useState<BuildSelection>({});
   const [step, setStep] = useState(0);
@@ -153,20 +164,53 @@ export default function ConfiguratorApp({ catalog, rules }: Props) {
     [catalog, priceOverrides]
   );
 
+  const validProfileIds = useMemo(() => {
+    const ids = new Set<string>();
+    for (const profile of getComponentsByCategory(catalog, "profile")) {
+      ids.add(profile.id);
+    }
+    return ids;
+  }, [catalog]);
+
   useEffect(() => {
+    let nextSelection: BuildSelection = {};
     const saved = window.localStorage.getItem(STORAGE_KEY);
-    if (!saved) {
-      return;
+
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved) as BuildSelection;
+        nextSelection = sanitizeSelection(parsed, catalog, parsed.profile);
+      } catch {
+        window.localStorage.removeItem(STORAGE_KEY);
+      }
     }
 
-    try {
-      const parsed = JSON.parse(saved) as BuildSelection;
-      const cleaned = sanitizeSelection(parsed, catalog, parsed.profile);
-      setSelection(cleaned);
-    } catch {
-      window.localStorage.removeItem(STORAGE_KEY);
+    const requestedProfile = new URLSearchParams(window.location.search).get("profile");
+    if (requestedProfile && validProfileIds.has(requestedProfile)) {
+      nextSelection = sanitizeSelection(nextSelection, catalog, requestedProfile);
+      setStep(Math.min(1, catalog.categories.length - 1));
     }
-  }, [catalog]);
+
+    setSelection(nextSelection);
+  }, [catalog, validProfileIds]);
+
+  useEffect(() => {
+    function handleApplyProfile(event: Event): void {
+      const profileId = (event as CustomEvent<{ profileId?: string }>).detail?.profileId;
+      if (!profileId || !validProfileIds.has(profileId)) {
+        return;
+      }
+
+      setSelection((previous) => sanitizeSelection({ ...previous, profile: profileId }, catalog, profileId));
+      setStep(Math.min(1, catalog.categories.length - 1));
+      updateProfileQuery(profileId);
+    }
+
+    window.addEventListener(APPLY_PROFILE_EVENT, handleApplyProfile as EventListener);
+    return () => {
+      window.removeEventListener(APPLY_PROFILE_EVENT, handleApplyProfile as EventListener);
+    };
+  }, [catalog, validProfileIds]);
 
   useEffect(() => {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(selection));
@@ -318,6 +362,10 @@ export default function ConfiguratorApp({ catalog, rules }: Props) {
   const quoteHref = `/contact?mode=quote&build=${serializeBuildSelection(selection)}`;
 
   function setCategorySelection(categoryId: string, componentId: string): void {
+    if (categoryId === "profile") {
+      updateProfileQuery(componentId);
+    }
+
     setSelection((previous) => {
       if (categoryId === "profile") {
         const nextSelection: BuildSelection = { ...previous, profile: componentId };
@@ -332,6 +380,7 @@ export default function ConfiguratorApp({ catalog, rules }: Props) {
   function resetSelection(): void {
     setSelection({});
     setStep(0);
+    updateProfileQuery(undefined);
   }
 
   return (
