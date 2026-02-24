@@ -64,6 +64,8 @@ export interface ConfigComponent {
   score?: number;
   tags?: string[];
   profiles?: string[];
+  image?: string;
+  highlights?: string[];
   marketQuery?: string;
   marketRequiredTokens?: string[];
   marketExcludeTokens?: string[];

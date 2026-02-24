@@ -39,6 +39,17 @@ export function getComponentsByCategory(
   );
 }
 
+export function filterMotherboardsByCpu(
+  motherboards: ConfigComponent[],
+  cpu: ConfigComponent | undefined
+): ConfigComponent[] {
+  if (!cpu?.socket) {
+    return motherboards;
+  }
+
+  return motherboards.filter((motherboard) => !motherboard.socket || motherboard.socket === cpu.socket);
+}
+
 export function estimateRequiredWattage(
   selection: BuildSelection,
   catalog: ComponentCatalog,

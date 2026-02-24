@@ -4,6 +4,8 @@ import rules from "@/data/configurator/rules.json";
 import {
   estimatePriceRange,
   estimateRequiredWattage,
+  filterMotherboardsByCpu,
+  getComponentById,
   getComponentsByCategory,
   validateSelection
 } from "@/lib/configurator/engine";
@@ -71,5 +73,14 @@ describe("configurator engine", () => {
 
     expect(budgetGpus.some((component) => component.id === "gpu-rtx-5080")).toBe(false);
     expect(highEndGpus.some((component) => component.id === "gpu-rtx-5080")).toBe(true);
+  });
+
+  it("limits motherboard options to selected CPU socket", () => {
+    const cpu = getComponentById(typedCatalog, "cpu-r5-9600x");
+    const motherboards = getComponentsByCategory(typedCatalog, "motherboard", "profile-budget");
+    const compatible = filterMotherboardsByCpu(motherboards, cpu);
+
+    expect(compatible.every((board) => board.socket === "AM5")).toBe(true);
+    expect(compatible.some((board) => board.id === "mb-b760-gaming-x")).toBe(false);
   });
 });

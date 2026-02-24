@@ -1,14 +1,50 @@
 {
   "categories": [
-    { "id": "profile", "label": "Usage Profile", "required": true },
-    { "id": "cpu", "label": "CPU", "required": true },
-    { "id": "gpu", "label": "GPU", "required": true },
-    { "id": "motherboard", "label": "Motherboard", "required": true },
-    { "id": "ram", "label": "Memory", "required": true },
-    { "id": "storage", "label": "Storage", "required": true },
-    { "id": "psu", "label": "Power Supply", "required": true },
-    { "id": "case", "label": "Case", "required": true },
-    { "id": "cooling", "label": "Cooling", "required": true }
+    {
+      "id": "profile",
+      "label": "Usage Profile",
+      "required": true
+    },
+    {
+      "id": "cpu",
+      "label": "CPU",
+      "required": true
+    },
+    {
+      "id": "gpu",
+      "label": "GPU",
+      "required": true
+    },
+    {
+      "id": "motherboard",
+      "label": "Motherboard",
+      "required": true
+    },
+    {
+      "id": "ram",
+      "label": "Memory",
+      "required": true
+    },
+    {
+      "id": "storage",
+      "label": "Storage",
+      "required": true
+    },
+    {
+      "id": "psu",
+      "label": "Power Supply",
+      "required": true
+    },
+    {
+      "id": "case",
+      "label": "Case",
+      "required": true
+    },
+    {
+      "id": "cooling",
+      "label": "Cooling",
+      "required": true
+    }
   ],
   "components": [
     {
@@ -17,7 +53,10 @@
       "name": "Budget Build",
       "priceMin": 0,
       "priceMax": 0,
-      "tags": ["budget", "1080p"]
+      "tags": [
+        "budget",
+        "1080p"
+      ]
     },
     {
       "id": "profile-mid-range",
@@ -25,7 +64,10 @@
       "name": "Mid Range Build",
       "priceMin": 0,
       "priceMax": 0,
-      "tags": ["mid-range", "1440p"]
+      "tags": [
+        "mid-range",
+        "1440p"
+      ]
     },
     {
       "id": "profile-high-end",
@@ -33,9 +75,12 @@
       "name": "High End Build",
       "priceMin": 0,
       "priceMax": 0,
-      "tags": ["high-end", "4k", "creator"]
+      "tags": [
+        "high-end",
+        "4k",
+        "creator"
+      ]
     },
-
     {
       "id": "cpu-i5-14400f",
       "category": "cpu",
@@ -45,10 +90,22 @@
       "socket": "LGA1700",
       "tdp": 148,
       "score": 76,
-      "profiles": ["profile-budget", "profile-mid-range"],
+      "profiles": [
+        "profile-budget",
+        "profile-mid-range"
+      ],
       "marketQuery": "Intel Core i5-14400F",
-      "marketRequiredTokens": ["i5", "14400f"],
-      "marketExcludeTokens": ["gaming desktop", "desktop pc", "prebuilt", "laptop", "notebook"],
+      "marketRequiredTokens": [
+        "i5",
+        "14400f"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook"
+      ],
       "marketPriceBandPercent": 8,
       "marketMaxDeviationPercent": 45
     },
@@ -61,10 +118,22 @@
       "socket": "AM5",
       "tdp": 88,
       "score": 80,
-      "profiles": ["profile-budget", "profile-mid-range"],
+      "profiles": [
+        "profile-budget",
+        "profile-mid-range"
+      ],
       "marketQuery": "AMD Ryzen 5 9600X",
-      "marketRequiredTokens": ["ryzen", "9600x"],
-      "marketExcludeTokens": ["gaming desktop", "desktop pc", "prebuilt", "laptop", "notebook"],
+      "marketRequiredTokens": [
+        "ryzen",
+        "9600x"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook"
+      ],
       "marketPriceBandPercent": 8,
       "marketMaxDeviationPercent": 45
     },
@@ -77,10 +146,22 @@
       "socket": "AM5",
       "tdp": 88,
       "score": 86,
-      "profiles": ["profile-mid-range", "profile-high-end"],
+      "profiles": [
+        "profile-mid-range",
+        "profile-high-end"
+      ],
       "marketQuery": "AMD Ryzen 7 9700X",
-      "marketRequiredTokens": ["ryzen", "9700x"],
-      "marketExcludeTokens": ["gaming desktop", "desktop pc", "prebuilt", "laptop", "notebook"],
+      "marketRequiredTokens": [
+        "ryzen",
+        "9700x"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook"
+      ],
       "marketPriceBandPercent": 8,
       "marketMaxDeviationPercent": 45
     },
@@ -93,10 +174,22 @@
       "socket": "LGA1700",
       "tdp": 253,
       "score": 90,
-      "profiles": ["profile-mid-range", "profile-high-end"],
+      "profiles": [
+        "profile-mid-range",
+        "profile-high-end"
+      ],
       "marketQuery": "Intel Core i7-14700K",
-      "marketRequiredTokens": ["i7", "14700k"],
-      "marketExcludeTokens": ["gaming desktop", "desktop pc", "prebuilt", "laptop", "notebook"],
+      "marketRequiredTokens": [
+        "i7",
+        "14700k"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook"
+      ],
       "marketPriceBandPercent": 8,
       "marketMaxDeviationPercent": 45
     },
@@ -109,10 +202,21 @@
       "socket": "AM5",
       "tdp": 120,
       "score": 96,
-      "profiles": ["profile-high-end"],
+      "profiles": [
+        "profile-high-end"
+      ],
       "marketQuery": "AMD Ryzen 7 9800X3D",
-      "marketRequiredTokens": ["ryzen", "9800x3d"],
-      "marketExcludeTokens": ["gaming desktop", "desktop pc", "prebuilt", "laptop", "notebook"],
+      "marketRequiredTokens": [
+        "ryzen",
+        "9800x3d"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook"
+      ],
       "marketPriceBandPercent": 8,
       "marketMaxDeviationPercent": 45
     },
@@ -125,10 +229,21 @@
       "socket": "AM5",
       "tdp": 170,
       "score": 94,
-      "profiles": ["profile-high-end"],
+      "profiles": [
+        "profile-high-end"
+      ],
       "marketQuery": "AMD Ryzen 9 9900X",
-      "marketRequiredTokens": ["ryzen", "9900x"],
-      "marketExcludeTokens": ["gaming desktop", "desktop pc", "prebuilt", "laptop", "notebook"],
+      "marketRequiredTokens": [
+        "ryzen",
+        "9900x"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook"
+      ],
       "marketPriceBandPercent": 8,
       "marketMaxDeviationPercent": 45
     },
@@ -141,14 +256,24 @@
       "socket": "LGA1700",
       "tdp": 253,
       "score": 95,
-      "profiles": ["profile-high-end"],
+      "profiles": [
+        "profile-high-end"
+      ],
       "marketQuery": "Intel Core i9-14900K",
-      "marketRequiredTokens": ["i9", "14900k"],
-      "marketExcludeTokens": ["gaming desktop", "desktop pc", "prebuilt", "laptop", "notebook"],
+      "marketRequiredTokens": [
+        "i9",
+        "14900k"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook"
+      ],
       "marketPriceBandPercent": 8,
       "marketMaxDeviationPercent": 45
     },
-
     {
       "id": "gpu-rtx-4060-ti-8g",
       "category": "gpu",
@@ -157,10 +282,23 @@
       "priceMax": 430,
       "tdp": 165,
       "score": 74,
-      "profiles": ["profile-budget", "profile-mid-range"],
+      "profiles": [
+        "profile-budget",
+        "profile-mid-range"
+      ],
       "marketQuery": "NVIDIA RTX 4060 Ti 8GB",
-      "marketRequiredTokens": ["4060", "ti"],
-      "marketExcludeTokens": ["gaming desktop", "desktop pc", "prebuilt", "laptop", "notebook", "motherboard"],
+      "marketRequiredTokens": [
+        "4060",
+        "ti"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook",
+        "motherboard"
+      ],
       "marketPriceBandPercent": 10,
       "marketMaxDeviationPercent": 50
     },
@@ -172,10 +310,23 @@
       "priceMax": 430,
       "tdp": 245,
       "score": 78,
-      "profiles": ["profile-budget", "profile-mid-range"],
+      "profiles": [
+        "profile-budget",
+        "profile-mid-range"
+      ],
       "marketQuery": "AMD RX 7700 XT",
-      "marketRequiredTokens": ["7700", "xt"],
-      "marketExcludeTokens": ["gaming desktop", "desktop pc", "prebuilt", "laptop", "notebook", "motherboard"],
+      "marketRequiredTokens": [
+        "7700",
+        "xt"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook",
+        "motherboard"
+      ],
       "marketPriceBandPercent": 10,
       "marketMaxDeviationPercent": 50
     },
@@ -187,10 +338,23 @@
       "priceMax": 560,
       "tdp": 220,
       "score": 86,
-      "profiles": ["profile-mid-range", "profile-high-end"],
+      "profiles": [
+        "profile-mid-range",
+        "profile-high-end"
+      ],
       "marketQuery": "NVIDIA RTX 4070 SUPER",
-      "marketRequiredTokens": ["4070", "super"],
-      "marketExcludeTokens": ["gaming desktop", "desktop pc", "prebuilt", "laptop", "notebook", "motherboard"],
+      "marketRequiredTokens": [
+        "4070",
+        "super"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook",
+        "motherboard"
+      ],
       "marketPriceBandPercent": 10,
       "marketMaxDeviationPercent": 50
     },
@@ -202,10 +366,23 @@
       "priceMax": 520,
       "tdp": 263,
       "score": 84,
-      "profiles": ["profile-mid-range", "profile-high-end"],
+      "profiles": [
+        "profile-mid-range",
+        "profile-high-end"
+      ],
       "marketQuery": "AMD RX 7800 XT",
-      "marketRequiredTokens": ["7800", "xt"],
-      "marketExcludeTokens": ["gaming desktop", "desktop pc", "prebuilt", "laptop", "notebook", "motherboard"],
+      "marketRequiredTokens": [
+        "7800",
+        "xt"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook",
+        "motherboard"
+      ],
       "marketPriceBandPercent": 10,
       "marketMaxDeviationPercent": 50
     },
@@ -217,10 +394,21 @@
       "priceMax": 680,
       "tdp": 250,
       "score": 90,
-      "profiles": ["profile-high-end"],
+      "profiles": [
+        "profile-high-end"
+      ],
       "marketQuery": "NVIDIA RTX 5070",
-      "marketRequiredTokens": ["5070"],
-      "marketExcludeTokens": ["gaming desktop", "desktop pc", "prebuilt", "laptop", "notebook", "motherboard"],
+      "marketRequiredTokens": [
+        "5070"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook",
+        "motherboard"
+      ],
       "marketPriceBandPercent": 10,
       "marketMaxDeviationPercent": 50
     },
@@ -232,10 +420,22 @@
       "priceMax": 760,
       "tdp": 315,
       "score": 91,
-      "profiles": ["profile-high-end"],
+      "profiles": [
+        "profile-high-end"
+      ],
       "marketQuery": "AMD RX 7900 XT",
-      "marketRequiredTokens": ["7900", "xt"],
-      "marketExcludeTokens": ["gaming desktop", "desktop pc", "prebuilt", "laptop", "notebook", "motherboard"],
+      "marketRequiredTokens": [
+        "7900",
+        "xt"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook",
+        "motherboard"
+      ],
       "marketPriceBandPercent": 10,
       "marketMaxDeviationPercent": 50
     },
@@ -247,10 +447,22 @@
       "priceMax": 910,
       "tdp": 355,
       "score": 95,
-      "profiles": ["profile-high-end"],
+      "profiles": [
+        "profile-high-end"
+      ],
       "marketQuery": "AMD RX 7900 XTX",
-      "marketRequiredTokens": ["7900", "xtx"],
-      "marketExcludeTokens": ["gaming desktop", "desktop pc", "prebuilt", "laptop", "notebook", "motherboard"],
+      "marketRequiredTokens": [
+        "7900",
+        "xtx"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook",
+        "motherboard"
+      ],
       "marketPriceBandPercent": 10,
       "marketMaxDeviationPercent": 50
     },
@@ -262,53 +474,125 @@
       "priceMax": 1390,
       "tdp": 360,
       "score": 99,
-      "profiles": ["profile-high-end"],
+      "profiles": [
+        "profile-high-end"
+      ],
       "marketQuery": "NVIDIA RTX 5080",
-      "marketRequiredTokens": ["5080"],
-      "marketExcludeTokens": ["gaming desktop", "desktop pc", "prebuilt", "laptop", "notebook", "motherboard"],
+      "marketRequiredTokens": [
+        "5080"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook",
+        "motherboard"
+      ],
       "marketPriceBandPercent": 10,
       "marketMaxDeviationPercent": 55
     },
-
+    {
+      "id": "mb-a620m-hdv",
+      "category": "motherboard",
+      "name": "ASRock A620M-HDV/M.2+",
+      "priceMin": 95,
+      "priceMax": 140,
+      "socket": "AM5",
+      "ramType": "DDR5",
+      "profiles": [
+        "profile-budget"
+      ],
+      "highlights": [
+        "Cost-efficient AM5 entry platform with DDR5 support.",
+        "PCIe 4.0 M.2 slot for fast NVMe boot and game storage.",
+        "Compact mATX board suited to airflow-focused budget cases."
+      ]
+    },
     {
       "id": "mb-b650m-pro-rs",
       "category": "motherboard",
       "name": "ASRock B650M Pro RS WiFi",
       "priceMin": 130,
-      "priceMax": 190,
+      "priceMax": 195,
       "socket": "AM5",
       "ramType": "DDR5",
-      "profiles": ["profile-budget", "profile-mid-range"],
+      "profiles": [
+        "profile-budget",
+        "profile-mid-range"
+      ],
+      "highlights": [
+        "Integrated Wi-Fi with AM5 upgrade path for future CPUs.",
+        "Balanced VRM and thermals for mainstream gaming builds.",
+        "Two M.2 slots for OS and secondary high-speed storage."
+      ],
       "marketQuery": "ASRock B650M Pro RS WiFi",
-      "marketRequiredTokens": ["b650", "pro", "rs"],
-      "marketExcludeTokens": ["gaming desktop", "desktop pc", "prebuilt", "laptop", "notebook"],
+      "marketRequiredTokens": [
+        "b650",
+        "pro",
+        "rs"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook"
+      ],
       "marketPriceBandPercent": 8,
       "marketMaxDeviationPercent": 40
     },
     {
       "id": "mb-b650-atx-plus",
       "category": "motherboard",
-      "name": "B650 ATX Gaming",
-      "priceMin": 170,
-      "priceMax": 250,
+      "name": "MSI B650 Gaming Plus WiFi",
+      "priceMin": 165,
+      "priceMax": 255,
       "socket": "AM5",
       "ramType": "DDR5",
-      "profiles": ["profile-mid-range", "profile-high-end"]
-    },
-    {
-      "id": "mb-z790-gaming-plus",
-      "category": "motherboard",
-      "name": "MSI Z790 Gaming Plus WiFi",
-      "priceMin": 180,
-      "priceMax": 270,
-      "socket": "LGA1700",
-      "ramType": "DDR5",
-      "profiles": ["profile-budget", "profile-mid-range", "profile-high-end"],
-      "marketQuery": "MSI Z790 Gaming Plus WiFi",
-      "marketRequiredTokens": ["z790", "gaming", "plus"],
-      "marketExcludeTokens": ["gaming desktop", "desktop pc", "prebuilt", "laptop", "notebook"],
+      "profiles": [
+        "profile-budget",
+        "profile-mid-range",
+        "profile-high-end"
+      ],
+      "highlights": [
+        "Strong AM5 mid-tier option with robust power delivery.",
+        "ATX layout adds PCIe and fan-header flexibility.",
+        "Wi-Fi and 2.5GbE support modern low-latency networking."
+      ],
+      "marketQuery": "MSI B650 Gaming Plus WiFi",
+      "marketRequiredTokens": [
+        "b650",
+        "gaming",
+        "plus"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook"
+      ],
       "marketPriceBandPercent": 8,
       "marketMaxDeviationPercent": 40
+    },
+    {
+      "id": "mb-b650e-steel-legend",
+      "category": "motherboard",
+      "name": "ASRock B650E Steel Legend WiFi",
+      "priceMin": 220,
+      "priceMax": 320,
+      "socket": "AM5",
+      "ramType": "DDR5",
+      "profiles": [
+        "profile-mid-range",
+        "profile-high-end"
+      ],
+      "highlights": [
+        "B650E chipset adds PCIe 5.0 headroom for next-gen parts.",
+        "Upgraded VRM cooling for sustained high-load sessions.",
+        "Extra rear I/O and M.2 expansion for creator workflows."
+      ]
     },
     {
       "id": "mb-x670e-tomahawk",
@@ -318,24 +602,148 @@
       "priceMax": 360,
       "socket": "AM5",
       "ramType": "DDR5",
-      "profiles": ["profile-high-end"],
+      "profiles": [
+        "profile-mid-range",
+        "profile-high-end"
+      ],
+      "highlights": [
+        "High-end AM5 platform tuned for Ryzen 7/9 processors.",
+        "PCIe 5.0 support and stronger VRM for overclocking headroom.",
+        "Rich USB and storage connectivity for productivity rigs."
+      ],
       "marketQuery": "MSI MAG X670E Tomahawk",
-      "marketRequiredTokens": ["x670e", "tomahawk"],
-      "marketExcludeTokens": ["gaming desktop", "desktop pc", "prebuilt", "laptop", "notebook"],
+      "marketRequiredTokens": [
+        "x670e",
+        "tomahawk"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook"
+      ],
       "marketPriceBandPercent": 8,
       "marketMaxDeviationPercent": 40
     },
     {
-      "id": "mb-z790-creator",
+      "id": "mb-x870e-aorus-elite",
       "category": "motherboard",
-      "name": "Z790 Creator ATX",
-      "priceMin": 260,
-      "priceMax": 390,
+      "name": "Gigabyte X870E Aorus Elite WiFi7",
+      "priceMin": 310,
+      "priceMax": 450,
+      "socket": "AM5",
+      "ramType": "DDR5",
+      "profiles": [
+        "profile-high-end"
+      ],
+      "highlights": [
+        "Premium AM5 option built for flagship Ryzen builds.",
+        "Wi-Fi 7 and high-bandwidth I/O for modern peripherals.",
+        "Expanded PCIe Gen5 lanes for GPU and storage longevity."
+      ]
+    },
+    {
+      "id": "mb-b760-gaming-x",
+      "category": "motherboard",
+      "name": "Gigabyte B760 Gaming X AX",
+      "priceMin": 145,
+      "priceMax": 220,
       "socket": "LGA1700",
       "ramType": "DDR5",
-      "profiles": ["profile-high-end"]
+      "profiles": [
+        "profile-budget",
+        "profile-mid-range"
+      ],
+      "highlights": [
+        "Value LGA1700 board ideal for Core i5 and Core i7 builds.",
+        "DDR5 memory support with practical gaming-focused layout.",
+        "Built-in Wi-Fi and solid rear I/O for plug-and-play setups."
+      ],
+      "marketQuery": "Gigabyte B760 Gaming X AX",
+      "marketRequiredTokens": [
+        "b760",
+        "gaming",
+        "x"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook"
+      ],
+      "marketPriceBandPercent": 8,
+      "marketMaxDeviationPercent": 40
     },
-
+    {
+      "id": "mb-z790-gaming-plus",
+      "category": "motherboard",
+      "name": "MSI Z790 Gaming Plus WiFi",
+      "priceMin": 180,
+      "priceMax": 270,
+      "socket": "LGA1700",
+      "ramType": "DDR5",
+      "profiles": [
+        "profile-mid-range",
+        "profile-high-end"
+      ],
+      "highlights": [
+        "Mainstream enthusiast board for unlocked Intel CPUs.",
+        "Good thermal design for sustained gaming clocks.",
+        "Wi-Fi and 2.5GbE for stable online and download performance."
+      ],
+      "marketQuery": "MSI Z790 Gaming Plus WiFi",
+      "marketRequiredTokens": [
+        "z790",
+        "gaming",
+        "plus"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook"
+      ],
+      "marketPriceBandPercent": 8,
+      "marketMaxDeviationPercent": 40
+    },
+    {
+      "id": "mb-z790-aorus-elite",
+      "category": "motherboard",
+      "name": "Gigabyte Z790 Aorus Elite AX",
+      "priceMin": 230,
+      "priceMax": 330,
+      "socket": "LGA1700",
+      "ramType": "DDR5",
+      "profiles": [
+        "profile-mid-range",
+        "profile-high-end"
+      ],
+      "highlights": [
+        "Enhanced VRM setup for high-core Intel chips.",
+        "Extra M.2 and expansion bandwidth for storage-heavy builds.",
+        "Strong BIOS tooling for memory tuning and stability."
+      ]
+    },
+    {
+      "id": "mb-z790-creator",
+      "category": "motherboard",
+      "name": "ASUS ProArt Z790-Creator WiFi",
+      "priceMin": 300,
+      "priceMax": 430,
+      "socket": "LGA1700",
+      "ramType": "DDR5",
+      "profiles": [
+        "profile-high-end"
+      ],
+      "highlights": [
+        "Creator-centric layout with advanced connectivity options.",
+        "High-end power design suited to sustained workstation loads.",
+        "Excellent for mixed rendering, editing, and gaming workloads."
+      ]
+    },
     {
       "id": "ram-16-ddr5",
       "category": "ram",
@@ -344,7 +752,9 @@
       "priceMax": 90,
       "ramType": "DDR5",
       "sizeGB": 16,
-      "profiles": ["profile-budget"]
+      "profiles": [
+        "profile-budget"
+      ]
     },
     {
       "id": "ram-32-ddr5",
@@ -354,7 +764,11 @@
       "priceMax": 150,
       "ramType": "DDR5",
       "sizeGB": 32,
-      "profiles": ["profile-budget", "profile-mid-range", "profile-high-end"]
+      "profiles": [
+        "profile-budget",
+        "profile-mid-range",
+        "profile-high-end"
+      ]
     },
     {
       "id": "ram-48-ddr5",
@@ -364,7 +778,10 @@
       "priceMax": 240,
       "ramType": "DDR5",
       "sizeGB": 48,
-      "profiles": ["profile-mid-range", "profile-high-end"]
+      "profiles": [
+        "profile-mid-range",
+        "profile-high-end"
+      ]
     },
     {
       "id": "ram-64-ddr5",
@@ -374,7 +791,10 @@
       "priceMax": 310,
       "ramType": "DDR5",
       "sizeGB": 64,
-      "profiles": ["profile-mid-range", "profile-high-end"]
+      "profiles": [
+        "profile-mid-range",
+        "profile-high-end"
+      ]
     },
     {
       "id": "ram-96-ddr5",
@@ -384,16 +804,21 @@
       "priceMax": 480,
       "ramType": "DDR5",
       "sizeGB": 96,
-      "profiles": ["profile-high-end"]
+      "profiles": [
+        "profile-high-end"
+      ]
     },
-
     {
       "id": "storage-1tb-nvme-budget",
       "category": "storage",
       "name": "1TB NVMe Gen4",
       "priceMin": 60,
       "priceMax": 105,
-      "profiles": ["profile-budget", "profile-mid-range", "profile-high-end"]
+      "profiles": [
+        "profile-budget",
+        "profile-mid-range",
+        "profile-high-end"
+      ]
     },
     {
       "id": "storage-2tb-nvme-mainstream",
@@ -401,7 +826,11 @@
       "name": "2TB NVMe Gen4",
       "priceMin": 100,
       "priceMax": 170,
-      "profiles": ["profile-budget", "profile-mid-range", "profile-high-end"]
+      "profiles": [
+        "profile-budget",
+        "profile-mid-range",
+        "profile-high-end"
+      ]
     },
     {
       "id": "storage-2tb-nvme-premium",
@@ -409,7 +838,10 @@
       "name": "2TB NVMe Gen4 Premium",
       "priceMin": 140,
       "priceMax": 240,
-      "profiles": ["profile-mid-range", "profile-high-end"]
+      "profiles": [
+        "profile-mid-range",
+        "profile-high-end"
+      ]
     },
     {
       "id": "storage-4tb-nvme-mainstream",
@@ -417,7 +849,10 @@
       "name": "4TB NVMe Gen4",
       "priceMin": 220,
       "priceMax": 360,
-      "profiles": ["profile-mid-range", "profile-high-end"]
+      "profiles": [
+        "profile-mid-range",
+        "profile-high-end"
+      ]
     },
     {
       "id": "storage-4tb-nvme-premium",
@@ -425,9 +860,10 @@
       "name": "4TB NVMe Gen4 Premium",
       "priceMin": 300,
       "priceMax": 520,
-      "profiles": ["profile-high-end"]
+      "profiles": [
+        "profile-high-end"
+      ]
     },
-
     {
       "id": "psu-650-gold",
       "category": "psu",
@@ -435,10 +871,22 @@
       "priceMin": 90,
       "priceMax": 140,
       "wattage": 650,
-      "profiles": ["profile-budget", "profile-mid-range"],
+      "profiles": [
+        "profile-budget",
+        "profile-mid-range"
+      ],
       "marketQuery": "MSI MAG A650GLS",
-      "marketRequiredTokens": ["650", "gold"],
-      "marketExcludeTokens": ["gaming desktop", "desktop pc", "prebuilt", "laptop", "notebook"],
+      "marketRequiredTokens": [
+        "650",
+        "gold"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook"
+      ],
       "marketPriceBandPercent": 8,
       "marketMaxDeviationPercent": 40
     },
@@ -449,10 +897,23 @@
       "priceMin": 105,
       "priceMax": 165,
       "wattage": 750,
-      "profiles": ["profile-budget", "profile-mid-range", "profile-high-end"],
+      "profiles": [
+        "profile-budget",
+        "profile-mid-range",
+        "profile-high-end"
+      ],
       "marketQuery": "Corsair RM750e",
-      "marketRequiredTokens": ["rm750", "750"],
-      "marketExcludeTokens": ["gaming desktop", "desktop pc", "prebuilt", "laptop", "notebook"],
+      "marketRequiredTokens": [
+        "rm750",
+        "750"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook"
+      ],
       "marketPriceBandPercent": 8,
       "marketMaxDeviationPercent": 40
     },
@@ -463,10 +924,22 @@
       "priceMin": 130,
       "priceMax": 210,
       "wattage": 850,
-      "profiles": ["profile-mid-range", "profile-high-end"],
+      "profiles": [
+        "profile-mid-range",
+        "profile-high-end"
+      ],
       "marketQuery": "Corsair RM850e",
-      "marketRequiredTokens": ["rm850", "850"],
-      "marketExcludeTokens": ["gaming desktop", "desktop pc", "prebuilt", "laptop", "notebook"],
+      "marketRequiredTokens": [
+        "rm850",
+        "850"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook"
+      ],
       "marketPriceBandPercent": 8,
       "marketMaxDeviationPercent": 40
     },
@@ -477,10 +950,21 @@
       "priceMin": 165,
       "priceMax": 260,
       "wattage": 1000,
-      "profiles": ["profile-high-end"],
+      "profiles": [
+        "profile-high-end"
+      ],
       "marketQuery": "Corsair RM1000e",
-      "marketRequiredTokens": ["rm1000", "1000"],
-      "marketExcludeTokens": ["gaming desktop", "desktop pc", "prebuilt", "laptop", "notebook"],
+      "marketRequiredTokens": [
+        "rm1000",
+        "1000"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook"
+      ],
       "marketPriceBandPercent": 8,
       "marketMaxDeviationPercent": 40
     },
@@ -491,16 +975,20 @@
       "priceMin": 230,
       "priceMax": 340,
       "wattage": 1200,
-      "profiles": ["profile-high-end"]
+      "profiles": [
+        "profile-high-end"
+      ]
     },
-
     {
       "id": "case-airflow-core",
       "category": "case",
       "name": "Airflow Core Mid Tower",
       "priceMin": 70,
       "priceMax": 120,
-      "profiles": ["profile-budget", "profile-mid-range"]
+      "profiles": [
+        "profile-budget",
+        "profile-mid-range"
+      ]
     },
     {
       "id": "case-fractal-pop-air",
@@ -508,10 +996,23 @@
       "name": "Fractal Pop Air",
       "priceMin": 110,
       "priceMax": 180,
-      "profiles": ["profile-budget", "profile-mid-range", "profile-high-end"],
+      "profiles": [
+        "profile-budget",
+        "profile-mid-range",
+        "profile-high-end"
+      ],
       "marketQuery": "Fractal Pop Air",
-      "marketRequiredTokens": ["pop", "air"],
-      "marketExcludeTokens": ["gaming desktop", "desktop pc", "prebuilt", "laptop", "notebook"],
+      "marketRequiredTokens": [
+        "pop",
+        "air"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook"
+      ],
       "marketPriceBandPercent": 8,
       "marketMaxDeviationPercent": 40
     },
@@ -521,10 +1022,22 @@
       "name": "Lian Li Lancool 216",
       "priceMin": 130,
       "priceMax": 210,
-      "profiles": ["profile-mid-range", "profile-high-end"],
+      "profiles": [
+        "profile-mid-range",
+        "profile-high-end"
+      ],
       "marketQuery": "Lian Li Lancool 216",
-      "marketRequiredTokens": ["lancool", "216"],
-      "marketExcludeTokens": ["gaming desktop", "desktop pc", "prebuilt", "laptop", "notebook"],
+      "marketRequiredTokens": [
+        "lancool",
+        "216"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook"
+      ],
       "marketPriceBandPercent": 8,
       "marketMaxDeviationPercent": 40
     },
@@ -534,10 +1047,22 @@
       "name": "NZXT H6 Flow",
       "priceMin": 130,
       "priceMax": 210,
-      "profiles": ["profile-mid-range", "profile-high-end"],
+      "profiles": [
+        "profile-mid-range",
+        "profile-high-end"
+      ],
       "marketQuery": "NZXT H6 Flow",
-      "marketRequiredTokens": ["h6", "flow"],
-      "marketExcludeTokens": ["gaming desktop", "desktop pc", "prebuilt", "laptop", "notebook"],
+      "marketRequiredTokens": [
+        "h6",
+        "flow"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook"
+      ],
       "marketPriceBandPercent": 8,
       "marketMaxDeviationPercent": 40
     },
@@ -547,16 +1072,20 @@
       "name": "Premium Showcase Tower",
       "priceMin": 190,
       "priceMax": 320,
-      "profiles": ["profile-high-end"]
+      "profiles": [
+        "profile-high-end"
+      ]
     },
-
     {
       "id": "cooling-air-120",
       "category": "cooling",
       "name": "120mm Tower Air Cooler",
       "priceMin": 35,
       "priceMax": 70,
-      "profiles": ["profile-budget", "profile-mid-range"]
+      "profiles": [
+        "profile-budget",
+        "profile-mid-range"
+      ]
     },
     {
       "id": "cooling-air-dual",
@@ -564,7 +1093,11 @@
       "name": "Dual Tower Air Cooler",
       "priceMin": 60,
       "priceMax": 120,
-      "profiles": ["profile-budget", "profile-mid-range", "profile-high-end"]
+      "profiles": [
+        "profile-budget",
+        "profile-mid-range",
+        "profile-high-end"
+      ]
     },
     {
       "id": "cooling-aio-240",
@@ -572,10 +1105,22 @@
       "name": "240mm AIO Liquid Cooler",
       "priceMin": 90,
       "priceMax": 170,
-      "profiles": ["profile-mid-range", "profile-high-end"],
+      "profiles": [
+        "profile-mid-range",
+        "profile-high-end"
+      ],
       "marketQuery": "NZXT Kraken 240",
-      "marketRequiredTokens": ["kraken", "240"],
-      "marketExcludeTokens": ["gaming desktop", "desktop pc", "prebuilt", "laptop", "notebook"],
+      "marketRequiredTokens": [
+        "kraken",
+        "240"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook"
+      ],
       "marketPriceBandPercent": 8,
       "marketMaxDeviationPercent": 40
     },
@@ -585,10 +1130,21 @@
       "name": "360mm AIO Liquid Cooler",
       "priceMin": 120,
       "priceMax": 240,
-      "profiles": ["profile-high-end"],
+      "profiles": [
+        "profile-high-end"
+      ],
       "marketQuery": "NZXT Kraken 360",
-      "marketRequiredTokens": ["kraken", "360"],
-      "marketExcludeTokens": ["gaming desktop", "desktop pc", "prebuilt", "laptop", "notebook"],
+      "marketRequiredTokens": [
+        "kraken",
+        "360"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook"
+      ],
       "marketPriceBandPercent": 8,
       "marketMaxDeviationPercent": 45
     },
@@ -598,7 +1154,9 @@
       "name": "Premium 360mm AIO",
       "priceMin": 190,
       "priceMax": 320,
-      "profiles": ["profile-high-end"]
+      "profiles": [
+        "profile-high-end"
+      ]
     }
   ]
 }
