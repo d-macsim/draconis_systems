@@ -1,0 +1,50 @@
+{
+  "categories": [
+    { "id": "profile", "label": "Usage Profile", "required": true },
+    { "id": "cpu", "label": "CPU", "required": true },
+    { "id": "gpu", "label": "GPU", "required": true },
+    { "id": "motherboard", "label": "Motherboard", "required": true },
+    { "id": "ram", "label": "Memory", "required": true },
+    { "id": "storage", "label": "Storage", "required": true },
+    { "id": "psu", "label": "Power Supply", "required": true },
+    { "id": "case", "label": "Case", "required": true },
+    { "id": "cooling", "label": "Cooling", "required": true }
+  ],
+  "components": [
+    { "id": "profile-esports", "category": "profile", "name": "Competitive Gaming", "priceMin": 0, "priceMax": 0, "tags": ["esports"] },
+    { "id": "profile-creator", "category": "profile", "name": "Creator Workloads", "priceMin": 0, "priceMax": 0, "tags": ["creator"] },
+    { "id": "profile-hybrid", "category": "profile", "name": "Balanced Hybrid", "priceMin": 0, "priceMax": 0, "tags": ["hybrid"] },
+
+    { "id": "cpu-r7-7800x3d", "category": "cpu", "name": "AMD Ryzen 7 7800X3D", "priceMin": 329, "priceMax": 389, "socket": "AM5", "tdp": 120, "score": 95 },
+    { "id": "cpu-r9-7900", "category": "cpu", "name": "AMD Ryzen 9 7900", "priceMin": 339, "priceMax": 419, "socket": "AM5", "tdp": 170, "score": 92 },
+    { "id": "cpu-i7-14700k", "category": "cpu", "name": "Intel Core i7-14700K", "priceMin": 369, "priceMax": 449, "socket": "LGA1700", "tdp": 253, "score": 93 },
+
+    { "id": "gpu-rtx-4070-super", "category": "gpu", "name": "NVIDIA RTX 4070 SUPER", "priceMin": 579, "priceMax": 679, "tdp": 220, "score": 90 },
+    { "id": "gpu-rx-7800xt", "category": "gpu", "name": "AMD Radeon RX 7800 XT", "priceMin": 469, "priceMax": 549, "tdp": 263, "score": 86 },
+    { "id": "gpu-rtx-4080-super", "category": "gpu", "name": "NVIDIA RTX 4080 SUPER", "priceMin": 999, "priceMax": 1179, "tdp": 320, "score": 98 },
+
+    { "id": "mb-b650", "category": "motherboard", "name": "B650 ATX", "priceMin": 169, "priceMax": 239, "socket": "AM5", "ramType": "DDR5" },
+    { "id": "mb-x670e", "category": "motherboard", "name": "X670E ATX", "priceMin": 279, "priceMax": 429, "socket": "AM5", "ramType": "DDR5" },
+    { "id": "mb-z790", "category": "motherboard", "name": "Z790 ATX", "priceMin": 229, "priceMax": 379, "socket": "LGA1700", "ramType": "DDR5" },
+
+    { "id": "ram-32-ddr5", "category": "ram", "name": "32GB DDR5-6000", "priceMin": 99, "priceMax": 149, "ramType": "DDR5", "sizeGB": 32 },
+    { "id": "ram-64-ddr5", "category": "ram", "name": "64GB DDR5-6000", "priceMin": 189, "priceMax": 259, "ramType": "DDR5", "sizeGB": 64 },
+    { "id": "ram-96-ddr5", "category": "ram", "name": "96GB DDR5-5600", "priceMin": 289, "priceMax": 379, "ramType": "DDR5", "sizeGB": 96 },
+
+    { "id": "storage-1tb-nvme", "category": "storage", "name": "1TB NVMe Gen4", "priceMin": 69, "priceMax": 109 },
+    { "id": "storage-2tb-nvme", "category": "storage", "name": "2TB NVMe Gen4", "priceMin": 119, "priceMax": 179 },
+    { "id": "storage-4tb-nvme", "category": "storage", "name": "4TB NVMe Gen4", "priceMin": 239, "priceMax": 369 },
+
+    { "id": "psu-750-gold", "category": "psu", "name": "750W 80+ Gold", "priceMin": 109, "priceMax": 159, "wattage": 750 },
+    { "id": "psu-850-gold", "category": "psu", "name": "850W 80+ Gold", "priceMin": 139, "priceMax": 199, "wattage": 850 },
+    { "id": "psu-1000-gold", "category": "psu", "name": "1000W 80+ Gold", "priceMin": 189, "priceMax": 269, "wattage": 1000 },
+
+    { "id": "case-airflow-mid", "category": "case", "name": "Airflow Mid Tower", "priceMin": 99, "priceMax": 149 },
+    { "id": "case-compact-atx", "category": "case", "name": "Compact ATX Tower", "priceMin": 109, "priceMax": 169 },
+    { "id": "case-showcase", "category": "case", "name": "Showcase Tempered Tower", "priceMin": 159, "priceMax": 249 },
+
+    { "id": "cooling-air-premium", "category": "cooling", "name": "Premium Air Cooler", "priceMin": 59, "priceMax": 99 },
+    { "id": "cooling-aio-240", "category": "cooling", "name": "240mm AIO Liquid", "priceMin": 109, "priceMax": 169 },
+    { "id": "cooling-aio-360", "category": "cooling", "name": "360mm AIO Liquid", "priceMin": 149, "priceMax": 239 }
+  ]
+}

@@ -1,0 +1,28 @@
+---
+import type { ServiceEntry } from "@/lib/types";
+
+interface Props {
+  services: ServiceEntry[];
+}
+
+const { services } = Astro.props;
+---
+<section class="section" id="services">
+  <div class="container">
+    <p class="eyebrow">Services</p>
+    <h2>Built for outcomes, not spec-sheet theater.</h2>
+    <div class="grid grid-3">
+      {services.map((service, index) => (
+        <article class="card reveal" style={`animation-delay:${index * 70}ms;`}>
+          <h3>{service.title}</h3>
+          <p>{service.description}</p>
+          <ul class="clean stack small">
+            {service.bullets.map((bullet) => (
+              <li>• {bullet}</li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

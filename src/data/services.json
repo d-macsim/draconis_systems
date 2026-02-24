@@ -1,0 +1,32 @@
+[
+  {
+    "id": "custom-builds",
+    "title": "Custom Gaming & Creator Builds",
+    "description": "Purpose-built PCs tuned for target workloads with thermal and acoustic targets in mind.",
+    "bullets": [
+      "Use-case-first part matching",
+      "Stress-tested stability before handoff",
+      "Cable-managed, clean internal airflow"
+    ]
+  },
+  {
+    "id": "upgrade-consulting",
+    "title": "Upgrade Consulting",
+    "description": "Keep what still performs and replace only what unlocks meaningful gains.",
+    "bullets": [
+      "Bottleneck analysis",
+      "Budget-priority recommendations",
+      "Compatibility and BIOS planning"
+    ]
+  },
+  {
+    "id": "workstation-solutions",
+    "title": "Workstation Solutions",
+    "description": "Reliability-focused machines for rendering, CAD, simulation, and video pipelines.",
+    "bullets": [
+      "Long-session thermal stability",
+      "High-I/O storage strategy",
+      "Service and warranty options"
+    ]
+  }
+]

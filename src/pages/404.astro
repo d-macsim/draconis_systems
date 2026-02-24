@@ -1,0 +1,20 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+---
+<BaseLayout
+  title="Page Not Found | Draconis Systems"
+  description="The page you requested could not be found."
+  noIndex={true}
+>
+  <section class="section">
+    <div class="container card stack" style="text-align:center;max-width:760px;">
+      <p class="eyebrow">404</p>
+      <h1>Page not found.</h1>
+      <p>The requested route does not exist or has been moved.</p>
+      <div class="row" style="justify-content:center;">
+        <a class="button primary" href="/">Back to Home</a>
+        <a class="button secondary" href="/contact">Contact Support</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

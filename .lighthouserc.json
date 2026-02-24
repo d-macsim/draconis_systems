@@ -1,0 +1,24 @@
+{
+  "ci": {
+    "collect": {
+      "numberOfRuns": 2,
+      "startServerCommand": "npm run preview -- --host 0.0.0.0 --port 4321",
+      "url": [
+        "http://localhost:4321/",
+        "http://localhost:4321/projects",
+        "http://localhost:4321/configurator"
+      ]
+    },
+    "assert": {
+      "assertions": {
+        "categories:performance": ["warn", { "minScore": 0.9 }],
+        "categories:accessibility": ["warn", { "minScore": 0.95 }],
+        "categories:seo": ["warn", { "minScore": 0.95 }],
+        "resource-summary:script:size": ["warn", { "maxNumericValue": 180000 }]
+      }
+    },
+    "upload": {
+      "target": "temporary-public-storage"
+    }
+  }
+}

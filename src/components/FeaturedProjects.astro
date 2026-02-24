@@ -1,0 +1,41 @@
+---
+import type { ProjectEntry } from "@/lib/types";
+
+interface Props {
+  projects: ProjectEntry[];
+}
+
+const { projects } = Astro.props;
+---
+<section class="section" id="featured-projects">
+  <div class="container">
+    <div class="row" style="justify-content:space-between;margin-bottom:1rem;">
+      <div>
+        <p class="eyebrow">Featured Projects</p>
+        <h2>Recent systems shipped</h2>
+      </div>
+      <a href="/projects" class="button secondary">Browse Projects</a>
+    </div>
+
+    <div class="grid grid-3">
+      {projects.map((project, index) => (
+        <article class="card reveal" style={`animation-delay:${index * 90}ms;padding:0;overflow:hidden;`}>
+          <img
+            src={project.heroImage}
+            alt={project.title}
+            width="1200"
+            height="675"
+            loading="lazy"
+            style="aspect-ratio:16/9;object-fit:cover;"
+          />
+          <div style="padding:1rem;">
+            <p class="small">{project.useCase} / {project.budgetTier}</p>
+            <h3>{project.title}</h3>
+            <p>{project.summary}</p>
+            <a href={`/projects/${project.slug}`} class="button secondary" style="padding:0.55rem 0.85rem;">View Details</a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

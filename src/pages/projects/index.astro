@@ -1,0 +1,43 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import ProjectsFilter from "@/components/projects/ProjectsFilter";
+import type { ProjectEntry } from "@/lib/types";
+
+const projectCollection = (await getCollection("projects")).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const projects: ProjectEntry[] = projectCollection.map((entry) => ({
+  slug: entry.slug,
+  title: entry.data.title,
+  summary: entry.data.summary,
+  description: entry.data.description,
+  date: entry.data.date.toISOString(),
+  featured: entry.data.featured,
+  useCase: entry.data.useCase,
+  budgetTier: entry.data.budgetTier,
+  tags: entry.data.tags,
+  heroImage: entry.data.heroImage,
+  gallery: entry.data.gallery,
+  cpu: entry.data.cpu,
+  gpu: entry.data.gpu,
+  ram: entry.data.ram,
+  storage: entry.data.storage,
+  outcome: entry.data.outcome
+}));
+---
+<BaseLayout
+  title="Projects | Draconis Systems"
+  description="Explore previous custom PC builds by use-case, budget tier, and performance goals."
+  breadcrumbs={[{ label: "Home", href: "/" }, { label: "Projects" }]}
+>
+  <section class="section">
+    <div class="container stack">
+      <p class="eyebrow">Previous Projects</p>
+      <h1>Build archive</h1>
+      <p>Filter previous systems by use-case, budget tier, and tagged outcomes.</p>
+      <ProjectsFilter client:visible projects={projects} />
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,18 @@
+[
+  {
+    "question": "How long does a custom build take?",
+    "answer": "Typical turnaround is 7-14 business days once parts availability is confirmed. Rush timelines can be quoted when inventory allows."
+  },
+  {
+    "question": "Do you optimize airflow and acoustics?",
+    "answer": "Yes. Every build includes fan curve tuning and cable management to balance thermal headroom with low noise under load."
+  },
+  {
+    "question": "Can I bring my own components?",
+    "answer": "Yes, with compatibility review first. We validate thermals, power delivery, and BIOS support before assembly."
+  },
+  {
+    "question": "Do estimates include taxes and shipping?",
+    "answer": "Configurator ranges are parts-and-build estimates only. Final quotes include exact sourcing, tax, and delivery details."
+  }
+]

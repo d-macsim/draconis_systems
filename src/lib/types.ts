@@ -1,0 +1,114 @@
+export type BudgetTier = "entry" | "mid" | "high" | "flagship";
+export type UseCase = "gaming" | "creator" | "workstation" | "hybrid";
+
+export interface ProjectEntry {
+  slug: string;
+  title: string;
+  summary: string;
+  description: string;
+  date: string;
+  featured: boolean;
+  useCase: UseCase;
+  budgetTier: BudgetTier;
+  tags: string[];
+  heroImage: string;
+  gallery: string[];
+  cpu: string;
+  gpu: string;
+  ram: string;
+  storage: string;
+  outcome: string;
+}
+
+export interface UpdateEntry {
+  slug: string;
+  title: string;
+  summary: string;
+  date: string;
+  category: "company" | "build-log" | "availability" | "events";
+  featured: boolean;
+}
+
+export interface ServiceEntry {
+  id: string;
+  title: string;
+  description: string;
+  bullets: string[];
+}
+
+export interface FaqEntry {
+  question: string;
+  answer: string;
+}
+
+export interface ConfigComponent {
+  id: string;
+  category:
+    | "profile"
+    | "cpu"
+    | "gpu"
+    | "motherboard"
+    | "ram"
+    | "storage"
+    | "psu"
+    | "case"
+    | "cooling";
+  name: string;
+  priceMin: number | null;
+  priceMax: number | null;
+  socket?: string;
+  ramType?: "DDR4" | "DDR5";
+  tdp?: number;
+  wattage?: number;
+  sizeGB?: number;
+  score?: number;
+  tags?: string[];
+}
+
+export interface ComponentCategory {
+  id: ConfigComponent["category"];
+  label: string;
+  required: boolean;
+}
+
+export interface ComponentCatalog {
+  categories: ComponentCategory[];
+  components: ConfigComponent[];
+}
+
+export interface CompatibilityRule {
+  id: string;
+  description: string;
+}
+
+export interface ConfiguratorRules {
+  psuHeadroomPercent: number;
+  recommendedRamByProfile: Record<string, number>;
+}
+
+export interface BuildSelection {
+  [key: string]: string | undefined;
+  profile?: string;
+  cpu?: string;
+  gpu?: string;
+  motherboard?: string;
+  ram?: string;
+  storage?: string;
+  psu?: string;
+  case?: string;
+  cooling?: string;
+}
+
+export interface LeadPayload {
+  mode: "inquiry" | "quote";
+  name: string;
+  email: string;
+  phone?: string;
+  company?: string;
+  budget?: string;
+  timeline?: string;
+  message: string;
+  buildSelection?: BuildSelection;
+  honeypot?: string;
+  turnstileToken?: string;
+}

@@ -1,0 +1,27 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import faqData from "@/data/faq.json";
+import type { FaqEntry } from "@/lib/types";
+
+const faqs = faqData as FaqEntry[];
+---
+<BaseLayout
+  title="FAQ | Draconis Systems"
+  description="Frequently asked questions about build timelines, compatibility, tuning, and estimates."
+  breadcrumbs={[{ label: "Home", href: "/" }, { label: "FAQ" }]}
+>
+  <section class="section">
+    <div class="container stack">
+      <p class="eyebrow">FAQ</p>
+      <h1>Common questions</h1>
+      <div class="stack">
+        {faqs.map((item) => (
+          <details class="card">
+            <summary style="cursor:pointer;font-weight:700;">{item.question}</summary>
+            <p style="margin-top:0.8rem;">{item.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

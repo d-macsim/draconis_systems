@@ -1,0 +1,36 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import ConfiguratorApp from "@/components/configurator/ConfiguratorApp";
+import catalog from "@/data/configurator/components.json";
+import rules from "@/data/configurator/rules.json";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  applicationCategory: "BusinessApplication",
+  name: "Draconis Systems Configurator",
+  operatingSystem: "Any",
+  description:
+    "Guided custom PC configurator with compatibility checks, estimated price ranges, and quote export."
+};
+---
+<BaseLayout
+  title="Custom Configurator | Draconis Systems"
+  description="Build a guided custom PC estimate with compatibility checks and export to quote request."
+  breadcrumbs={[{ label: "Home", href: "/" }, { label: "Configurator" }]}
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
+
+  <section class="section">
+    <div class="container stack">
+      <p class="eyebrow">Guided Estimator</p>
+      <h1>Custom PC Configurator</h1>
+      <p>
+        Build your system in steps, check core compatibility, and export your selection to a quote request.
+        Estimates are non-binding and finalized during sourcing.
+      </p>
+
+      <ConfiguratorApp client:visible catalog={catalog} rules={rules} />
+    </div>
+  </section>
+</BaseLayout>

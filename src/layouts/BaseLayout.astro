@@ -1,0 +1,80 @@
+---
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import CookieConsent from "@/components/CookieConsent";
+import "@/styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  breadcrumbs?: { label: string; href?: string }[];
+  noIndex?: boolean;
+}
+
+const {
+  title,
+  description,
+  image = "/images/logo-placeholder.svg",
+  breadcrumbs = [],
+  noIndex = false
+} = Astro.props;
+
+const siteName = import.meta.env.PUBLIC_SITE_NAME || "Draconis Systems";
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+const ogImage = new URL(image, Astro.site).toString();
+const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN;
+const analyticsRequiresConsent = import.meta.env.PUBLIC_ANALYTICS_REQUIRE_CONSENT === "true";
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#111827" />
+    {noIndex && <meta name="robots" content="noindex, nofollow" />}
+
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://plausible.io" />
+    <script is:inline>
+      (() => {
+        const key = "draconis-theme";
+        const stored = window.localStorage.getItem(key);
+        const autoDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        const theme = stored === "light" || stored === "dark" ? stored : autoDark ? "dark" : "light";
+        document.documentElement.setAttribute("data-theme", theme);
+      })();
+    </script>
+    {
+      plausibleDomain && !analyticsRequiresConsent && (
+        <script defer data-domain={plausibleDomain} src="https://plausible.io/js/script.js"></script>
+      )
+    }
+    <title>{title}</title>
+  </head>
+  <body>
+    <Header />
+    <Breadcrumbs items={breadcrumbs} />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+    {plausibleDomain && analyticsRequiresConsent && <CookieConsent client:idle domain={plausibleDomain} />}
+  </body>
+</html>

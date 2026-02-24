@@ -1,0 +1,34 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+---
+<BaseLayout
+  title="About | Draconis Systems"
+  description="Draconis Systems builds workload-focused custom PCs with validated thermals and stability-first engineering."
+  breadcrumbs={[{ label: "Home", href: "/" }, { label: "About" }]}
+>
+  <section class="section">
+    <div class="container grid grid-2">
+      <article class="card">
+        <p class="eyebrow">About</p>
+        <h1>Engineering-first custom PC company.</h1>
+        <p>
+          Draconis Systems is a US-based custom PC building company focused on measurable outcomes: frame consistency,
+          render throughput, reliability, and serviceability.
+        </p>
+        <p>
+          We prioritize compatibility discipline, clean thermal behavior, and clear scope communication before any build is approved.
+        </p>
+      </article>
+
+      <article class="card">
+        <h2>Operating Principles</h2>
+        <ul class="clean stack">
+          <li>Workload-driven component selection.</li>
+          <li>Compatibility and thermals validated before delivery.</li>
+          <li>Transparent quote boundaries and lead times.</li>
+          <li>Documentation and support path after handoff.</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+</BaseLayout>

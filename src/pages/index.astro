@@ -1,0 +1,88 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/Hero.astro";
+import ServiceGrid from "@/components/ServiceGrid.astro";
+import UpdatesFeed from "@/components/UpdatesFeed.astro";
+import FeaturedProjects from "@/components/FeaturedProjects.astro";
+import services from "@/data/services.json";
+import type { ProjectEntry, ServiceEntry, UpdateEntry } from "@/lib/types";
+
+const updatesCollection = (await getCollection("updates"))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+const featuredProjectsCollection = (await getCollection("projects"))
+  .filter((project) => project.data.featured)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
+const updates: UpdateEntry[] = updatesCollection.map((entry) => ({
+  slug: entry.slug,
+  title: entry.data.title,
+  summary: entry.data.summary,
+  date: entry.data.date.toISOString(),
+  category: entry.data.category,
+  featured: entry.data.featured
+}));
+
+const featuredProjects: ProjectEntry[] = featuredProjectsCollection.map((entry) => ({
+  slug: entry.slug,
+  title: entry.data.title,
+  summary: entry.data.summary,
+  description: entry.data.description,
+  date: entry.data.date.toISOString(),
+  featured: entry.data.featured,
+  useCase: entry.data.useCase,
+  budgetTier: entry.data.budgetTier,
+  tags: entry.data.tags,
+  heroImage: entry.data.heroImage,
+  gallery: entry.data.gallery,
+  cpu: entry.data.cpu,
+  gpu: entry.data.gpu,
+  ram: entry.data.ram,
+  storage: entry.data.storage,
+  outcome: entry.data.outcome
+}));
+
+const typedServices = services as ServiceEntry[];
+---
+<BaseLayout
+  title="Draconis Systems | Custom PC Building"
+  description="Custom gaming, creator, and workstation PC builds engineered around your performance targets."
+>
+  <Hero />
+  <UpdatesFeed updates={updates} />
+  <FeaturedProjects projects={featuredProjects} />
+  <ServiceGrid services={typedServices} />
+
+  <section class="section">
+    <div class="container grid grid-2">
+      <article class="card">
+        <p class="eyebrow">Process</p>
+        <h2>From brief to benchmark-ready system.</h2>
+        <ol class="stack small" style="padding-left:1.1rem;">
+          <li><strong>1.</strong> Requirement call and workload priorities.</li>
+          <li><strong>2.</strong> Parts plan with compatibility + thermal strategy.</li>
+          <li><strong>3.</strong> Assembly, tuning, and validation pass.</li>
+          <li><strong>4.</strong> Delivery with documentation and support path.</li>
+        </ol>
+        <a href="/process" class="button secondary">See Full Process</a>
+      </article>
+
+      <article class="card">
+        <p class="eyebrow">Trust Signals</p>
+        <h2>Focused on repeatable, stable outcomes.</h2>
+        <ul class="clean stack">
+          <li>Thermal and stress validation before handoff.</li>
+          <li>Clean internal layout for long-term serviceability.</li>
+          <li>Quote transparency with clear scope boundaries.</li>
+          <li>Post-build support and warranty options.</li>
+        </ul>
+        <div class="row" style="margin-top:1rem;">
+          <a href="/configurator" class="button primary">Build an Estimate</a>
+          <a href="/contact" class="button secondary">Talk to an Engineer</a>
+        </div>
+      </article>
+    </div>
+  </section>
+</BaseLayout>

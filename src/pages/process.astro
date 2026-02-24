@@ -1,0 +1,33 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+---
+<BaseLayout
+  title="Process | Draconis Systems"
+  description="How Draconis Systems takes a custom PC build from consultation through validation and delivery."
+  breadcrumbs={[{ label: "Home", href: "/" }, { label: "Process" }]}
+>
+  <section class="section">
+    <div class="container stack">
+      <p class="eyebrow">Build Process</p>
+      <h1>Transparent delivery workflow</h1>
+      <div class="grid grid-2">
+        <article class="card">
+          <h2>1) Discovery</h2>
+          <p>We define workload, target titles/apps, budget bands, and timeline constraints.</p>
+        </article>
+        <article class="card">
+          <h2>2) Architecture</h2>
+          <p>Component plan is built around compatibility, airflow profile, and reliability objectives.</p>
+        </article>
+        <article class="card">
+          <h2>3) Build + Validation</h2>
+          <p>Assembly, thermal tuning, and stress validation are completed before handoff scheduling.</p>
+        </article>
+        <article class="card">
+          <h2>4) Handoff + Support</h2>
+          <p>Customer receives handoff documentation, warranty details, and support contact channels.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

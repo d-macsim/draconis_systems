@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="Project Riftforge Placeholder">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#12222f" />
+      <stop offset="100%" stop-color="#1b1a2f" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)" />
+  <rect x="780" y="80" width="340" height="520" rx="22" fill="#1f2f4a" opacity="0.6" />
+  <text x="70" y="150" font-size="68" font-family="Segoe UI, sans-serif" fill="#f8fafc">Project Riftforge</text>
+  <text x="70" y="220" font-size="34" font-family="Segoe UI, sans-serif" fill="#9fb3c8">Creator Hybrid Tower</text>
+</svg>

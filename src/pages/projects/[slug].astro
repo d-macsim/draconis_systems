@@ -1,0 +1,117 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { formatDate } from "@/lib/format";
+import type { CollectionEntry } from "astro:content";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project, projects }
+  }));
+}
+
+interface Props {
+  project: CollectionEntry<"projects">;
+  projects: CollectionEntry<"projects">[];
+}
+
+const { project, projects } = Astro.props as Props;
+const { Content } = await project.render();
+
+const related = projects
+  .filter(
+    (entry) =>
+      entry.slug !== project.slug &&
+      entry.data.tags.some((tag) => project.data.tags.includes(tag))
+  )
+  .slice(0, 2);
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  name: project.data.title,
+  datePublished: project.data.date.toISOString(),
+  description: project.data.description,
+  image: project.data.heroImage,
+  about: project.data.tags,
+  author: {
+    "@type": "Organization",
+    name: "Draconis Systems"
+  }
+};
+---
+<BaseLayout
+  title={`${project.data.title} | Draconis Systems`}
+  description={project.data.summary}
+  image={project.data.heroImage}
+  breadcrumbs={[{ label: "Home", href: "/" }, { label: "Projects", href: "/projects" }, { label: project.data.title }]}
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
+
+  <article class="section">
+    <div class="container stack">
+      <p class="eyebrow">{project.data.useCase} / {project.data.budgetTier}</p>
+      <h1>{project.data.title}</h1>
+      <p>{project.data.description}</p>
+      <p class="small">Published {formatDate(project.data.date)}</p>
+
+      <img
+        src={project.data.heroImage}
+        alt={project.data.title}
+        width="1200"
+        height="675"
+        loading="eager"
+        class="surface"
+        style="aspect-ratio:16/9;object-fit:cover;"
+      />
+
+      <div class="grid grid-2">
+        <section class="card">
+          <h2>System Specs</h2>
+          <ul class="clean stack">
+            <li><strong>CPU:</strong> {project.data.cpu}</li>
+            <li><strong>GPU:</strong> {project.data.gpu}</li>
+            <li><strong>Memory:</strong> {project.data.ram}</li>
+            <li><strong>Storage:</strong> {project.data.storage}</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h2>Outcome</h2>
+          <p>{project.data.outcome}</p>
+          <div class="row small">
+            {project.data.tags.map((tag) => (
+              <span class="badge" style="padding:0.25rem 0.55rem;font-size:0.65rem;">{tag}</span>
+            ))}
+          </div>
+        </section>
+      </div>
+
+      <section class="card">
+        <h2>Build Notes</h2>
+        <Content />
+      </section>
+
+      {related.length > 0 && (
+        <section class="section" style="padding-top:0;">
+          <h2>Related Builds</h2>
+          <div class="grid grid-2">
+            {related.map((entry) => (
+              <article class="card" style="padding:0;overflow:hidden;">
+                <img src={entry.data.heroImage} alt={entry.data.title} loading="lazy" width="1200" height="675" />
+                <div style="padding:1rem;">
+                  <h3>{entry.data.title}</h3>
+                  <p>{entry.data.summary}</p>
+                  <a class="button secondary" href={`/projects/${entry.slug}`}>Read Project</a>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
+    </div>
+  </article>
+</BaseLayout>

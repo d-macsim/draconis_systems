@@ -1,0 +1,31 @@
+---
+import type { UpdateEntry } from "@/lib/types";
+import { formatDate } from "@/lib/format";
+
+interface Props {
+  updates: UpdateEntry[];
+}
+
+const { updates } = Astro.props;
+---
+<section class="section" id="updates">
+  <div class="container">
+    <div class="row" style="justify-content:space-between;margin-bottom:1rem;">
+      <div>
+        <p class="eyebrow">What Is Going On</p>
+        <h2>Shop updates and build logs</h2>
+      </div>
+      <a href="/updates" class="button secondary">All Updates</a>
+    </div>
+    <div class="grid grid-3">
+      {updates.map((entry, index) => (
+        <article class="card reveal" style={`animation-delay:${index * 80}ms;`}>
+          <p class="badge" style="margin-bottom:0.8rem;">{entry.category}</p>
+          <h3>{entry.title}</h3>
+          <p>{entry.summary}</p>
+          <p class="small">{formatDate(entry.date)}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

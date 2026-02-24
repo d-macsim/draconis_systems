@@ -1,0 +1,35 @@
+---
+import ThemeToggle from "./ThemeToggle";
+
+const links = [
+  { href: "/projects", label: "Projects" },
+  { href: "/updates", label: "Updates" },
+  { href: "/configurator", label: "Configurator" },
+  { href: "/process", label: "Process" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" }
+];
+---
+<header style="position:sticky;top:0;z-index:60;border-bottom:1px solid var(--line);background:color-mix(in srgb, var(--bg) 90%, transparent);backdrop-filter: blur(10px);">
+  <div class="container site-header__inner" style="display:flex;align-items:center;justify-content:space-between;padding:0.75rem 0;gap:1rem;">
+    <a href="/" class="row site-brand" style="gap:0.75rem;font-weight:800;letter-spacing:0.02em;">
+      <img src="/images/logo-placeholder.svg" alt="Draconis Systems logo placeholder" width="38" height="38" loading="eager" />
+      <span>Draconis Systems</span>
+    </a>
+
+    <nav aria-label="Primary" class="site-nav">
+      <ul class="clean row" style="gap:0.8rem;">
+        {links.map((item) => (
+          <li>
+            <a href={item.href} class="small" style="font-weight:700;">{item.label}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="site-actions" style="display:flex;align-items:center;gap:0.5rem;">
+      <a href="/contact" class="button primary" style="padding:0.55rem 0.9rem;">Get a Quote</a>
+      <ThemeToggle client:idle />
+    </div>
+  </div>
+</header>
