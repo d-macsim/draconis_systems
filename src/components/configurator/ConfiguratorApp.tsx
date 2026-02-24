@@ -31,7 +31,6 @@ interface MarketPriceResponse {
 
 const STORAGE_KEY = "draconis-configurator-selection";
 const MARKET_PRICES_ENDPOINT = "/.netlify/functions/market-prices";
-const APPLY_PROFILE_EVENT = "draconis:apply-profile";
 
 interface PriceRange {
   min: number;
@@ -192,24 +191,6 @@ export default function ConfiguratorApp({ catalog, rules }: Props) {
     }
 
     setSelection(nextSelection);
-  }, [catalog, validProfileIds]);
-
-  useEffect(() => {
-    function handleApplyProfile(event: Event): void {
-      const profileId = (event as CustomEvent<{ profileId?: string }>).detail?.profileId;
-      if (!profileId || !validProfileIds.has(profileId)) {
-        return;
-      }
-
-      setSelection((previous) => sanitizeSelection({ ...previous, profile: profileId }, catalog, profileId));
-      setStep(Math.min(1, catalog.categories.length - 1));
-      updateProfileQuery(profileId);
-    }
-
-    window.addEventListener(APPLY_PROFILE_EVENT, handleApplyProfile as EventListener);
-    return () => {
-      window.removeEventListener(APPLY_PROFILE_EVENT, handleApplyProfile as EventListener);
-    };
   }, [catalog, validProfileIds]);
 
   useEffect(() => {

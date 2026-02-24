@@ -35,16 +35,6 @@ const jsonLd = {
         Estimates are non-binding and finalized during sourcing.
       </p>
 
-      <div class="surface stack" style="padding: 1rem">
-        <h2 style="margin-bottom: 0.1rem">Not sure where to begin?</h2>
-        <p class="small" style="margin: 0">
-          Start with the quick questionnaire below. It asks 10 simple questions and recommends a build tier
-          before you enter the full configurator.
-        </p>
-      </div>
-
-      <BuildQuestionnaire client:visible catalog={typedCatalog} />
-
       <div id="configurator-builder" class="stack" style="gap: 0.35rem">
         <h2 style="margin-bottom: 0">Build It Manually</h2>
         <p class="small" style="margin: 0">
@@ -53,6 +43,15 @@ const jsonLd = {
       </div>
 
       <ConfiguratorApp client:visible catalog={typedCatalog} rules={typedRules} />
+
+      <details class="surface" style="padding: 1rem">
+        <summary style="cursor: pointer; font-weight: 700; color: var(--text)">
+          Not sure what to choose? Open the quick questionnaire for a full preconfigured recommendation.
+        </summary>
+        <div style="margin-top: 1rem">
+          <BuildQuestionnaire client:visible catalog={typedCatalog} rules={typedRules} />
+        </div>
+      </details>
     </div>
   </section>
 </BaseLayout>
