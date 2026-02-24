@@ -5,6 +5,7 @@ import type {
   ConfiguratorRules,
   MarketPriceOverride
 } from "@/lib/types";
+import BuildQuestionnaire from "@/components/configurator/BuildQuestionnaire";
 import {
   estimatePerformanceScore,
   estimatePriceRange,
@@ -20,6 +21,7 @@ import { formatCurrency } from "@/lib/format";
 interface Props {
   catalog: ComponentCatalog;
   rules: ConfiguratorRules;
+  showQuestionnaire?: boolean;
 }
 
 interface MarketPriceResponse {
@@ -150,7 +152,7 @@ function updateProfileQuery(profileId: string | undefined): void {
   window.history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
 }
 
-export default function ConfiguratorApp({ catalog, rules }: Props) {
+export default function ConfiguratorApp({ catalog, rules, showQuestionnaire = false }: Props) {
   const [selection, setSelection] = useState<BuildSelection>({});
   const [step, setStep] = useState(0);
   const [priceOverrides, setPriceOverrides] = useState<Record<string, MarketPriceOverride>>({});
@@ -366,6 +368,17 @@ export default function ConfiguratorApp({ catalog, rules }: Props) {
 
   return (
     <div className="grid" style={{ gridTemplateColumns: "1fr", gap: "1rem" }}>
+      {showQuestionnaire && (
+        <details className="surface" style={{ padding: "1rem" }}>
+          <summary style={{ cursor: "pointer", fontWeight: 700, color: "var(--text)" }}>
+            Not sure what to choose? Open the quick questionnaire for a full preconfigured recommendation.
+          </summary>
+          <div style={{ marginTop: "1rem" }}>
+            <BuildQuestionnaire catalog={catalog} rules={rules} />
+          </div>
+        </details>
+      )}
+
       <div className="card" style={{ padding: "1rem" }}>
         <p className="small">
           Step {step + 1} of {categories.length}
