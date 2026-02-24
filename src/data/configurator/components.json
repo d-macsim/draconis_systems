@@ -85,13 +85,12 @@
       "id": "cpu-i5-14400f",
       "category": "cpu",
       "name": "Intel Core i5-14400F",
-      "priceMin": 185,
-      "priceMax": 235,
+      "priceMin": 180,
+      "priceMax": 230,
       "socket": "LGA1700",
       "tdp": 148,
       "score": 76,
       "profiles": [
-        "profile-budget",
         "profile-mid-range"
       ],
       "marketQuery": "Intel Core i5-14400F",
@@ -113,8 +112,8 @@
       "id": "cpu-r5-9600x",
       "category": "cpu",
       "name": "AMD Ryzen 5 9600X",
-      "priceMin": 170,
-      "priceMax": 220,
+      "priceMin": 125,
+      "priceMax": 170,
       "socket": "AM5",
       "tdp": 88,
       "score": 80,
@@ -135,7 +134,30 @@
         "notebook"
       ],
       "marketPriceBandPercent": 8,
-      "marketMaxDeviationPercent": 45
+      "marketMaxDeviationPercent": 45,
+      "highlights": [
+        "Strong value AM5 processor for budget and mainstream gaming.",
+        "Low platform cost with efficient thermals for compact builds.",
+        "Good upgrade runway to higher-tier AM5 CPUs later."
+      ]
+    },
+    {
+      "id": "cpu-r5-7500f",
+      "category": "cpu",
+      "name": "AMD Ryzen 5 7500F",
+      "priceMin": 110,
+      "priceMax": 155,
+      "socket": "AM5",
+      "tdp": 88,
+      "score": 72,
+      "profiles": [
+        "profile-budget"
+      ],
+      "highlights": [
+        "Entry AM5 CPU that keeps total build cost tightly controlled.",
+        "Great for 1080p gaming when paired with budget GPUs.",
+        "Leaves budget headroom for better GPU or storage upgrades."
+      ]
     },
     {
       "id": "cpu-r7-9700x",
@@ -278,13 +300,13 @@
       "id": "gpu-rtx-4060-ti-8g",
       "category": "gpu",
       "name": "NVIDIA RTX 4060 Ti 8GB",
-      "priceMin": 340,
+      "priceMin": 330,
       "priceMax": 430,
       "tdp": 165,
       "score": 74,
       "profiles": [
-        "profile-budget",
-        "profile-mid-range"
+        "profile-mid-range",
+        "profile-high-end"
       ],
       "marketQuery": "NVIDIA RTX 4060 Ti 8GB",
       "marketRequiredTokens": [
@@ -306,13 +328,13 @@
       "id": "gpu-rx-7700xt",
       "category": "gpu",
       "name": "AMD Radeon RX 7700 XT",
-      "priceMin": 330,
-      "priceMax": 430,
+      "priceMin": 320,
+      "priceMax": 420,
       "tdp": 245,
       "score": 78,
       "profiles": [
-        "profile-budget",
-        "profile-mid-range"
+        "profile-mid-range",
+        "profile-high-end"
       ],
       "marketQuery": "AMD RX 7700 XT",
       "marketRequiredTokens": [
@@ -329,6 +351,71 @@
       ],
       "marketPriceBandPercent": 10,
       "marketMaxDeviationPercent": 50
+    },
+    {
+      "id": "gpu-rx-7600",
+      "category": "gpu",
+      "name": "AMD Radeon RX 7600",
+      "priceMin": 160,
+      "priceMax": 210,
+      "tdp": 165,
+      "score": 69,
+      "profiles": [
+        "profile-budget"
+      ],
+      "marketQuery": "AMD RX 7600",
+      "marketRequiredTokens": [
+        "7600"
+      ],
+      "marketExcludeTokens": [
+        "xt",
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook",
+        "motherboard"
+      ],
+      "marketPriceBandPercent": 10,
+      "marketMaxDeviationPercent": 50,
+      "highlights": [
+        "Budget-friendly GPU for strong 1080p gaming performance.",
+        "Lower power draw helps keep PSU and cooling costs down.",
+        "Balanced choice for entry and value-focused builds."
+      ]
+    },
+    {
+      "id": "gpu-rtx-4060",
+      "category": "gpu",
+      "name": "NVIDIA RTX 4060",
+      "priceMin": 180,
+      "priceMax": 230,
+      "tdp": 115,
+      "score": 71,
+      "profiles": [
+        "profile-budget",
+        "profile-mid-range"
+      ],
+      "marketQuery": "NVIDIA RTX 4060 8GB",
+      "marketRequiredTokens": [
+        "4060"
+      ],
+      "marketExcludeTokens": [
+        "ti",
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook",
+        "motherboard"
+      ],
+      "marketPriceBandPercent": 10,
+      "marketMaxDeviationPercent": 50,
+      "highlights": [
+        "Entry RTX card with efficient performance for 1080p targets.",
+        "Supports modern NVIDIA feature stack for upscaling workflows.",
+        "Good fit for compact and lower-noise budget systems."
+      ]
     },
     {
       "id": "gpu-rtx-4070-super",
@@ -496,8 +583,8 @@
       "id": "mb-a620m-hdv",
       "category": "motherboard",
       "name": "ASRock A620M-HDV/M.2+",
-      "priceMin": 95,
-      "priceMax": 140,
+      "priceMin": 85,
+      "priceMax": 120,
       "socket": "AM5",
       "ramType": "DDR5",
       "profiles": [
@@ -513,8 +600,8 @@
       "id": "mb-b650m-pro-rs",
       "category": "motherboard",
       "name": "ASRock B650M Pro RS WiFi",
-      "priceMin": 130,
-      "priceMax": 195,
+      "priceMin": 110,
+      "priceMax": 150,
       "socket": "AM5",
       "ramType": "DDR5",
       "profiles": [
@@ -551,7 +638,6 @@
       "socket": "AM5",
       "ramType": "DDR5",
       "profiles": [
-        "profile-budget",
         "profile-mid-range",
         "profile-high-end"
       ],
@@ -652,7 +738,6 @@
       "socket": "LGA1700",
       "ramType": "DDR5",
       "profiles": [
-        "profile-budget",
         "profile-mid-range"
       ],
       "highlights": [
@@ -748,8 +833,8 @@
       "id": "ram-16-ddr5",
       "category": "ram",
       "name": "16GB DDR5-5600 (Non-RGB)",
-      "priceMin": 70,
-      "priceMax": 120,
+      "priceMin": 55,
+      "priceMax": 85,
       "ramType": "DDR5",
       "sizeGB": 16,
       "profiles": [
@@ -765,8 +850,8 @@
       "id": "ram-32-ddr5",
       "category": "ram",
       "name": "32GB DDR5-6000 (Non-RGB)",
-      "priceMin": 145,
-      "priceMax": 260,
+      "priceMin": 70,
+      "priceMax": 100,
       "ramType": "DDR5",
       "sizeGB": 32,
       "profiles": [
@@ -805,7 +890,6 @@
       "ramType": "DDR5",
       "sizeGB": 32,
       "profiles": [
-        "profile-budget",
         "profile-mid-range",
         "profile-high-end"
       ],
@@ -1000,8 +1084,8 @@
       "id": "storage-1tb-nvme-budget",
       "category": "storage",
       "name": "1TB NVMe Gen4 (Value)",
-      "priceMin": 120,
-      "priceMax": 185,
+      "priceMin": 60,
+      "priceMax": 90,
       "profiles": [
         "profile-budget",
         "profile-mid-range",
@@ -1031,8 +1115,8 @@
       "id": "storage-2tb-nvme-mainstream",
       "category": "storage",
       "name": "2TB NVMe Gen4 (Value)",
-      "priceMin": 220,
-      "priceMax": 360,
+      "priceMin": 75,
+      "priceMax": 105,
       "profiles": [
         "profile-budget",
         "profile-mid-range",
@@ -1212,8 +1296,8 @@
       "id": "psu-650-gold",
       "category": "psu",
       "name": "650W 80+ Gold",
-      "priceMin": 90,
-      "priceMax": 140,
+      "priceMin": 55,
+      "priceMax": 80,
       "wattage": 650,
       "profiles": [
         "profile-budget",
@@ -1238,8 +1322,8 @@
       "id": "psu-750-gold",
       "category": "psu",
       "name": "750W 80+ Gold",
-      "priceMin": 105,
-      "priceMax": 165,
+      "priceMin": 70,
+      "priceMax": 95,
       "wattage": 750,
       "profiles": [
         "profile-budget",
@@ -1327,8 +1411,8 @@
       "id": "case-airflow-core",
       "category": "case",
       "name": "Airflow Core Mid Tower",
-      "priceMin": 70,
-      "priceMax": 120,
+      "priceMin": 50,
+      "priceMax": 65,
       "profiles": [
         "profile-budget",
         "profile-mid-range"
@@ -1341,7 +1425,6 @@
       "priceMin": 110,
       "priceMax": 180,
       "profiles": [
-        "profile-budget",
         "profile-mid-range",
         "profile-high-end"
       ],
@@ -1424,8 +1507,8 @@
       "id": "cooling-air-120",
       "category": "cooling",
       "name": "120mm Tower Air Cooler",
-      "priceMin": 35,
-      "priceMax": 70,
+      "priceMin": 25,
+      "priceMax": 45,
       "profiles": [
         "profile-budget",
         "profile-mid-range"
@@ -1435,8 +1518,8 @@
       "id": "cooling-air-dual",
       "category": "cooling",
       "name": "Dual Tower Air Cooler",
-      "priceMin": 60,
-      "priceMax": 120,
+      "priceMin": 35,
+      "priceMax": 55,
       "profiles": [
         "profile-budget",
         "profile-mid-range",
