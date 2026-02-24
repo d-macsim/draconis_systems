@@ -69,6 +69,77 @@ function parsePrice(value: unknown): number | null {
   return null;
 }
 
+interface NeweggImagePathPattern {
+  Size?: number;
+  PathPattern?: string;
+}
+
+interface NeweggItemCell {
+  FinalPrice?: unknown;
+  UnitCost?: unknown;
+  Description?: { Title?: string };
+  NewImage?: { ImageName?: string };
+  Image?: {
+    ItemCellImageName?: string;
+    Normal?: { ImageName?: string };
+    ImagePathPattern?: NeweggImagePathPattern[];
+  };
+}
+
+interface NeweggMarketData {
+  spot: number;
+  image?: string;
+}
+
+function buildNeweggImageUrl(itemCell: NeweggItemCell): string | undefined {
+  const imageName =
+    itemCell.NewImage?.ImageName ||
+    itemCell.Image?.Normal?.ImageName ||
+    itemCell.Image?.ItemCellImageName;
+
+  if (!imageName) {
+    return undefined;
+  }
+
+  const patterns = itemCell.Image?.ImagePathPattern || [];
+  const preferredSizes = [180, 100, 60, 35];
+  let selectedPattern: NeweggImagePathPattern | undefined;
+
+  for (const size of preferredSizes) {
+    selectedPattern = patterns.find((pattern) => pattern.Size === size && pattern.PathPattern);
+    if (selectedPattern) {
+      break;
+    }
+  }
+
+  if (!selectedPattern) {
+    selectedPattern = patterns.find((pattern) => Boolean(pattern.PathPattern));
+  }
+
+  if (!selectedPattern?.PathPattern) {
+    return `https://c1.neweggimages.com/ProductImageCompressAll200/${imageName}`;
+  }
+
+  const replacementSize =
+    typeof selectedPattern.Size === "number" && selectedPattern.Size > 0
+      ? String(selectedPattern.Size)
+      : "200";
+
+  const url = selectedPattern.PathPattern
+    .replaceAll("{Size}", replacementSize)
+    .replaceAll("{ImageName}", imageName);
+
+  if (url.startsWith("//")) {
+    return `https:${url}`;
+  }
+
+  if (url.startsWith("http://") || url.startsWith("https://")) {
+    return url;
+  }
+
+  return undefined;
+}
+
 function extractNeweggState(html: string): { Products?: Array<Record<string, unknown>> } | null {
   const match = html.match(
     /window\.__initialState__\s*=\s*(\{.*?\})\s*<\/script><script defer="">window\.__neweggState__/s
@@ -105,7 +176,7 @@ function matchesFilters(component: ConfigComponent, title: string): boolean {
   return true;
 }
 
-async function fetchNeweggSpotPrice(component: ConfigComponent): Promise<number | null> {
+async function fetchNeweggMarketData(component: ConfigComponent): Promise<NeweggMarketData | null> {
   if (!component.marketQuery) {
     return null;
   }
@@ -135,13 +206,7 @@ async function fetchNeweggSpotPrice(component: ConfigComponent): Promise<number 
     }
 
     for (const product of state.Products.slice(0, 12)) {
-      const itemCell = product.ItemCell as
-        | {
-            FinalPrice?: unknown;
-            UnitCost?: unknown;
-            Description?: { Title?: string };
-          }
-        | undefined;
+      const itemCell = product.ItemCell as NeweggItemCell | undefined;
 
       if (!itemCell) {
         continue;
@@ -154,7 +219,11 @@ async function fetchNeweggSpotPrice(component: ConfigComponent): Promise<number 
 
       const price = parsePrice(itemCell.FinalPrice) ?? parsePrice(itemCell.UnitCost);
       if (price !== null) {
-        return price;
+        const image = buildNeweggImageUrl(itemCell);
+        return {
+          spot: price,
+          ...(image ? { image } : {})
+        };
       }
     }
 
@@ -167,7 +236,8 @@ async function fetchNeweggSpotPrice(component: ConfigComponent): Promise<number 
 function buildOverride(
   component: ConfigComponent,
   spot: number,
-  updatedAt: string
+  updatedAt: string,
+  image?: string
 ): MarketPriceOverride | null {
   if (component.priceMin === null || component.priceMax === null) {
     return null;
@@ -188,7 +258,7 @@ function buildOverride(
   const min = Math.max(0, Math.round(spot * (1 - priceBandPercent / 100)));
   const max = Math.max(min, Math.round(spot * (1 + priceBandPercent / 100)));
 
-  return {
+  const base: MarketPriceOverride = {
     id: component.id,
     priceMin: min,
     priceMax: max,
@@ -196,6 +266,12 @@ function buildOverride(
     source: SOURCE_NAME,
     updatedAt
   };
+
+  if (image) {
+    return { ...base, image };
+  }
+
+  return base;
 }
 
 async function resolveOverride(component: ConfigComponent, updatedAt: string): Promise<MarketPriceOverride | null> {
@@ -205,8 +281,11 @@ async function resolveOverride(component: ConfigComponent, updatedAt: string): P
     return cached.override;
   }
 
-  const spot = await fetchNeweggSpotPrice(component);
-  const override = spot === null ? null : buildOverride(component, spot, updatedAt);
+  const marketData = await fetchNeweggMarketData(component);
+  const override =
+    marketData === null
+      ? null
+      : buildOverride(component, marketData.spot, updatedAt, marketData.image);
 
   marketCache.set(component.id, {
     expiresAt: now + CACHE_TTL_MS,

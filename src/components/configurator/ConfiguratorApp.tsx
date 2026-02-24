@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "preact/hooks";
 import type {
   BuildSelection,
-  ConfigComponent,
   ComponentCatalog,
   ConfiguratorRules,
   MarketPriceOverride
@@ -36,64 +35,6 @@ const MARKET_PRICES_ENDPOINT = "/.netlify/functions/market-prices";
 interface PriceRange {
   min: number;
   max: number;
-}
-
-const CATEGORY_COLORS: Record<ConfigComponent["category"], { from: string; to: string; accent: string }> = {
-  profile: { from: "#3b82f6", to: "#1d4ed8", accent: "#93c5fd" },
-  cpu: { from: "#0ea5e9", to: "#0369a1", accent: "#7dd3fc" },
-  gpu: { from: "#7c3aed", to: "#4c1d95", accent: "#c4b5fd" },
-  motherboard: { from: "#10b981", to: "#065f46", accent: "#6ee7b7" },
-  ram: { from: "#f97316", to: "#9a3412", accent: "#fdba74" },
-  storage: { from: "#6366f1", to: "#3730a3", accent: "#a5b4fc" },
-  psu: { from: "#ef4444", to: "#991b1b", accent: "#fca5a5" },
-  case: { from: "#14b8a6", to: "#0f766e", accent: "#99f6e4" },
-  cooling: { from: "#06b6d4", to: "#155e75", accent: "#67e8f9" }
-};
-
-function escapeXml(value: string): string {
-  return value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll("\"", "&quot;")
-    .replaceAll("'", "&apos;");
-}
-
-function splitLabel(value: string): [string, string] {
-  const words = value.split(" ");
-  if (words.length <= 3) {
-    return [value, ""];
-  }
-
-  const pivot = Math.ceil(words.length / 2);
-  return [words.slice(0, pivot).join(" "), words.slice(pivot).join(" ")];
-}
-
-function generateComponentIllustration(component: ConfigComponent): string {
-  const palette = CATEGORY_COLORS[component.category];
-  const [line1, line2] = splitLabel(component.name);
-  const meta = component.socket || component.ramType || component.wattage ? `${component.socket || ""} ${component.ramType || ""} ${component.wattage ? `${component.wattage}W` : ""}`.trim() : component.category.toUpperCase();
-
-  const svg = `
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" role="img" aria-label="${escapeXml(component.name)}">
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="${palette.from}" />
-      <stop offset="100%" stop-color="${palette.to}" />
-    </linearGradient>
-  </defs>
-  <rect width="720" height="420" fill="url(#bg)" rx="22" />
-  <circle cx="660" cy="65" r="95" fill="${palette.accent}" fill-opacity="0.22" />
-  <circle cx="80" cy="350" r="140" fill="${palette.accent}" fill-opacity="0.17" />
-  <text x="36" y="64" font-family="Segoe UI, Arial, sans-serif" font-size="20" fill="${palette.accent}" letter-spacing="2">${escapeXml(component.category.toUpperCase())}</text>
-  <text x="36" y="206" font-family="Segoe UI, Arial, sans-serif" font-size="40" fill="#ffffff" font-weight="700">${escapeXml(line1)}</text>
-  ${line2 ? `<text x="36" y="254" font-family="Segoe UI, Arial, sans-serif" font-size="40" fill="#ffffff" font-weight="700">${escapeXml(line2)}</text>` : ""}
-  <rect x="36" y="304" width="270" height="46" fill="rgba(15,23,42,0.26)" rx="10" />
-  <text x="52" y="334" font-family="Segoe UI, Arial, sans-serif" font-size="22" fill="#e2e8f0">${escapeXml(meta)}</text>
-</svg>
-  `.trim();
-
-  return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
 }
 
 function calculateProfilePriceRanges(catalog: ComponentCatalog): Record<string, PriceRange> {
@@ -184,11 +125,17 @@ function mergeCatalogPrices(
         return component;
       }
 
-      return {
+      const next = {
         ...component,
         priceMin: override.priceMin,
         priceMax: override.priceMax
       };
+
+      if (override.image) {
+        return { ...next, image: override.image };
+      }
+
+      return next;
     })
   };
 }
@@ -275,7 +222,9 @@ export default function ConfiguratorApp({ catalog, rules }: Props) {
   const optionImages = useMemo(() => {
     const images: Record<string, string> = {};
     for (const component of currentOptions) {
-      images[component.id] = component.image || generateComponentIllustration(component);
+      if (component.image) {
+        images[component.id] = component.image;
+      }
     }
     return images;
   }, [currentOptions]);
@@ -451,6 +400,7 @@ export default function ConfiguratorApp({ catalog, rules }: Props) {
                 const selected = selection[currentCategory.id] === component.id;
                 const override = priceOverrides[component.id];
                 const profileRange = profilePriceRanges[component.id];
+                const image = optionImages[component.id];
                 return (
                   <button
                     key={component.id}
@@ -466,20 +416,22 @@ export default function ConfiguratorApp({ catalog, rules }: Props) {
                       cursor: "pointer"
                     }}
                   >
-                    <img
-                      src={optionImages[component.id]}
-                      alt={`${component.name} preview`}
-                      loading="lazy"
-                      decoding="async"
-                      style={{
-                        width: "100%",
-                        aspectRatio: "16 / 9",
-                        objectFit: "cover",
-                        borderRadius: "0.65rem",
-                        marginBottom: "0.6rem",
-                        border: "1px solid var(--line)"
-                      }}
-                    />
+                    {image && (
+                      <img
+                        src={image}
+                        alt={`${component.name} product photo`}
+                        loading="lazy"
+                        decoding="async"
+                        style={{
+                          width: "100%",
+                          aspectRatio: "16 / 9",
+                          objectFit: "cover",
+                          borderRadius: "0.65rem",
+                          marginBottom: "0.6rem",
+                          border: "1px solid var(--line)"
+                        }}
+                      />
+                    )}
                     <strong style={{ display: "block", marginBottom: "0.35rem" }}>{component.name}</strong>
                     <span className="small">
                       {component.priceMin !== null && component.priceMax !== null

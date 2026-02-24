@@ -99,6 +99,7 @@ export interface MarketPriceOverride {
   priceMin: number;
   priceMax: number;
   spot: number;
+  image?: string;
   source: string;
   updatedAt: string;
 }
