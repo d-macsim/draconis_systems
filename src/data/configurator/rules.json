@@ -1,8 +1,8 @@
 {
   "psuHeadroomPercent": 30,
   "recommendedRamByProfile": {
-    "profile-esports": 32,
-    "profile-creator": 64,
-    "profile-hybrid": 32
+    "profile-budget": 16,
+    "profile-mid-range": 32,
+    "profile-high-end": 64
   }
 }

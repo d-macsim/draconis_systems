@@ -1,5 +1,10 @@
 import { useEffect, useMemo, useState } from "preact/hooks";
-import type { BuildSelection, ComponentCatalog, ConfiguratorRules } from "@/lib/types";
+import type {
+  BuildSelection,
+  ComponentCatalog,
+  ConfiguratorRules,
+  MarketPriceOverride
+} from "@/lib/types";
 import {
   estimatePerformanceScore,
   estimatePriceRange,
@@ -16,44 +21,234 @@ interface Props {
   rules: ConfiguratorRules;
 }
 
+interface MarketPriceResponse {
+  ok: boolean;
+  source: string;
+  fetchedAt: string;
+  overrides: MarketPriceOverride[];
+}
+
 const STORAGE_KEY = "draconis-configurator-selection";
+const MARKET_PRICES_ENDPOINT = "/.netlify/functions/market-prices";
+
+function isComponentProfileCompatible(componentProfileIds: string[] | undefined, profileId: string): boolean {
+  return !componentProfileIds || componentProfileIds.length === 0 || componentProfileIds.includes(profileId);
+}
+
+function sanitizeSelection(
+  selection: BuildSelection,
+  catalog: ComponentCatalog,
+  profileId?: string
+): BuildSelection {
+  const next: BuildSelection = {};
+
+  for (const category of catalog.categories) {
+    const selectedId = selection[category.id];
+    if (!selectedId) {
+      continue;
+    }
+
+    const component = catalog.components.find(
+      (item) => item.id === selectedId && item.category === category.id
+    );
+    if (!component) {
+      continue;
+    }
+
+    if (category.id !== "profile" && profileId && !isComponentProfileCompatible(component.profiles, profileId)) {
+      continue;
+    }
+
+    next[category.id] = component.id;
+  }
+
+  if (profileId) {
+    next.profile = profileId;
+  }
+
+  return next;
+}
+
+function mergeCatalogPrices(
+  catalog: ComponentCatalog,
+  overrides: Record<string, MarketPriceOverride>
+): ComponentCatalog {
+  return {
+    ...catalog,
+    components: catalog.components.map((component) => {
+      const override = overrides[component.id];
+      if (!override) {
+        return component;
+      }
+
+      return {
+        ...component,
+        priceMin: override.priceMin,
+        priceMax: override.priceMax
+      };
+    })
+  };
+}
 
 export default function ConfiguratorApp({ catalog, rules }: Props) {
   const [selection, setSelection] = useState<BuildSelection>({});
   const [step, setStep] = useState(0);
+  const [priceOverrides, setPriceOverrides] = useState<Record<string, MarketPriceOverride>>({});
+  const [marketError, setMarketError] = useState<string | null>(null);
+  const [marketUpdatedAt, setMarketUpdatedAt] = useState<string | null>(null);
+  const [marketLoading, setMarketLoading] = useState(false);
+
+  const effectiveCatalog = useMemo(
+    () => mergeCatalogPrices(catalog, priceOverrides),
+    [catalog, priceOverrides]
+  );
 
   useEffect(() => {
     const saved = window.localStorage.getItem(STORAGE_KEY);
     if (!saved) {
       return;
     }
+
     try {
       const parsed = JSON.parse(saved) as BuildSelection;
-      setSelection(parsed);
+      const cleaned = sanitizeSelection(parsed, catalog, parsed.profile);
+      setSelection(cleaned);
     } catch {
       window.localStorage.removeItem(STORAGE_KEY);
     }
-  }, []);
+  }, [catalog]);
 
   useEffect(() => {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(selection));
   }, [selection]);
 
-  const categories = catalog.categories;
+  useEffect(() => {
+    if (!selection.profile) {
+      return;
+    }
+
+    setSelection((previous) => sanitizeSelection(previous, catalog, selection.profile));
+  }, [catalog, selection.profile]);
+
+  useEffect(() => {
+    if (!selection.profile && step > 0) {
+      setStep(0);
+    }
+  }, [selection.profile, step]);
+
+  const categories = effectiveCatalog.categories;
   const currentCategory = categories[step] ?? categories[0];
 
+  const currentOptions = useMemo(() => {
+    if (!currentCategory) {
+      return [];
+    }
+
+    if (currentCategory.id !== "profile" && !selection.profile) {
+      return [];
+    }
+
+    const profileFilter = currentCategory.id === "profile" ? undefined : selection.profile;
+    return getComponentsByCategory(effectiveCatalog, currentCategory.id, profileFilter);
+  }, [currentCategory, effectiveCatalog, selection.profile]);
+
+  useEffect(() => {
+    if (!currentCategory || currentCategory.id === "profile") {
+      return;
+    }
+
+    const dynamicIds = currentOptions
+      .filter((component) => component.marketQuery)
+      .map((component) => component.id)
+      .filter((id) => !priceOverrides[id]);
+
+    if (dynamicIds.length === 0) {
+      return;
+    }
+
+    const controller = new AbortController();
+    setMarketLoading(true);
+
+    const params = new URLSearchParams({ ids: dynamicIds.join(",") });
+
+    fetch(`${MARKET_PRICES_ENDPOINT}?${params.toString()}`, {
+      method: "GET",
+      signal: controller.signal
+    })
+      .then(async (response) => {
+        if (!response.ok) {
+          throw new Error(`Price sync failed with status ${response.status}.`);
+        }
+
+        const payload = (await response.json()) as MarketPriceResponse;
+        if (!payload.ok || !Array.isArray(payload.overrides)) {
+          throw new Error("Market price response format was invalid.");
+        }
+
+        if (payload.overrides.length === 0) {
+          return;
+        }
+
+        setPriceOverrides((previous) => {
+          const merged = { ...previous };
+          for (const override of payload.overrides) {
+            merged[override.id] = override;
+          }
+          return merged;
+        });
+
+        setMarketUpdatedAt(payload.fetchedAt);
+        setMarketError(null);
+      })
+      .catch((error: unknown) => {
+        if (controller.signal.aborted) {
+          return;
+        }
+        const message = error instanceof Error ? error.message : "Unable to sync live market prices.";
+        setMarketError(message);
+      })
+      .finally(() => {
+        if (!controller.signal.aborted) {
+          setMarketLoading(false);
+        }
+      });
+
+    return () => {
+      controller.abort();
+    };
+  }, [currentCategory, currentOptions, priceOverrides]);
+
   const compatibility = useMemo(
-    () => validateSelection(selection, catalog, rules),
-    [selection, catalog, rules]
+    () => validateSelection(selection, effectiveCatalog, rules),
+    [selection, effectiveCatalog, rules]
   );
-  const estimated = useMemo(() => estimatePriceRange(selection, catalog), [selection, catalog]);
-  const performance = useMemo(() => estimatePerformanceScore(selection, catalog), [selection, catalog]);
-  const wattage = useMemo(() => estimateRequiredWattage(selection, catalog, rules), [selection, catalog, rules]);
+
+  const estimated = useMemo(
+    () => estimatePriceRange(selection, effectiveCatalog),
+    [selection, effectiveCatalog]
+  );
+
+  const performance = useMemo(
+    () => estimatePerformanceScore(selection, effectiveCatalog),
+    [selection, effectiveCatalog]
+  );
+
+  const wattage = useMemo(
+    () => estimateRequiredWattage(selection, effectiveCatalog, rules),
+    [selection, effectiveCatalog, rules]
+  );
 
   const quoteHref = `/contact?mode=quote&build=${serializeBuildSelection(selection)}`;
 
   function setCategorySelection(categoryId: string, componentId: string): void {
-    setSelection((prev) => ({ ...prev, [categoryId]: componentId }));
+    setSelection((previous) => {
+      if (categoryId === "profile") {
+        const nextSelection: BuildSelection = { ...previous, profile: componentId };
+        return sanitizeSelection(nextSelection, catalog, componentId);
+      }
+
+      return { ...previous, [categoryId]: componentId };
+    });
   }
 
   function resetSelection(): void {
@@ -64,36 +259,63 @@ export default function ConfiguratorApp({ catalog, rules }: Props) {
   return (
     <div className="grid" style={{ gridTemplateColumns: "1fr", gap: "1rem" }}>
       <div className="card" style={{ padding: "1rem" }}>
-        <p className="small">Step {step + 1} of {categories.length}</p>
-        <div className="row" style={{ gap: "0.4rem" }}>
-          {categories.map((category, index) => (
-            <button
-              type="button"
-              className="button secondary"
-              style={{
-                padding: "0.45rem 0.65rem",
-                borderColor: index === step ? "var(--brand)" : undefined,
-                background: selection[category.id] ? "color-mix(in srgb, var(--brand) 12%, var(--bg-elev))" : undefined
-              }}
-              onClick={() => setStep(index)}
-            >
-              {category.label}
-            </button>
-          ))}
+        <p className="small">
+          Step {step + 1} of {categories.length}
+        </p>
+        <div className="row" style={{ gap: "0.4rem", flexWrap: "wrap" }}>
+          {categories.map((category, index) => {
+            const disabled = !selection.profile && category.id !== "profile";
+            return (
+              <button
+                key={category.id}
+                type="button"
+                className="button secondary"
+                disabled={disabled}
+                style={{
+                  padding: "0.45rem 0.65rem",
+                  borderColor: index === step ? "var(--brand)" : undefined,
+                  background: selection[category.id]
+                    ? "color-mix(in srgb, var(--brand) 12%, var(--bg-elev))"
+                    : undefined,
+                  opacity: disabled ? 0.55 : 1
+                }}
+                onClick={() => setStep(index)}
+              >
+                {category.label}
+              </button>
+            );
+          })}
         </div>
       </div>
 
       <div className="grid" style={{ gridTemplateColumns: "2fr 1fr", gap: "1rem", alignItems: "start" }}>
         <section className="card stack">
           <h2 style={{ marginBottom: "0.2rem" }}>{currentCategory?.label}</h2>
-          <p className="small">Choose one option to continue. You can revisit any step later.</p>
+          <p className="small">
+            {currentCategory?.id === "profile"
+              ? "Pick your build tier first. Parts in later steps adapt to this profile."
+              : "Choose one option to continue. You can revisit any step later."}
+          </p>
 
-          <div className="grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))", gap: "0.75rem" }}>
+          {!selection.profile && currentCategory?.id !== "profile" && (
+            <div className="surface" style={{ padding: "0.8rem" }}>
+              <p className="small" style={{ margin: 0 }}>
+                Select a Usage Profile first to unlock tier-specific hardware options.
+              </p>
+            </div>
+          )}
+
+          <div
+            className="grid"
+            style={{ gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))", gap: "0.75rem" }}
+          >
             {currentCategory &&
-              getComponentsByCategory(catalog, currentCategory.id).map((component) => {
+              currentOptions.map((component) => {
                 const selected = selection[currentCategory.id] === component.id;
+                const override = priceOverrides[component.id];
                 return (
                   <button
+                    key={component.id}
                     type="button"
                     className="card"
                     onClick={() => setCategorySelection(currentCategory.id, component.id)}
@@ -112,16 +334,37 @@ export default function ConfiguratorApp({ catalog, rules }: Props) {
                         ? `${formatCurrency(component.priceMin)}-${formatCurrency(component.priceMax)}`
                         : "Quote-only"}
                     </span>
-                    {component.socket && <p className="small" style={{ marginTop: "0.35rem" }}>Socket: {component.socket}</p>}
-                    {component.ramType && <p className="small" style={{ marginTop: "0.35rem" }}>RAM: {component.ramType}</p>}
-                    {component.wattage && <p className="small" style={{ marginTop: "0.35rem" }}>{component.wattage}W</p>}
+                    {override && (
+                      <p className="small" style={{ marginTop: "0.35rem" }}>
+                        Live market synced ({override.source})
+                      </p>
+                    )}
+                    {component.socket && (
+                      <p className="small" style={{ marginTop: "0.35rem" }}>
+                        Socket: {component.socket}
+                      </p>
+                    )}
+                    {component.ramType && (
+                      <p className="small" style={{ marginTop: "0.35rem" }}>
+                        RAM: {component.ramType}
+                      </p>
+                    )}
+                    {component.wattage && (
+                      <p className="small" style={{ marginTop: "0.35rem" }}>
+                        {component.wattage}W
+                      </p>
+                    )}
                   </button>
                 );
               })}
           </div>
 
           <div className="row" style={{ justifyContent: "space-between" }}>
-            <button type="button" className="button secondary" onClick={() => setStep(Math.max(0, step - 1))}>
+            <button
+              type="button"
+              className="button secondary"
+              onClick={() => setStep(Math.max(0, step - 1))}
+            >
               Previous
             </button>
             <div className="row">
@@ -143,9 +386,9 @@ export default function ConfiguratorApp({ catalog, rules }: Props) {
           <h3 style={{ marginBottom: "0.2rem" }}>Build Summary</h3>
           <ul className="clean stack small">
             {categories.map((category) => {
-              const selected = getComponentById(catalog, selection[category.id]);
+              const selected = getComponentById(effectiveCatalog, selection[category.id]);
               return (
-                <li>
+                <li key={category.id}>
                   <strong>{category.label}:</strong> {selected?.name ?? "Not selected"}
                 </li>
               );
@@ -160,10 +403,22 @@ export default function ConfiguratorApp({ catalog, rules }: Props) {
             <p className="small" style={{ marginTop: "0.5rem" }}>
               Performance score: {performance > 0 ? `${performance}/100` : "Pending selections"}
             </p>
-            <p className="small" style={{ marginTop: "0.3rem" }}>Recommended PSU headroom target: {wattage}W</p>
+            <p className="small" style={{ marginTop: "0.3rem" }}>
+              Recommended PSU headroom target: {wattage}W
+            </p>
             <p className="small" style={{ marginTop: "0.3rem" }}>
               Estimate only. Final quote may vary by market availability and sourcing.
             </p>
+            <p className="small" style={{ marginTop: "0.3rem" }}>
+              {marketLoading
+                ? "Refreshing live market prices for this step..."
+                : `Live prices synced on ${marketUpdatedAt ? new Date(marketUpdatedAt).toLocaleString() : "local defaults"}.`}
+            </p>
+            {marketError && (
+              <p className="small" style={{ marginTop: "0.3rem", color: "var(--warn)" }}>
+                {marketError}
+              </p>
+            )}
           </div>
 
           {compatibility.errors.length > 0 && (
@@ -171,7 +426,7 @@ export default function ConfiguratorApp({ catalog, rules }: Props) {
               <strong>Compatibility Errors</strong>
               <ul className="clean stack small" style={{ marginTop: "0.45rem" }}>
                 {compatibility.errors.map((error) => (
-                  <li>{error}</li>
+                  <li key={error}>{error}</li>
                 ))}
               </ul>
             </div>
@@ -182,7 +437,7 @@ export default function ConfiguratorApp({ catalog, rules }: Props) {
               <strong>Warnings</strong>
               <ul className="clean stack small" style={{ marginTop: "0.45rem" }}>
                 {compatibility.warnings.map((warning) => (
-                  <li>{warning}</li>
+                  <li key={warning}>{warning}</li>
                 ))}
               </ul>
             </div>

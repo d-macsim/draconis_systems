@@ -29,9 +29,14 @@ export function getComponentById(
 
 export function getComponentsByCategory(
   catalog: ComponentCatalog,
-  category: ConfigComponent["category"]
+  category: ConfigComponent["category"],
+  profileId?: string
 ): ConfigComponent[] {
-  return catalog.components.filter((component) => component.category === category);
+  return catalog.components.filter(
+    (component) =>
+      component.category === category &&
+      (!profileId || !component.profiles || component.profiles.includes(profileId))
+  );
 }
 
 export function estimateRequiredWattage(
@@ -78,6 +83,23 @@ export function validateSelection(
     const recommendedRam = rules.recommendedRamByProfile[profileId];
     if (recommendedRam && ram.sizeGB < recommendedRam) {
       warnings.push(`The selected profile typically benefits from at least ${recommendedRam}GB of RAM.`);
+    }
+  }
+
+  if (profileId) {
+    for (const category of catalog.categories) {
+      if (category.id === "profile") {
+        continue;
+      }
+      const selectedId = selection[category.id];
+      const selectedComponent = getComponentById(catalog, selectedId);
+      if (
+        selectedComponent &&
+        selectedComponent.profiles &&
+        !selectedComponent.profiles.includes(profileId)
+      ) {
+        errors.push(`${category.label} selection is not available for the chosen usage profile.`);
+      }
     }
   }
 

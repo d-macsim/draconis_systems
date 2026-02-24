@@ -61,6 +61,13 @@ Use `.env.example` as the source of truth.
 - Success response: `{ "ok": true, "leadId": "..." }`
 - Failure response: `{ "ok": false, "code": "...", "message": "..." }`
 
+## Live Configurator Pricing
+`GET /.netlify/functions/market-prices?ids=<component-id,...>`
+
+- Fetches live UK-facing market spot prices for selected configurator components.
+- Returns guarded overrides only (token match + outlier rejection) to avoid bad search matches.
+- Uses cached results server-side to stay lightweight.
+
 ## Content Management
 - Projects: `src/content/projects/*.md`
 - Updates: `src/content/updates/*.md`

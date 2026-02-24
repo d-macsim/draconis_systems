@@ -63,6 +63,12 @@ export interface ConfigComponent {
   sizeGB?: number;
   score?: number;
   tags?: string[];
+  profiles?: string[];
+  marketQuery?: string;
+  marketRequiredTokens?: string[];
+  marketExcludeTokens?: string[];
+  marketPriceBandPercent?: number;
+  marketMaxDeviationPercent?: number;
 }
 
 export interface ComponentCategory {
@@ -84,6 +90,15 @@ export interface CompatibilityRule {
 export interface ConfiguratorRules {
   psuHeadroomPercent: number;
   recommendedRamByProfile: Record<string, number>;
+}
+
+export interface MarketPriceOverride {
+  id: string;
+  priceMin: number;
+  priceMax: number;
+  spot: number;
+  source: string;
+  updatedAt: string;
 }
 
 export interface BuildSelection {
