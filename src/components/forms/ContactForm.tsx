@@ -45,7 +45,7 @@ export default function ContactForm({ turnstileSiteKey }: Props) {
       message:
         mode === "quote"
           ? "I would like a quote for a custom build."
-          : "I am interested in learning more about Draconis Systems services."
+          : "I would like to make an enquiry about Draconis Systems services."
     }));
 
     window.onDraconisTurnstile = (token: string) => {
@@ -120,7 +120,7 @@ export default function ContactForm({ turnstileSiteKey }: Props) {
             className={`button ${payload.mode === "inquiry" ? "primary" : "secondary"}`}
             onClick={() => setMode("inquiry")}
           >
-            Inquiry
+            Enquiry
           </button>
           <button
             type="button"

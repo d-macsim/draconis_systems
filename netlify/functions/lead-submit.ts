@@ -165,7 +165,7 @@ export const handler: Handler = async (event) => {
 
   const toEmail = process.env.LEADS_TO_EMAIL;
   const resendApiKey = process.env.RESEND_API_KEY;
-  const resendFrom = process.env.LEADS_FROM_EMAIL || "Draconis Systems <leads@draconis-systems.example>";
+  const resendFrom = process.env.LEADS_FROM_EMAIL || "Draconis Systems <leads@draconis-systems.co.uk>";
 
   const supabaseUrl = process.env.SUPABASE_URL;
   const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;

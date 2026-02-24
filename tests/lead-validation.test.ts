@@ -8,7 +8,7 @@ describe("lead payload validation", () => {
       name: "Alex Builder",
       email: "alex@example.com",
       message: "Need a hybrid build for gaming and 4K editing.",
-      budget: "$2500-$3500"
+      budget: "£2500-£3500"
     };
 
     const result = leadSchema.safeParse(payload);

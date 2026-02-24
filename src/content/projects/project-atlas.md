@@ -21,4 +21,4 @@ outcome: "Delivered stable multi-hour simulation runs with improved thermal marg
 - Expandable storage and memory headroom.
 
 ### Implementation Notes
-Selected motherboard for I/O expansion and tuned cooling behavior for predictable operation under prolonged load.
+Selected motherboard for I/O expansion and tuned cooling behaviour for predictable operation under prolonged load.

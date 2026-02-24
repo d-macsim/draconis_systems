@@ -1,6 +1,6 @@
 ---
 title: "Project Riftforge: Creator Hybrid Tower"
-summary: "Balanced workstation/gaming system optimized for editing and rendering."
+summary: "Balanced workstation/gaming system optimised for editing and rendering."
 description: "Hybrid build prioritizing multicore throughput without sacrificing gaming performance."
 date: 2025-11-02
 featured: true

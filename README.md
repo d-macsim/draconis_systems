@@ -1,6 +1,6 @@
 # Draconis Systems Website
 
-Static-first marketing + lead-generation website for a custom PC building company.
+Static-first marketing + lead-generation website for a UK-based custom PC building company.
 
 ## Stack
 - Astro + TypeScript
