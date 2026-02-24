@@ -488,7 +488,7 @@ export default function ConfiguratorApp({ catalog, rules, showQuestionnaire = fa
                     )}
                     {override && (
                       <p className="small" style={{ marginTop: "0.35rem" }}>
-                        Live market synced ({override.source})
+                        Live price synced
                       </p>
                     )}
                     {component.socket && (
