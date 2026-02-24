@@ -3,7 +3,8 @@ import type {
   BuildSelection,
   ComponentCatalog,
   ConfiguratorRules,
-  MarketPriceOverride
+  MarketPriceOverride,
+  QueueStatus
 } from "@/lib/types";
 import BuildQuestionnaire from "@/components/configurator/BuildQuestionnaire";
 import {
@@ -16,12 +17,20 @@ import {
   serializeBuildSelection,
   validateSelection
 } from "@/lib/configurator/engine";
+import {
+  clampCapacity,
+  findBottleneckForComponent,
+  getQueueTone,
+  getSelectionDelayNotices,
+  isImpactStatus
+} from "@/lib/pulse";
 import { formatCurrency } from "@/lib/format";
 
 interface Props {
   catalog: ComponentCatalog;
   rules: ConfiguratorRules;
   showQuestionnaire?: boolean;
+  queueStatus?: QueueStatus;
 }
 
 interface MarketPriceResponse {
@@ -152,7 +161,12 @@ function updateProfileQuery(profileId: string | undefined): void {
   window.history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
 }
 
-export default function ConfiguratorApp({ catalog, rules, showQuestionnaire = false }: Props) {
+export default function ConfiguratorApp({
+  catalog,
+  rules,
+  showQuestionnaire = false,
+  queueStatus
+}: Props) {
   const [selection, setSelection] = useState<BuildSelection>({});
   const [step, setStep] = useState(0);
   const [priceOverrides, setPriceOverrides] = useState<Record<string, MarketPriceOverride>>({});
@@ -222,6 +236,12 @@ export default function ConfiguratorApp({ catalog, rules, showQuestionnaire = fa
   const profilePriceRanges = useMemo(
     () => calculateProfilePriceRanges(effectiveCatalog),
     [effectiveCatalog]
+  );
+  const queueCapacity = queueStatus ? clampCapacity(queueStatus.queue_capacity) : null;
+  const queueTone = queueStatus ? getQueueTone(queueCapacity ?? 0) : "normal";
+  const selectionDelayNotices = useMemo(
+    () => (queueStatus ? getSelectionDelayNotices(selection, effectiveCatalog, queueStatus) : []),
+    [effectiveCatalog, queueStatus, selection]
   );
 
   const currentOptions = useMemo(() => {
@@ -368,6 +388,33 @@ export default function ConfiguratorApp({ catalog, rules, showQuestionnaire = fa
 
   return (
     <div className="grid" style={{ gridTemplateColumns: "1fr", gap: "1rem" }}>
+      {queueStatus && (
+        <div
+          className="surface row"
+          style={{
+            padding: "0.8rem",
+            justifyContent: "space-between",
+            borderColor:
+              queueTone === "full"
+                ? "var(--danger)"
+                : queueTone === "warning"
+                  ? "var(--warn)"
+                  : "var(--line)"
+          }}
+        >
+          <div className="row" style={{ gap: "0.5rem" }}>
+            <span className="badge">Live Status</span>
+            <span className="small" style={{ color: "var(--text)" }}>
+              {queueStatus.current_queue_label}: {queueCapacity ?? 0}% full
+            </span>
+          </div>
+          <div className="row" style={{ gap: "0.55rem" }}>
+            <span className="small">Lead time: {queueStatus.estimated_lead_time}</span>
+            <span className="small">Stage: {queueStatus.current_stage}</span>
+          </div>
+        </div>
+      )}
+
       {showQuestionnaire && (
         <details className="surface" style={{ padding: "1rem" }}>
           <summary style={{ cursor: "pointer", fontWeight: 700, color: "var(--text)" }}>
@@ -444,6 +491,17 @@ export default function ConfiguratorApp({ catalog, rules, showQuestionnaire = fa
                 const override = priceOverrides[component.id];
                 const profileRange = profilePriceRanges[component.id];
                 const image = optionImages[component.id];
+                const bottleneckMatch = queueStatus
+                  ? findBottleneckForComponent(component, queueStatus)
+                  : null;
+                const bottleneckTooltip =
+                  bottleneckMatch && isImpactStatus(bottleneckMatch.bottleneck.status)
+                    ? `Live status: ${bottleneckMatch.bottleneck.display}${
+                        bottleneckMatch.bottleneck.lead_time_impact_days
+                          ? ` (adds ${bottleneckMatch.bottleneck.lead_time_impact_days} days)`
+                          : ""
+                      }`
+                    : null;
                 return (
                   <button
                     key={component.id}
@@ -481,6 +539,15 @@ export default function ConfiguratorApp({ catalog, rules, showQuestionnaire = fa
                         ? `${formatCurrency(component.priceMin)}-${formatCurrency(component.priceMax)}`
                         : "Quote-only"}
                     </span>
+                    {bottleneckTooltip && (
+                      <p
+                        className="small"
+                        title={bottleneckTooltip}
+                        style={{ marginTop: "0.35rem", color: "var(--warn)" }}
+                      >
+                        Live status: {bottleneckMatch?.bottleneck.display}
+                      </p>
+                    )}
                     {currentCategory.id === "profile" && profileRange && (
                       <p className="small" style={{ marginTop: "0.35rem" }}>
                         Typical build range: {formatCurrency(profileRange.min)}-{formatCurrency(profileRange.max)}
@@ -587,6 +654,17 @@ export default function ConfiguratorApp({ catalog, rules, showQuestionnaire = fa
               </p>
             )}
           </div>
+
+          {selectionDelayNotices.length > 0 && (
+            <div className="surface" style={{ borderColor: "var(--warn)", padding: "0.8rem" }}>
+              <strong>Live Availability Notes</strong>
+              <ul className="clean stack small" style={{ marginTop: "0.45rem" }}>
+                {selectionDelayNotices.map((notice) => (
+                  <li key={notice.componentId}>{notice.message}</li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           {compatibility.errors.length > 0 && (
             <div className="surface" style={{ borderColor: "var(--danger)", padding: "0.8rem" }}>

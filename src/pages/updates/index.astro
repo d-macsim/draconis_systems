@@ -1,9 +1,13 @@
 ---
 import { getCollection } from "astro:content";
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import DraconisPulse from "@/components/updates/DraconisPulse.astro";
+import queueStatusData from "@/data/queue-status.json";
 import { formatDate } from "@/lib/format";
+import type { QueueStatus } from "@/lib/types";
 
 const updates = (await getCollection("updates")).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const queueStatus = queueStatusData as QueueStatus;
 ---
 <BaseLayout
   title="Updates | Draconis Systems"
@@ -15,6 +19,8 @@ const updates = (await getCollection("updates")).sort((a, b) => b.data.date.valu
       <p class="eyebrow">What Is Going On</p>
       <h1>Updates</h1>
       <p>Latest queue windows, build methodology notes, and component availability updates.</p>
+
+      <DraconisPulse status={queueStatus} />
 
       <div class="grid grid-2">
         {updates.map((entry) => (

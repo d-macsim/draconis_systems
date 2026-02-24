@@ -2,11 +2,13 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import ConfiguratorApp from "@/components/configurator/ConfiguratorApp";
 import catalog from "@/data/configurator/components.json";
+import queueStatusData from "@/data/queue-status.json";
 import rules from "@/data/configurator/rules.json";
-import type { ComponentCatalog, ConfiguratorRules } from "@/lib/types";
+import type { ComponentCatalog, ConfiguratorRules, QueueStatus } from "@/lib/types";
 
 const typedCatalog = catalog as ComponentCatalog;
 const typedRules = rules as ConfiguratorRules;
+const queueStatus = queueStatusData as QueueStatus;
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -41,7 +43,13 @@ const jsonLd = {
         </p>
       </div>
 
-      <ConfiguratorApp client:visible catalog={typedCatalog} rules={typedRules} showQuestionnaire={true} />
+      <ConfiguratorApp
+        client:visible
+        catalog={typedCatalog}
+        rules={typedRules}
+        showQuestionnaire={true}
+        queueStatus={queueStatus}
+      />
     </div>
   </section>
 </BaseLayout>

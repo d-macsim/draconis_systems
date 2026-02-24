@@ -94,6 +94,27 @@ export interface ConfiguratorRules {
   recommendedRamByProfile: Record<string, number>;
 }
 
+export type QueueAvailabilityState = "in-stock" | "limited" | "high-demand" | "out-of-stock";
+
+export interface QueueStatusBottleneck {
+  label: string;
+  status: QueueAvailabilityState;
+  display: string;
+  lead_time_impact_days?: number;
+  component_ids?: string[];
+  query_tokens?: string[];
+}
+
+export interface QueueStatus {
+  queue_capacity: number;
+  estimated_lead_time: string;
+  current_stage: string;
+  current_focus: string;
+  current_queue_label: string;
+  next_queue_label: string;
+  bottlenecks: Record<string, QueueStatusBottleneck>;
+}
+
 export interface MarketPriceOverride {
   id: string;
   priceMin: number;

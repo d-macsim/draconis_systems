@@ -73,6 +73,7 @@ Use `.env.example` as the source of truth.
 - Updates: `src/content/updates/*.md`
 - Services: `src/data/services.json`
 - FAQ: `src/data/faq.json`
+- Live queue dashboard: `src/data/queue-status.json`
 - Configurator catalog/rules: `src/data/configurator/*.json`
 
 ## Performance and QA

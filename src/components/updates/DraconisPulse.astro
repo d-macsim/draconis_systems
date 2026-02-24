@@ -1,0 +1,245 @@
+---
+import { clampCapacity, getAvailabilityTone, getBottleneckEntries, getQueueTone, getUpdatesCta } from "@/lib/pulse";
+import type { QueueStatus } from "@/lib/types";
+
+interface Props {
+  status: QueueStatus;
+}
+
+const { status } = Astro.props as Props;
+const bottlenecks = getBottleneckEntries(status);
+const normalizedCapacity = clampCapacity(status.queue_capacity);
+const queueTone = getQueueTone(normalizedCapacity);
+const cta = getUpdatesCta(status);
+---
+
+<section class={`surface pulse-card pulse-card--${queueTone}`} aria-label="Draconis Pulse live dashboard">
+  <div class="pulse-head">
+    <div class="stack" style="gap:0.25rem;">
+      <p class="eyebrow" style="margin:0;">Draconis Pulse</p>
+      <h2 style="margin:0;">Live Build Dashboard</h2>
+      <p style="margin:0;">
+        Live queue visibility with current capacity, engineering stage, and component pressure points.
+      </p>
+    </div>
+    <a class="button primary" href={cta.href}>{cta.label}</a>
+  </div>
+
+  <div class="pulse-grid">
+    <article class="surface pulse-panel">
+      <p class="small" style="margin:0;">Build Capacity</p>
+      <p class="pulse-capacity">{status.current_queue_label}: {normalizedCapacity}% Full</p>
+      <div class="pulse-meter" role="img" aria-label={`${normalizedCapacity}% build queue capacity`}>
+        <span style={`width:${normalizedCapacity}%`}></span>
+      </div>
+      <div class="row pulse-meta">
+        <span class="badge">Lead time: {status.estimated_lead_time}</span>
+        <span class="badge">Stage: {status.current_stage}</span>
+      </div>
+      {queueTone !== "normal" && (
+        <p class="small pulse-warning">
+          {queueTone === "full"
+            ? "Queue window is fully allocated. Next queue reservations are now open."
+            : "Capacity is nearing limit. Availability may tighten for premium parts."}
+        </p>
+      )}
+    </article>
+
+    <article class="surface pulse-panel">
+      <p class="small" style="margin:0;">Availability Signals</p>
+      <ul class="clean pulse-availability-list">
+        {bottlenecks.map(({ bottleneck }) => (
+          <li>
+            <span class={`pulse-light pulse-light--${getAvailabilityTone(bottleneck.status)}`} aria-hidden="true"></span>
+            <div class="stack" style="gap:0.1rem;">
+              <strong>{bottleneck.label}</strong>
+              <span class="small">{bottleneck.display}</span>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </article>
+  </div>
+
+  <div class="pulse-ticker" aria-live="polite">
+    <div class="pulse-ticker__lane">
+      <span>{status.current_focus}</span>
+      <span aria-hidden="true">{status.current_focus}</span>
+    </div>
+  </div>
+</section>
+
+<style>
+  .pulse-card {
+    padding: 1rem;
+    display: grid;
+    gap: 1rem;
+    border-color: color-mix(in srgb, var(--brand) 35%, var(--line));
+    background: linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--brand) 10%, var(--bg-elev)),
+      var(--bg-elev)
+    );
+  }
+
+  .pulse-card--warning {
+    border-color: color-mix(in srgb, var(--warn) 45%, var(--line));
+  }
+
+  .pulse-card--full {
+    border-color: color-mix(in srgb, var(--danger) 60%, var(--line));
+    background: linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--danger) 20%, var(--bg-elev)),
+      var(--bg-elev)
+    );
+  }
+
+  .pulse-head {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .pulse-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 0.9rem;
+  }
+
+  .pulse-panel {
+    padding: 0.9rem;
+    border-radius: var(--radius-md);
+    background: color-mix(in srgb, var(--bg-elev) 75%, var(--bg-soft));
+  }
+
+  .pulse-capacity {
+    font-weight: 800;
+    font-size: 1.08rem;
+    margin: 0.2rem 0 0.4rem;
+    color: var(--text);
+  }
+
+  .pulse-meter {
+    height: 0.8rem;
+    border-radius: 999px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: color-mix(in srgb, var(--bg-soft) 70%, transparent);
+  }
+
+  .pulse-meter span {
+    height: 100%;
+    display: block;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--brand), var(--accent));
+    transform-origin: left;
+    animation: pulse-grow 700ms ease-out;
+  }
+
+  .pulse-meta {
+    gap: 0.45rem;
+    margin-top: 0.65rem;
+  }
+
+  .pulse-meta .badge {
+    font-size: 0.74rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .pulse-warning {
+    margin: 0.45rem 0 0;
+    color: color-mix(in srgb, var(--danger) 88%, var(--text));
+    font-weight: 600;
+  }
+
+  .pulse-availability-list {
+    display: grid;
+    gap: 0.65rem;
+    margin-top: 0.45rem;
+  }
+
+  .pulse-availability-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 0.5rem 0.6rem;
+    background: var(--bg-elev);
+  }
+
+  .pulse-light {
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 999px;
+    margin-top: 0.35rem;
+    box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 22%, transparent);
+  }
+
+  .pulse-light--green {
+    color: var(--ok);
+    background: var(--ok);
+  }
+
+  .pulse-light--amber {
+    color: var(--warn);
+    background: var(--warn);
+  }
+
+  .pulse-light--red {
+    color: var(--danger);
+    background: var(--danger);
+  }
+
+  .pulse-ticker {
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: color-mix(in srgb, var(--bg-soft) 55%, transparent);
+  }
+
+  .pulse-ticker__lane {
+    display: inline-flex;
+    gap: 3rem;
+    white-space: nowrap;
+    min-width: 100%;
+    padding: 0.55rem 0.9rem;
+    color: var(--text);
+    font-weight: 600;
+    animation: pulse-ticker 18s linear infinite;
+  }
+
+  @keyframes pulse-grow {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  @keyframes pulse-ticker {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (max-width: 760px) {
+    .pulse-head .button {
+      width: 100%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pulse-meter span,
+    .pulse-ticker__lane {
+      animation: none;
+    }
+  }
+</style>

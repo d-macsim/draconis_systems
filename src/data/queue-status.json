@@ -1,0 +1,37 @@
+{
+  "queue_capacity": 85,
+  "estimated_lead_time": "14-21 Days",
+  "current_stage": "Testing/Validation",
+  "current_focus": "Current focus: Thermal stress testing for Batch 22A.",
+  "current_queue_label": "February Queue",
+  "next_queue_label": "March Queue",
+  "bottlenecks": {
+    "RTX_5090": {
+      "label": "RTX 5090 / 5080-class GPUs",
+      "status": "limited",
+      "display": "Limited allocation",
+      "lead_time_impact_days": 3,
+      "component_ids": ["gpu-rtx-5080"],
+      "query_tokens": ["5090", "5080"]
+    },
+    "Ryzen_9800X3D": {
+      "label": "Ryzen 9800X3D CPUs",
+      "status": "in-stock",
+      "display": "In stock",
+      "query_tokens": ["9800x3d"]
+    },
+    "SFX_PSUs": {
+      "label": "SFX PSUs",
+      "status": "in-stock",
+      "display": "In stock",
+      "query_tokens": ["sfx"]
+    },
+    "Custom_Cabling": {
+      "label": "Custom Cabling",
+      "status": "high-demand",
+      "display": "High demand (+3 days)",
+      "lead_time_impact_days": 3,
+      "component_ids": ["case-showcase-premium", "cooling-aio-360-premium"]
+    }
+  }
+}
