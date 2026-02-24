@@ -83,4 +83,16 @@ describe("configurator engine", () => {
     expect(compatible.every((board) => board.socket === "AM5")).toBe(true);
     expect(compatible.some((board) => board.id === "mb-b760-gaming-x")).toBe(false);
   });
+
+  it("includes RGB and non-RGB RAM options", () => {
+    const ramOptions = getComponentsByCategory(typedCatalog, "ram", "profile-mid-range");
+    expect(ramOptions.some((component) => component.id === "ram-32-ddr5")).toBe(true);
+    expect(ramOptions.some((component) => component.id === "ram-32-ddr5-rgb")).toBe(true);
+  });
+
+  it("includes refreshed storage options with premium tiers", () => {
+    const storageOptions = getComponentsByCategory(typedCatalog, "storage", "profile-high-end");
+    expect(storageOptions.some((component) => component.id === "storage-1tb-nvme-premium")).toBe(true);
+    expect(storageOptions.some((component) => component.id === "storage-2tb-nvme-ultra")).toBe(true);
+  });
 });

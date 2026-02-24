@@ -747,122 +747,466 @@
     {
       "id": "ram-16-ddr5",
       "category": "ram",
-      "name": "16GB DDR5-5600",
-      "priceMin": 55,
-      "priceMax": 90,
+      "name": "16GB DDR5-5600 (Non-RGB)",
+      "priceMin": 70,
+      "priceMax": 120,
       "ramType": "DDR5",
       "sizeGB": 16,
       "profiles": [
         "profile-budget"
+      ],
+      "highlights": [
+        "Entry configuration aimed at budget gaming and office work.",
+        "Lower power draw and cost while staying on DDR5 platform.",
+        "Best paired with future 32GB upgrades when needed."
       ]
     },
     {
       "id": "ram-32-ddr5",
       "category": "ram",
-      "name": "32GB DDR5-6000",
-      "priceMin": 95,
-      "priceMax": 150,
+      "name": "32GB DDR5-6000 (Non-RGB)",
+      "priceMin": 145,
+      "priceMax": 260,
       "ramType": "DDR5",
       "sizeGB": 32,
       "profiles": [
         "profile-budget",
         "profile-mid-range",
         "profile-high-end"
-      ]
+      ],
+      "highlights": [
+        "High value baseline for modern gaming and content workloads.",
+        "Non-RGB heatspreaders keep cost and visual clutter lower.",
+        "6000MT/s class keeps latency/performance in a strong range."
+      ],
+      "marketQuery": "32GB DDR5 6000 non rgb",
+      "marketRequiredTokens": [
+        "32gb",
+        "ddr5",
+        "6000"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook",
+        "rgb"
+      ],
+      "marketPriceBandPercent": 10,
+      "marketMaxDeviationPercent": 60
     },
     {
-      "id": "ram-48-ddr5",
+      "id": "ram-32-ddr5-rgb",
       "category": "ram",
-      "name": "48GB DDR5-6000",
-      "priceMin": 150,
-      "priceMax": 240,
+      "name": "32GB DDR5-6000 RGB",
+      "priceMin": 210,
+      "priceMax": 430,
       "ramType": "DDR5",
-      "sizeGB": 48,
+      "sizeGB": 32,
       "profiles": [
+        "profile-budget",
         "profile-mid-range",
         "profile-high-end"
-      ]
+      ],
+      "highlights": [
+        "Addressable RGB lighting for showcase-focused builds.",
+        "32GB remains the current sweet spot for most gaming builds.",
+        "Matches well with tempered-glass chassis and synced lighting."
+      ],
+      "marketQuery": "32GB DDR5 6000 RGB",
+      "marketRequiredTokens": [
+        "32gb",
+        "ddr5",
+        "6000",
+        "rgb"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook"
+      ],
+      "marketPriceBandPercent": 10,
+      "marketMaxDeviationPercent": 65
     },
     {
-      "id": "ram-64-ddr5",
+      "id": "ram-64-ddr5-rgb",
       "category": "ram",
-      "name": "64GB DDR5-6000",
-      "priceMin": 190,
-      "priceMax": 310,
+      "name": "64GB DDR5-6000 RGB",
+      "priceMin": 420,
+      "priceMax": 820,
       "ramType": "DDR5",
       "sizeGB": 64,
       "profiles": [
         "profile-mid-range",
         "profile-high-end"
-      ]
+      ],
+      "highlights": [
+        "High-capacity RGB option for premium performance builds.",
+        "Supports creator and multitasking workflows with style.",
+        "Useful for mixed gaming, rendering, and heavy browser/app loads."
+      ],
+      "marketQuery": "64GB DDR5 6000 RGB",
+      "marketRequiredTokens": [
+        "64gb",
+        "ddr5",
+        "6000",
+        "rgb"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook"
+      ],
+      "marketPriceBandPercent": 10,
+      "marketMaxDeviationPercent": 65
     },
     {
-      "id": "ram-96-ddr5",
+      "id": "ram-96-ddr5-rgb",
       "category": "ram",
-      "name": "96GB DDR5-6000",
-      "priceMin": 320,
-      "priceMax": 480,
+      "name": "96GB DDR5-6000 RGB",
+      "priceMin": 760,
+      "priceMax": 1250,
       "ramType": "DDR5",
       "sizeGB": 96,
       "profiles": [
         "profile-high-end"
-      ]
+      ],
+      "highlights": [
+        "Ultra-capacity RGB memory for flagship workstation-class systems.",
+        "Built for intensive production, AI, and heavy parallel workloads.",
+        "Premium option where aesthetics and capacity are both priorities."
+      ],
+      "marketQuery": "96GB DDR5 6000 RGB",
+      "marketRequiredTokens": [
+        "96gb",
+        "ddr5",
+        "rgb"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook"
+      ],
+      "marketPriceBandPercent": 10,
+      "marketMaxDeviationPercent": 70
+    },
+    {
+      "id": "ram-48-ddr5",
+      "category": "ram",
+      "name": "48GB DDR5-6000 (Non-RGB)",
+      "priceMin": 220,
+      "priceMax": 360,
+      "ramType": "DDR5",
+      "sizeGB": 48,
+      "profiles": [
+        "profile-mid-range",
+        "profile-high-end"
+      ],
+      "highlights": [
+        "Useful middle ground for heavy multitasking and creator apps.",
+        "More breathing room than 32GB without jumping to full 64GB cost.",
+        "Good for gaming while streaming and running background tooling."
+      ],
+      "marketQuery": "48GB DDR5 6000 non rgb",
+      "marketRequiredTokens": [
+        "48gb",
+        "ddr5",
+        "6000"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook",
+        "rgb"
+      ],
+      "marketPriceBandPercent": 10,
+      "marketMaxDeviationPercent": 60
+    },
+    {
+      "id": "ram-64-ddr5",
+      "category": "ram",
+      "name": "64GB DDR5-6000 (Non-RGB)",
+      "priceMin": 320,
+      "priceMax": 620,
+      "ramType": "DDR5",
+      "sizeGB": 64,
+      "profiles": [
+        "profile-mid-range",
+        "profile-high-end"
+      ],
+      "highlights": [
+        "Recommended for advanced creator and simulation workloads.",
+        "Non-RGB kit prioritises value per GB and thermal consistency.",
+        "Better suited to high-core CPUs and workstation-style usage."
+      ],
+      "marketQuery": "64GB DDR5 6000",
+      "marketRequiredTokens": [
+        "64gb",
+        "ddr5",
+        "6000"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook",
+        "rgb"
+      ],
+      "marketPriceBandPercent": 10,
+      "marketMaxDeviationPercent": 60
+    },
+    {
+      "id": "ram-96-ddr5",
+      "category": "ram",
+      "name": "96GB DDR5-6000 (Creator Class)",
+      "priceMin": 540,
+      "priceMax": 980,
+      "ramType": "DDR5",
+      "sizeGB": 96,
+      "profiles": [
+        "profile-high-end"
+      ],
+      "highlights": [
+        "For high-end production workloads with large memory footprints.",
+        "Designed for complex timelines, large assets, and virtual labs.",
+        "Best paired with top-tier CPU and motherboard configurations."
+      ],
+      "marketQuery": "96GB DDR5 6000",
+      "marketRequiredTokens": [
+        "96gb",
+        "ddr5"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook"
+      ],
+      "marketPriceBandPercent": 10,
+      "marketMaxDeviationPercent": 65
     },
     {
       "id": "storage-1tb-nvme-budget",
       "category": "storage",
-      "name": "1TB NVMe Gen4",
-      "priceMin": 60,
-      "priceMax": 105,
+      "name": "1TB NVMe Gen4 (Value)",
+      "priceMin": 120,
+      "priceMax": 185,
       "profiles": [
         "profile-budget",
         "profile-mid-range",
         "profile-high-end"
-      ]
+      ],
+      "highlights": [
+        "Best value tier for OS, key apps, and core game library.",
+        "Balanced read/write speeds for daily gaming workflows.",
+        "Ideal for budget and mid-range builds with upgrade room."
+      ],
+      "marketQuery": "Kingston NV3 1TB",
+      "marketRequiredTokens": [
+        "nv3",
+        "1tb"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook"
+      ],
+      "marketPriceBandPercent": 10,
+      "marketMaxDeviationPercent": 60
     },
     {
       "id": "storage-2tb-nvme-mainstream",
       "category": "storage",
-      "name": "2TB NVMe Gen4",
-      "priceMin": 100,
-      "priceMax": 170,
+      "name": "2TB NVMe Gen4 (Value)",
+      "priceMin": 220,
+      "priceMax": 360,
       "profiles": [
         "profile-budget",
         "profile-mid-range",
         "profile-high-end"
-      ]
+      ],
+      "highlights": [
+        "Good capacity target for modern game installs and media.",
+        "Keeps load times fast while avoiding premium SSD pricing.",
+        "Strong default for mid-range gaming and creator rigs."
+      ],
+      "marketQuery": "Kingston NV3 2TB",
+      "marketRequiredTokens": [
+        "nv3",
+        "2tb"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook"
+      ],
+      "marketPriceBandPercent": 10,
+      "marketMaxDeviationPercent": 60
     },
     {
       "id": "storage-2tb-nvme-premium",
       "category": "storage",
       "name": "2TB NVMe Gen4 Premium",
-      "priceMin": 140,
-      "priceMax": 240,
+      "priceMin": 300,
+      "priceMax": 520,
       "profiles": [
         "profile-mid-range",
         "profile-high-end"
-      ]
+      ],
+      "highlights": [
+        "Higher sustained throughput for heavy asset and scratch workloads.",
+        "Better endurance profile for frequent writes and large transfers.",
+        "Recommended for high-end editing and production systems."
+      ],
+      "marketQuery": "WD SN850X 2TB",
+      "marketRequiredTokens": [
+        "sn850x",
+        "2tb"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook"
+      ],
+      "marketPriceBandPercent": 10,
+      "marketMaxDeviationPercent": 65
+    },
+    {
+      "id": "storage-1tb-nvme-premium",
+      "category": "storage",
+      "name": "1TB NVMe Gen4 Premium",
+      "priceMin": 170,
+      "priceMax": 280,
+      "profiles": [
+        "profile-mid-range",
+        "profile-high-end"
+      ],
+      "highlights": [
+        "Premium 1TB tier tuned for high sustained read/write performance.",
+        "Lower latency feel in demanding game and creator workloads.",
+        "Excellent as a dedicated OS/project drive in dual-drive builds."
+      ],
+      "marketQuery": "Samsung 990 Pro 1TB",
+      "marketRequiredTokens": [
+        "990",
+        "pro",
+        "1tb"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook"
+      ],
+      "marketPriceBandPercent": 10,
+      "marketMaxDeviationPercent": 65
+    },
+    {
+      "id": "storage-2tb-nvme-ultra",
+      "category": "storage",
+      "name": "2TB NVMe Gen4 Ultra",
+      "priceMin": 340,
+      "priceMax": 560,
+      "profiles": [
+        "profile-high-end"
+      ],
+      "highlights": [
+        "Ultra tier for write-heavy professional and enthusiast workloads.",
+        "Strong thermal and sustained throughput characteristics.",
+        "Ideal for large active datasets and high-bitrate video workflows."
+      ],
+      "marketQuery": "Samsung 990 Pro 2TB",
+      "marketRequiredTokens": [
+        "990",
+        "pro",
+        "2tb"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook"
+      ],
+      "marketPriceBandPercent": 10,
+      "marketMaxDeviationPercent": 70
     },
     {
       "id": "storage-4tb-nvme-mainstream",
       "category": "storage",
-      "name": "4TB NVMe Gen4",
-      "priceMin": 220,
-      "priceMax": 360,
+      "name": "4TB NVMe Gen4 (Mainstream)",
+      "priceMin": 430,
+      "priceMax": 700,
       "profiles": [
         "profile-mid-range",
         "profile-high-end"
-      ]
+      ],
+      "highlights": [
+        "Large-capacity option for extensive game and media libraries.",
+        "Reduces need for secondary drives in single-drive layouts.",
+        "Suitable for high-volume creators handling local project files."
+      ],
+      "marketQuery": "4TB NVMe SSD PCIe 4.0",
+      "marketRequiredTokens": [
+        "4tb",
+        "nvme"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook"
+      ],
+      "marketPriceBandPercent": 10,
+      "marketMaxDeviationPercent": 70
     },
     {
       "id": "storage-4tb-nvme-premium",
       "category": "storage",
       "name": "4TB NVMe Gen4 Premium",
-      "priceMin": 300,
-      "priceMax": 520,
+      "priceMin": 560,
+      "priceMax": 980,
       "profiles": [
         "profile-high-end"
-      ]
+      ],
+      "highlights": [
+        "Top-tier 4TB class for flagship gaming and creator systems.",
+        "Designed for high sustained loads and large active projects.",
+        "Best when paired with high-end CPU/GPU workstation builds."
+      ],
+      "marketQuery": "WD SN850X 4TB",
+      "marketRequiredTokens": [
+        "sn850x",
+        "4tb"
+      ],
+      "marketExcludeTokens": [
+        "gaming desktop",
+        "desktop pc",
+        "prebuilt",
+        "laptop",
+        "notebook"
+      ],
+      "marketPriceBandPercent": 10,
+      "marketMaxDeviationPercent": 70
     },
     {
       "id": "psu-650-gold",
