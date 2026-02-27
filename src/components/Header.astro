@@ -2,34 +2,297 @@
 import ThemeToggle from "./ThemeToggle";
 
 const links = [
-  { href: "/projects", label: "Projects" },
-  { href: "/updates", label: "Updates" },
+  { href: "/projects",     label: "Projects" },
+  { href: "/updates",      label: "Updates" },
   { href: "/configurator", label: "Configurator" },
-  { href: "/process", label: "Process" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" }
+  { href: "/process",      label: "Process" },
+  { href: "/about",        label: "About" },
+  { href: "/contact",      label: "Contact" },
 ];
+
+const path = Astro.url.pathname;
 ---
-<header style="position:sticky;top:0;z-index:60;border-bottom:1px solid var(--line);background:color-mix(in srgb, var(--bg) 90%, transparent);backdrop-filter: blur(10px);">
-  <div class="container site-header__inner" style="display:flex;align-items:center;justify-content:space-between;padding:0.75rem 0;gap:1rem;">
-    <a href="/" class="row site-brand" style="gap:0.75rem;font-weight:800;letter-spacing:0.02em;">
-      <img src="/images/logo-placeholder.svg" alt="Draconis Systems logo placeholder" width="38" height="38" loading="eager" />
-      <span>Draconis Systems</span>
+
+<header class="site-header" id="site-header">
+  <div class="site-header__inner container">
+
+    <!-- ── Brand ── -->
+    <a href="/" class="site-brand" aria-label="Draconis Systems — Home">
+      <div class="site-brand__mark" aria-hidden="true">
+        <img src="/images/logo-placeholder.svg" alt="" width="28" height="28" loading="eager" />
+      </div>
+      <span class="site-brand__name">
+        Draconis<em>Systems</em>
+      </span>
     </a>
 
+    <!-- ── Mobile toggle (pure CSS) ── -->
+    <input type="checkbox" id="nav-open" class="nav-toggle-input" aria-hidden="true" />
+
+    <!-- ── Primary nav ── -->
     <nav aria-label="Primary" class="site-nav">
-      <ul class="clean row" style="gap:0.8rem;">
-        {links.map((item) => (
-          <li>
-            <a href={item.href} class="small" style="font-weight:700;">{item.label}</a>
-          </li>
-        ))}
+      <ul class="clean">
+        {links.map((item) => {
+          const active = item.href === "/"
+            ? path === "/"
+            : path.startsWith(item.href);
+          return (
+            <li>
+              <a
+                href={item.href}
+                class={`nav-link${active ? " is-active" : ""}`}
+                aria-current={active ? "page" : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          );
+        })}
       </ul>
     </nav>
 
-    <div class="site-actions" style="display:flex;align-items:center;gap:0.5rem;">
-      <a href="/configurator" class="button primary" style="padding:0.55rem 0.9rem;">Start Your Build</a>
+    <!-- ── Actions ── -->
+    <div class="site-actions">
+      <a href="/configurator" class="button primary pill site-cta">
+        Start Your Build
+      </a>
       <ThemeToggle client:load />
+      <label for="nav-open" class="nav-burger" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
     </div>
+
   </div>
 </header>
+
+<!-- Scroll-state script -->
+<script>
+  const header = document.getElementById("site-header");
+  if (header) {
+    const tick = () =>
+      header.classList.toggle("is-scrolled", window.scrollY > 24);
+    window.addEventListener("scroll", tick, { passive: true });
+    tick();
+  }
+</script>
+
+<style>
+  /* ── Shell ── */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+    border-bottom: 1px solid transparent;
+    background: transparent;
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+    transition:
+      border-color 350ms ease,
+      background 350ms ease,
+      backdrop-filter 350ms ease;
+  }
+
+  /* Gains body on scroll */
+  .site-header.is-scrolled {
+    border-bottom-color: var(--line);
+    background: color-mix(in srgb, var(--bg) 78%, transparent);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-block: 0.8rem;
+  }
+
+  /* ── Brand ── */
+  .site-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    flex-shrink: 0;
+    text-decoration: none;
+  }
+
+  .site-brand__mark {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 350ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .site-brand:hover .site-brand__mark {
+    transform: rotate(-10deg) scale(1.1);
+  }
+
+  .site-brand__mark img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .site-brand__name {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 0.01em;
+    line-height: 1;
+  }
+
+  .site-brand__name em {
+    font-style: italic;
+    color: var(--brand);
+    margin-left: 0.28em;
+  }
+
+  /* ── Nav ── */
+  .nav-toggle-input {
+    display: none;
+  }
+
+  .site-nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .site-nav ul {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-link {
+    position: relative;
+    display: block;
+    padding: 0.4rem 0.7rem;
+    font-size: 0.83rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    transition: color 200ms ease;
+    border-radius: var(--radius-xs);
+  }
+
+  /* Underline rule */
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 0.7rem;
+    right: 0.7rem;
+    height: 1px;
+    background: var(--brand);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 230ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .nav-link:hover { color: var(--text); }
+  .nav-link:hover::after { transform: scaleX(1); }
+  .nav-link.is-active { color: var(--text); }
+  .nav-link.is-active::after { transform: scaleX(0.6); opacity: 0.55; }
+
+  /* ── Actions ── */
+  .site-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-shrink: 0;
+  }
+
+  .site-cta {
+    font-size: 0.8rem;
+    padding: 0.5rem 1.1rem;
+  }
+
+  /* ── Mobile burger ── */
+  .nav-burger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: var(--radius-xs);
+    border: 1px solid var(--line);
+    transition: border-color 200ms ease;
+  }
+
+  .nav-burger:hover { border-color: color-mix(in srgb, var(--brand) 50%, var(--line)); }
+
+  .nav-burger span {
+    display: block;
+    height: 1.5px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: transform 280ms ease, opacity 280ms ease, width 280ms ease;
+  }
+
+  .nav-burger span:nth-child(3) { width: 60%; }
+
+  /* Open state via checkbox */
+  .nav-toggle-input:checked ~ .site-nav ul {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 1080px) {
+    .site-header__inner {
+      flex-wrap: wrap;
+      padding-block: 0.6rem;
+    }
+
+    .site-nav {
+      order: 4;
+      width: 100%;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 300ms ease;
+    }
+
+    .nav-toggle-input:checked ~ .site-nav {
+      max-height: 360px;
+    }
+
+    .site-nav ul {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+      padding-block: 0.5rem;
+      border-top: 1px solid var(--line);
+      margin-top: 0.35rem;
+    }
+
+    .nav-link {
+      width: 100%;
+      padding: 0.6rem 0.25rem;
+      font-size: 0.9rem;
+    }
+
+    .nav-link::after { bottom: 4px; left: 0.25rem; right: 0.25rem; }
+
+    .nav-burger { display: flex; }
+    .site-cta   { display: none; }
+  }
+
+  @media (max-width: 480px) {
+    .site-brand__name { display: none; }
+  }
+</style>

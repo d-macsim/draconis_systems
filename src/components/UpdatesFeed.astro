@@ -6,25 +6,237 @@ interface Props {
 }
 
 const { updates } = Astro.props;
+
+function fmtDate(iso: string) {
+  return new Date(iso).toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+}
 ---
-<section class="section" id="updates">
+
+<section class="dispatch-section section" id="updates">
   <div class="container">
-    <div class="row" style="justify-content:space-between;margin-bottom:1rem;">
+
+    <!-- Section header -->
+    <header class="dispatch-hd reveal-on-scroll">
       <div>
-        <p class="eyebrow">Inside The Workshop</p>
-        <h2>Latest commissions and build notes</h2>
+        <span class="eyebrow">Inside the Workshop</span>
+        <h2 class="dispatch-hd__title">Dispatch<br /><em>log.</em></h2>
       </div>
-      <a href="/updates" class="button secondary">All Updates</a>
+      <a href="/updates" class="button secondary dispatch-hd__cta">
+        All dispatches
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+          <path d="M2 6.5h9M7.5 3l3.5 3.5L7.5 10" stroke="currentColor" stroke-width="1.7"
+            stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </header>
+
+    <!-- Column headers (desktop) -->
+    <div class="dispatch-cols" aria-hidden="true">
+      <span>N°</span>
+      <span>Category</span>
+      <span>Title</span>
+      <span>Date</span>
+      <span></span>
     </div>
-    <div class="grid grid-3">
-      {updates.map((entry, index) => (
-        <article class="card reveal" style={`animation-delay:${index * 80}ms;`}>
-          <p class="badge" style="margin-bottom:0.8rem;">{entry.category}</p>
-          <h3>{entry.title}</h3>
-          <p>{entry.summary}</p>
-          <p class="small">Recent workshop dispatch</p>
-        </article>
+
+    <!-- Feed rows -->
+    <div class="dispatch-feed" role="list">
+      {updates.map((entry, i) => (
+        <a
+          href={`/updates/${entry.slug}`}
+          class="dispatch-entry reveal-on-scroll"
+          style={`animation-delay: ${i * 60}ms;`}
+          role="listitem"
+        >
+          <span class="dispatch-entry__num" aria-label={`Entry ${i + 1}`}>
+            N°{String(i + 1).padStart(3, "0")}
+          </span>
+          <span class="dispatch-entry__cat">{entry.category}</span>
+          <span class="dispatch-entry__title">{entry.title}</span>
+          <span class="dispatch-entry__date">{fmtDate(entry.date)}</span>
+          <span class="dispatch-entry__arrow" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7"
+                stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </a>
       ))}
     </div>
+
   </div>
 </section>
+
+<style>
+  /* ── Section ── */
+  .dispatch-section {
+    overflow: hidden;
+  }
+
+  /* ── Header ── */
+  .dispatch-hd {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: clamp(2rem, 4vw, 3.5rem);
+  }
+
+  .dispatch-hd__title {
+    font-size: clamp(2.2rem, 5.5vw, 4.2rem);
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    margin-bottom: 0;
+    color: var(--text);
+  }
+
+  .dispatch-hd__title em {
+    font-style: italic;
+    color: var(--brand);
+  }
+
+  .dispatch-hd__cta {
+    font-size: 0.85rem;
+    padding: 0.65rem 1.2rem;
+    gap: 0.45rem;
+    white-space: nowrap;
+    align-self: flex-end;
+  }
+
+  /* ── Column headers ── */
+  .dispatch-cols {
+    display: grid;
+    grid-template-columns: 70px 130px 1fr 110px 32px;
+    gap: 1rem;
+    padding: 0 1rem 0.6rem;
+    border-bottom: 1px solid var(--line);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* ── Feed rows ── */
+  .dispatch-feed {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dispatch-entry {
+    display: grid;
+    grid-template-columns: 70px 130px 1fr 110px 32px;
+    gap: 1rem;
+    align-items: center;
+    padding: 1.1rem 1rem;
+    border-bottom: 1px solid var(--line);
+    text-decoration: none;
+    color: inherit;
+    transition: background 200ms ease, padding-left 220ms ease;
+    cursor: pointer;
+  }
+
+  .dispatch-entry:hover {
+    background: color-mix(in srgb, var(--brand) 4%, var(--bg-soft));
+    padding-left: 1.5rem;
+  }
+
+  .dispatch-entry:hover .dispatch-entry__title {
+    color: var(--text);
+  }
+
+  .dispatch-entry:hover .dispatch-entry__arrow {
+    color: var(--brand);
+    transform: translateX(4px);
+  }
+
+  .dispatch-entry__num {
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  .dispatch-entry__cat {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--accent);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .dispatch-entry__title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-soft);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: color 200ms ease;
+  }
+
+  .dispatch-entry__date {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    text-align: right;
+  }
+
+  .dispatch-entry__arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    flex-shrink: 0;
+    transition: color 200ms ease, transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  /* ── Responsive: compact on mobile ── */
+  @media (max-width: 700px) {
+    .dispatch-cols { display: none; }
+
+    .dispatch-entry {
+      grid-template-columns: auto 1fr auto;
+      grid-template-rows: auto auto;
+      gap: 0.25rem 0.75rem;
+    }
+
+    .dispatch-entry__num {
+      grid-row: 1;
+      grid-column: 1;
+    }
+
+    .dispatch-entry__title {
+      grid-row: 1;
+      grid-column: 2;
+      font-size: 0.9rem;
+      white-space: normal;
+      overflow: visible;
+      text-overflow: unset;
+    }
+
+    .dispatch-entry__arrow {
+      grid-row: 1 / 3;
+      grid-column: 3;
+      align-self: center;
+    }
+
+    .dispatch-entry__cat {
+      grid-row: 2;
+      grid-column: 1 / 3;
+      font-size: 0.68rem;
+    }
+
+    .dispatch-entry__date { display: none; }
+  }
+</style>

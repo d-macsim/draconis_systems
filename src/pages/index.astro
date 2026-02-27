@@ -11,78 +11,484 @@ import type { ProjectEntry, ServiceEntry, UpdateEntry } from "@/lib/types";
 const updatesCollection = (await getCollection("updates"))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 3);
+
 const featuredProjectsCollection = (await getCollection("projects"))
-  .filter((project) => project.data.featured)
+  .filter((p) => p.data.featured)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 3);
 
-const updates: UpdateEntry[] = updatesCollection.map((entry) => ({
-  slug: entry.slug,
-  title: entry.data.title,
-  summary: entry.data.summary,
-  date: entry.data.date.toISOString(),
-  category: entry.data.category,
-  featured: entry.data.featured
+const updates: UpdateEntry[] = updatesCollection.map((e) => ({
+  slug: e.slug,
+  title: e.data.title,
+  summary: e.data.summary,
+  date: e.data.date.toISOString(),
+  category: e.data.category,
+  featured: e.data.featured,
 }));
 
-const featuredProjects: ProjectEntry[] = featuredProjectsCollection.map((entry) => ({
-  slug: entry.slug,
-  title: entry.data.title,
-  summary: entry.data.summary,
-  description: entry.data.description,
-  date: entry.data.date.toISOString(),
-  featured: entry.data.featured,
-  useCase: entry.data.useCase,
-  budgetTier: entry.data.budgetTier,
-  tags: entry.data.tags,
-  heroImage: entry.data.heroImage,
-  gallery: entry.data.gallery,
-  cpu: entry.data.cpu,
-  gpu: entry.data.gpu,
-  ram: entry.data.ram,
-  storage: entry.data.storage,
-  outcome: entry.data.outcome
+const featuredProjects: ProjectEntry[] = featuredProjectsCollection.map((e) => ({
+  slug: e.slug,
+  title: e.data.title,
+  summary: e.data.summary,
+  description: e.data.description,
+  date: e.data.date.toISOString(),
+  featured: e.data.featured,
+  useCase: e.data.useCase,
+  budgetTier: e.data.budgetTier,
+  tags: e.data.tags,
+  heroImage: e.data.heroImage,
+  gallery: e.data.gallery,
+  cpu: e.data.cpu,
+  gpu: e.data.gpu,
+  ram: e.data.ram,
+  storage: e.data.storage,
+  outcome: e.data.outcome,
 }));
 
 const typedServices = services as ServiceEntry[];
+
+const processSteps = [
+  {
+    num: "01",
+    title: "Requirement Call",
+    desc: "Workload priorities and performance targets are established in detail before a single part is specified. No assumptions made.",
+  },
+  {
+    num: "02",
+    title: "Parts Plan",
+    desc: "Compatibility-validated component selection with thermal strategy, budget confidence, and documented rationale for every choice.",
+  },
+  {
+    num: "03",
+    title: "Assembly & Tuning",
+    desc: "Precision assembly with clean cable management, overclocking validation, thermal paste application, and full stress testing to specification.",
+  },
+  {
+    num: "04",
+    title: "Handoff",
+    desc: "Complete handoff documentation, ongoing support path, and warranty coverage. Delivered ready to benchmark from day one.",
+  },
+];
+
+const stats = [
+  { value: "7–12",    unit: "days",   label: "Average lead time" },
+  { value: "100%",    unit: "",       label: "Stress validated" },
+  { value: "Bespoke", unit: "",       label: "Every single build" },
+  { value: "Zero",    unit: "",       label: "Generic SKUs" },
+];
 ---
+
 <BaseLayout
   title="Draconis Systems | Custom PC Building"
   description="Custom gaming, creator, and workstation PC builds engineered around your performance targets."
 >
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       HERO
+  ════════════════════════════════════════════════════════════════════ -->
   <Hero />
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       DISPATCH LOG
+  ════════════════════════════════════════════════════════════════════ -->
   <UpdatesFeed updates={updates} />
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       FEATURED PROJECTS
+  ════════════════════════════════════════════════════════════════════ -->
   <FeaturedProjects projects={featuredProjects} />
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       STATS STRIP
+  ════════════════════════════════════════════════════════════════════ -->
+  <div class="stats-strip" aria-label="Key metrics">
+    <div class="container stats-strip__inner">
+      {stats.map((s, i) => (
+        <div class={`stat-item reveal-on-scroll delay-${i + 1}`}>
+          <span class="stat-item__value">
+            {s.value}
+            {s.unit && <span class="stat-item__unit">{s.unit}</span>}
+          </span>
+          <span class="stat-item__label">{s.label}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       SERVICES (BENTO TILES)
+  ════════════════════════════════════════════════════════════════════ -->
   <ServiceGrid services={typedServices} />
 
-  <section class="section">
-    <div class="container grid grid-2">
-      <article class="card">
-        <p class="eyebrow">Process</p>
-        <h2>From brief to benchmark-ready system.</h2>
-        <ol class="stack small" style="padding-left:1.1rem;">
-          <li><strong>1.</strong> Requirement call and workload priorities.</li>
-          <li><strong>2.</strong> Parts plan with compatibility + thermal strategy.</li>
-          <li><strong>3.</strong> Assembly, tuning, and validation pass.</li>
-          <li><strong>4.</strong> Delivery with documentation and support path.</li>
-        </ol>
-        <a href="/process" class="button secondary">See Full Process</a>
-      </article>
+  <!-- ═══════════════════════════════════════════════════════════════════
+       PROCESS — Editorial number-led layout
+  ════════════════════════════════════════════════════════════════════ -->
+  <section class="process-section section-xl">
+    <div class="container">
 
-      <article class="card">
-        <p class="eyebrow">Trust Signals</p>
-        <h2>Focused on repeatable, stable outcomes.</h2>
-        <ul class="clean stack">
-          <li>Thermal and stress validation before handoff.</li>
-          <li>Clean internal layout for long-term serviceability.</li>
-          <li>Quote transparency with clear scope boundaries.</li>
-          <li>Post-build support and warranty options.</li>
-        </ul>
-        <div class="row" style="margin-top:1rem;">
-          <a href="/configurator" class="button primary">Build an Estimate</a>
-          <a href="/contact" class="button secondary">Talk to an Engineer</a>
-        </div>
-      </article>
+      <header class="process-hd reveal-on-scroll">
+        <span class="eyebrow">How it works</span>
+        <h2 class="process-hd__title">
+          From brief to<br />
+          <em>benchmark-ready.</em>
+        </h2>
+        <p class="process-hd__sub">
+          A repeatable discipline, not improvisation.
+          Four stages, every build.
+        </p>
+      </header>
+
+      <div class="process-steps">
+        {processSteps.map((step, i) => (
+          <div class={`process-step reveal-on-scroll delay-${i + 1}`}>
+            <div class="process-step__num" aria-hidden="true">{step.num}</div>
+            <div class="process-step__body">
+              <h3 class="process-step__title">{step.title}</h3>
+              <p class="process-step__desc">{step.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="process-footer reveal-on-scroll">
+        <a href="/process" class="button secondary">
+          See the full process
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+            <path d="M2 6.5h9M7.5 3l3.5 3.5L7.5 10" stroke="currentColor"
+              stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+
     </div>
   </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       FINAL CTA — Apple "Ready?" moment
+  ════════════════════════════════════════════════════════════════════ -->
+  <section class="cta-section section-xl">
+    <div class="cta-bg" aria-hidden="true">
+      <div class="cta-orb cta-orb--1"></div>
+      <div class="cta-orb cta-orb--2"></div>
+      <div class="cta-rings">
+        <div class="cta-ring cta-ring--1"></div>
+        <div class="cta-ring cta-ring--2"></div>
+        <div class="cta-ring cta-ring--3"></div>
+      </div>
+    </div>
+
+    <div class="container cta-inner">
+      <span class="eyebrow reveal-on-scroll">Get started</span>
+      <h2 class="cta-title reveal-on-scroll delay-1">
+        Ready to build<br />
+        <em class="cta-title__em">your system?</em>
+      </h2>
+      <p class="cta-sub reveal-on-scroll delay-2">
+        Configure your build online, or talk directly to an engineer
+        about your requirements.
+      </p>
+      <div class="cta-actions reveal-on-scroll delay-3">
+        <a href="/configurator" class="button primary cta-primary">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Start Configurator
+        </a>
+        <a href="/contact" class="button secondary">Talk to an Engineer</a>
+      </div>
+    </div>
+  </section>
+
 </BaseLayout>
+
+<!-- IntersectionObserver for scroll-reveal -->
+<script>
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add("in-view");
+          io.unobserve(e.target);
+        }
+      });
+    },
+    { threshold: 0.08, rootMargin: "-40px 0px" }
+  );
+
+  document
+    .querySelectorAll(".reveal-on-scroll")
+    .forEach((el) => io.observe(el));
+</script>
+
+<style>
+  /* ══════════════════════════════════════════════════════════════════════
+     STATS STRIP
+  ═══════════════════════════════════════════════════════════════════════ */
+  .stats-strip {
+    border-block: 1px solid var(--line);
+    padding-block: clamp(2rem, 4vw, 3rem);
+    background: var(--bg-soft);
+    overflow: hidden;
+  }
+
+  .stats-strip__inner {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: clamp(1.5rem, 4vw, 3rem);
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.3rem;
+  }
+
+  .stat-item__value {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 1;
+    color: var(--text);
+    display: flex;
+    align-items: baseline;
+    gap: 0.2em;
+  }
+
+  .stat-item__unit {
+    font-size: 0.45em;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .stat-item__label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════
+     PROCESS SECTION
+  ═══════════════════════════════════════════════════════════════════════ */
+  .process-section {
+    overflow: hidden;
+  }
+
+  .process-hd {
+    max-width: 560px;
+    margin-bottom: clamp(3rem, 6vw, 5rem);
+  }
+
+  .process-hd__title {
+    font-size: clamp(2.2rem, 5.5vw, 4.2rem);
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .process-hd__title em {
+    font-style: italic;
+    color: var(--brand);
+  }
+
+  .process-hd__sub {
+    font-size: 1rem;
+    color: var(--text-muted);
+    max-width: 38ch;
+    margin: 0;
+    line-height: 1.65;
+  }
+
+  /* Step rows */
+  .process-steps {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .process-step {
+    display: grid;
+    grid-template-columns: clamp(80px, 12vw, 130px) 1fr;
+    gap: clamp(1.5rem, 3vw, 3rem);
+    align-items: start;
+    padding-block: clamp(2rem, 4vw, 3.5rem);
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+
+  .process-step:last-child { border-bottom: none; }
+
+  /* Giant editorial number */
+  .process-step__num {
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 9vw, 8rem);
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: -0.06em;
+    color: color-mix(in srgb, var(--brand) 22%, var(--text-muted));
+    text-align: right;
+    flex-shrink: 0;
+    padding-top: 0.1em;
+    transition: color 300ms ease;
+    user-select: none;
+  }
+
+  .process-step:hover .process-step__num {
+    color: color-mix(in srgb, var(--brand) 50%, var(--text-muted));
+  }
+
+  .process-step__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 3vw, 2.4rem);
+    letter-spacing: -0.02em;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: var(--text);
+    line-height: 1.2;
+  }
+
+  .process-step__desc {
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.75;
+    max-width: 60ch;
+    margin: 0;
+  }
+
+  .process-footer { text-align: left; }
+
+  /* ══════════════════════════════════════════════════════════════════════
+     FINAL CTA SECTION
+  ═══════════════════════════════════════════════════════════════════════ */
+  .cta-section {
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  /* Background elements */
+  .cta-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .cta-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+  }
+
+  .cta-orb--1 {
+    width: 600px;
+    height: 400px;
+    top: -20%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: radial-gradient(
+      circle,
+      color-mix(in srgb, var(--brand) 9%, transparent),
+      transparent 65%
+    );
+  }
+
+  .cta-orb--2 {
+    width: 400px;
+    height: 400px;
+    bottom: -15%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: radial-gradient(
+      circle,
+      color-mix(in srgb, var(--accent) 6%, transparent),
+      transparent 65%
+    );
+  }
+
+  /* CTA concentric rings */
+  .cta-rings {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cta-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid color-mix(in srgb, var(--brand) 8%, transparent);
+    animation: ring-breathe 8s ease-in-out infinite;
+  }
+
+  .cta-ring--1 { width: 340px; height: 340px; }
+  .cta-ring--2 { width: 620px; height: 620px; animation-delay: 0.8s; border-color: color-mix(in srgb, var(--brand) 5%, transparent); }
+  .cta-ring--3 { width: 940px; height: 940px; animation-delay: 1.6s; border-color: color-mix(in srgb, var(--brand) 3%, transparent); }
+
+  /* Content */
+  .cta-inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cta-title {
+    font-size: clamp(2.8rem, 7vw, 6rem);
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    color: var(--text);
+    margin-bottom: 1.25rem;
+    max-width: 12ch;
+  }
+
+  .cta-title__em {
+    font-style: italic;
+    color: var(--brand);
+  }
+
+  .cta-sub {
+    font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+    color: var(--text-muted);
+    max-width: 46ch;
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+  }
+
+  .cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.85rem;
+  }
+
+  .cta-primary {
+    padding: 1rem 2.2rem;
+    font-size: 0.95rem;
+    gap: 0.6rem;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    .process-step {
+      grid-template-columns: 60px 1fr;
+      gap: 1rem;
+    }
+
+    .stats-strip__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

@@ -6,23 +6,337 @@ interface Props {
 }
 
 const { services } = Astro.props;
+
+// Icon SVGs per service position
+const icons = [
+  // Gaming / Creator: processor with controls
+  `<svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+    <rect x="4" y="10" width="24" height="14" rx="3.5" stroke="currentColor" stroke-width="1.8"/>
+    <path d="M10 17h4M12 15v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    <circle cx="20.5" cy="16.5" r="1.5" fill="currentColor"/>
+    <circle cx="24.5" cy="16.5" r="1.5" fill="currentColor"/>
+    <path d="M11 6L9.5 10M21 6l1.5 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+  </svg>`,
+  // Upgrade consulting: arrow through node
+  `<svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+    <path d="M16 24V8M16 8l-6 6M16 8l6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="8"  cy="22" r="2.5" stroke="currentColor" stroke-width="1.6"/>
+    <circle cx="24" cy="22" r="2.5" stroke="currentColor" stroke-width="1.6"/>
+    <path d="M10.5 22h3M21.5 22h-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+  </svg>`,
+  // Workstation: server stack
+  `<svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+    <rect x="4" y="5"  width="24" height="8" rx="2.5" stroke="currentColor" stroke-width="1.8"/>
+    <rect x="4" y="17" width="24" height="8" rx="2.5" stroke="currentColor" stroke-width="1.8"/>
+    <circle cx="23.5" cy="9"  r="1.5" fill="currentColor"/>
+    <circle cx="23.5" cy="21" r="1.5" fill="currentColor"/>
+    <path d="M8 9h10M8 21h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+  </svg>`,
+];
 ---
-<section class="section" id="services">
+
+<section class="services-section section-xl" id="services">
   <div class="container">
-    <p class="eyebrow">Services</p>
-    <h2>Built for outcomes, not spec-sheet theater.</h2>
-    <div class="grid grid-3">
-      {services.map((service, index) => (
-        <article class="card reveal" style={`animation-delay:${index * 70}ms;`}>
-          <h3>{service.title}</h3>
-          <p>{service.description}</p>
-          <ul class="clean stack small">
-            {service.bullets.map((bullet) => (
-              <li>� {bullet}</li>
-            ))}
-          </ul>
+
+    <!-- Section header -->
+    <header class="services-hd reveal-on-scroll">
+      <span class="eyebrow">Services</span>
+      <h2 class="services-hd__title">
+        Built for outcomes,<br />
+        <em>not spec-sheet theater.</em>
+      </h2>
+    </header>
+
+    <!-- Bento tile grid: first tile full-width, then 2-up -->
+    <div class="services-bento">
+
+      <!-- Tile 0: full-width hero tile -->
+      {services[0] && (
+        <article class="service-tile service-tile--hero reveal-on-scroll">
+          <div class="service-tile__body">
+            <div class="service-tile__icon" aria-hidden="true">
+              <Fragment set:html={icons[0]} />
+            </div>
+            <h3 class="service-tile__title">{services[0].title}</h3>
+            <p class="service-tile__desc">{services[0].description}</p>
+            <a href="/configurator" class="service-tile__link">
+              Configure a build
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.7"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+          <div class="service-tile__hero-number" aria-hidden="true">01</div>
         </article>
-      ))}
+      )}
+
+      <!-- Tiles 1 & 2: side by side -->
+      <div class="services-row">
+        {services[1] && (
+          <article class="service-tile service-tile--sm reveal-on-scroll delay-1">
+            <div class="service-tile__icon" aria-hidden="true">
+              <Fragment set:html={icons[1]} />
+            </div>
+            <div class="service-tile__num-sm" aria-hidden="true">02</div>
+            <h3 class="service-tile__title">{services[1].title}</h3>
+            <p class="service-tile__desc">{services[1].description}</p>
+            <a href="/contact" class="service-tile__link">
+              Talk to us
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.7"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </article>
+        )}
+
+        {services[2] && (
+          <article class="service-tile service-tile--sm reveal-on-scroll delay-2">
+            <div class="service-tile__icon" aria-hidden="true">
+              <Fragment set:html={icons[2]} />
+            </div>
+            <div class="service-tile__num-sm" aria-hidden="true">03</div>
+            <h3 class="service-tile__title">{services[2].title}</h3>
+            <p class="service-tile__desc">{services[2].description}</p>
+            <a href="/configurator" class="service-tile__link">
+              Explore workstation builds
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.7"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </article>
+        )}
+      </div>
+
     </div>
   </div>
 </section>
+
+<style>
+  /* ── Section ── */
+  .services-section {
+    background: var(--bg-deep, var(--bg));
+    overflow: hidden;
+  }
+
+  :root[data-theme="dark"] .services-section {
+    background: #040810;
+  }
+
+  /* ── Header ── */
+  .services-hd {
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .services-hd__title {
+    font-size: clamp(2.2rem, 5.5vw, 4.2rem);
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    margin-bottom: 0;
+    color: var(--text);
+  }
+
+  .services-hd__title em {
+    font-style: italic;
+    color: var(--brand);
+  }
+
+  /* ── Bento layout ── */
+  .services-bento {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .services-row {
+    display: grid;
+    grid-template-columns: 5fr 6fr;
+    gap: 1.25rem;
+  }
+
+  /* ── Tile base ── */
+  .service-tile {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-xl);
+    background: var(--bg-elev);
+    transition:
+      border-color 320ms ease,
+      box-shadow 320ms ease,
+      transform 320ms cubic-bezier(0.34, 1.46, 0.64, 1);
+  }
+
+  .service-tile::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse 70% 60% at 0% 0%,
+      color-mix(in srgb, var(--brand) 5%, transparent),
+      transparent 55%
+    );
+    opacity: 0;
+    transition: opacity 400ms ease;
+  }
+
+  .service-tile:hover {
+    border-color: color-mix(in srgb, var(--brand) 50%, var(--line));
+    box-shadow: var(--shadow-lg), var(--glow-sm);
+    transform: translateY(-3px);
+  }
+
+  .service-tile:hover::before { opacity: 1; }
+
+  /* ── Hero tile (full-width) ── */
+  .service-tile--hero {
+    padding: clamp(2rem, 4vw, 3.5rem);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    min-height: 280px;
+    background:
+      linear-gradient(135deg,
+        color-mix(in srgb, var(--brand) 4%, var(--bg-elev)) 0%,
+        var(--bg-elev) 60%
+      );
+  }
+
+  .service-tile__body {
+    position: relative;
+    z-index: 1;
+    max-width: 520px;
+  }
+
+  .service-tile--hero .service-tile__title {
+    font-size: clamp(1.6rem, 3.5vw, 2.6rem);
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 0.75rem;
+    color: var(--text);
+  }
+
+  .service-tile__hero-number {
+    position: absolute;
+    bottom: -1rem;
+    right: 1.5rem;
+    font-family: var(--font-display);
+    font-size: clamp(6rem, 12vw, 11rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.06em;
+    color: color-mix(in srgb, var(--text) 5%, transparent);
+    user-select: none;
+    pointer-events: none;
+    transition: color 320ms ease;
+  }
+
+  .service-tile--hero:hover .service-tile__hero-number {
+    color: color-mix(in srgb, var(--brand) 8%, transparent);
+  }
+
+  /* ── Small tiles ── */
+  .service-tile--sm {
+    padding: clamp(1.75rem, 3.5vw, 2.5rem);
+    display: flex;
+    flex-direction: column;
+    min-height: 300px;
+  }
+
+  .service-tile--sm .service-tile__title {
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    font-family: var(--font-display);
+    letter-spacing: -0.015em;
+    line-height: 1.2;
+    margin-bottom: 0.6rem;
+    color: var(--text);
+    margin-top: auto;
+  }
+
+  .service-tile__num-sm {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 6vw, 5rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.05em;
+    color: color-mix(in srgb, var(--brand) 18%, transparent);
+    margin-bottom: 1.5rem;
+    transition: color 300ms ease;
+  }
+
+  .service-tile--sm:hover .service-tile__num-sm {
+    color: color-mix(in srgb, var(--brand) 35%, transparent);
+  }
+
+  /* ── Shared tile elements ── */
+  .service-tile__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: var(--radius-md);
+    background: color-mix(in srgb, var(--brand) 10%, var(--bg-soft));
+    border: 1px solid color-mix(in srgb, var(--brand) 20%, var(--line));
+    color: var(--brand);
+    margin-bottom: 1.25rem;
+    flex-shrink: 0;
+    transition:
+      background 300ms ease,
+      box-shadow 300ms ease,
+      transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .service-tile:hover .service-tile__icon {
+    background: color-mix(in srgb, var(--brand) 18%, var(--bg-soft));
+    box-shadow: var(--glow-sm);
+    transform: scale(1.08) rotate(-4deg);
+  }
+
+  .service-tile__desc {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    max-width: 48ch;
+  }
+
+  .service-tile__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.83rem;
+    font-weight: 700;
+    color: var(--brand);
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    transition: gap 220ms ease;
+    margin-top: auto;
+  }
+
+  .service-tile__link:hover { gap: 0.7rem; }
+
+  .service-tile__link svg {
+    transition: transform 220ms ease;
+  }
+
+  .service-tile__link:hover svg { transform: translateX(3px); }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .services-row {
+      grid-template-columns: 1fr;
+    }
+
+    .service-tile--hero {
+      min-height: 220px;
+    }
+
+    .service-tile--sm {
+      min-height: auto;
+    }
+  }
+</style>

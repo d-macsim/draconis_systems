@@ -1,34 +1,220 @@
 ---
 const year = new Date().getFullYear();
+
+const nav = [
+  { href: "/projects",     label: "Projects" },
+  { href: "/updates",      label: "Updates" },
+  { href: "/configurator", label: "Configurator" },
+  { href: "/process",      label: "Process" },
+  { href: "/about",        label: "About" },
+  { href: "/contact",      label: "Contact" },
+];
+
+const legal = [
+  { href: "/terms",    label: "Terms" },
+  { href: "/privacy",  label: "Privacy" },
+  { href: "/warranty", label: "Warranty" },
+];
 ---
-<footer style="border-top:1px solid var(--line);padding:2rem 0 2.4rem;background:var(--bg-soft);">
-  <div class="container grid grid-3">
-    <section>
-      <h3 style="margin-bottom:0.6rem;">Draconis Systems</h3>
-      <p class="small">Bespoke system building for gaming, creator, and studio-class performance goals.</p>
-      <p class="small">Email: concierge@draconis-systems.co.uk</p>
-    </section>
 
-    <section>
-      <h3 style="margin-bottom:0.6rem;">Navigate</h3>
-      <ul class="clean stack small">
-        <li><a href="/projects">Projects</a></li>
-        <li><a href="/updates">Updates</a></li>
-        <li><a href="/configurator">Configurator</a></li>
-        <li><a href="/contact">Contact</a></li>
-      </ul>
-    </section>
+<footer class="site-footer">
 
-    <section>
-      <h3 style="margin-bottom:0.6rem;">Legal</h3>
-      <ul class="clean stack small">
-        <li><a href="/terms">Terms</a></li>
-        <li><a href="/privacy">Privacy</a></li>
-        <li><a href="/warranty">Warranty</a></li>
+  <div class="container footer-inner">
+
+    <!-- Brand column -->
+    <div class="footer-brand">
+      <a href="/" class="footer-brand__mark" aria-label="Draconis Systems home">
+        <img src="/images/logo-placeholder.svg" alt="" width="28" height="28" loading="lazy" />
+        <span>Draconis<em>Systems</em></span>
+      </a>
+      <p class="footer-brand__tagline">
+        Precision PC engineering, bespoke for your workload.
+      </p>
+      <a href="mailto:concierge@draconis-systems.co.uk" class="footer-email">
+        concierge@draconis-systems.co.uk
+      </a>
+    </div>
+
+    <!-- Navigate -->
+    <nav aria-label="Footer navigation" class="footer-nav">
+      <p class="footer-col-label">Navigate</p>
+      <ul class="clean footer-links">
+        {nav.map(item => (
+          <li><a href={item.href} class="footer-link">{item.label}</a></li>
+        ))}
       </ul>
-    </section>
+    </nav>
+
+    <!-- Legal -->
+    <nav aria-label="Legal" class="footer-legal-col">
+      <p class="footer-col-label">Legal</p>
+      <ul class="clean footer-links">
+        {legal.map(item => (
+          <li><a href={item.href} class="footer-link">{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
   </div>
-  <div class="container" style="margin-top:1.5rem;">
-    <p class="small">Copyright {year} Draconis Systems. All rights reserved.</p>
+
+  <!-- Bottom bar -->
+  <div class="footer-bottom">
+    <div class="container footer-bottom__inner">
+      <p class="footer-copy">
+        &copy; {year} Draconis Systems Ltd. All rights reserved. UK-based studio.
+      </p>
+      <div class="footer-bottom__links">
+        {legal.map(item => (
+          <a href={item.href} class="footer-bottom-link">{item.label}</a>
+        ))}
+      </div>
+    </div>
   </div>
+
 </footer>
+
+<style>
+  /* ── Shell ── */
+  .site-footer {
+    border-top: 1px solid var(--line);
+    background: var(--bg-deep, var(--bg));
+  }
+
+  :root[data-theme="dark"] .site-footer {
+    background: #040810;
+  }
+
+  /* ── Main grid ── */
+  .footer-inner {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    padding-block: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  /* ── Brand ── */
+  .footer-brand__mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    margin-bottom: 0.9rem;
+  }
+
+  .footer-brand__mark img {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+    opacity: 0.9;
+  }
+
+  .footer-brand__mark span {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-soft);
+    letter-spacing: 0.01em;
+  }
+
+  .footer-brand__mark em {
+    font-style: italic;
+    color: var(--brand);
+    margin-left: 0.25em;
+  }
+
+  .footer-brand__tagline {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+    max-width: 32ch;
+  }
+
+  .footer-email {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 180ms ease;
+  }
+
+  .footer-email:hover { color: var(--brand); }
+
+  /* ── Nav columns ── */
+  .footer-col-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+  }
+
+  .footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .footer-link {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 180ms ease;
+    display: inline-block;
+  }
+
+  .footer-link:hover { color: var(--text); }
+
+  /* ── Bottom bar ── */
+  .footer-bottom {
+    border-top: 1px solid var(--line);
+    padding-block: 1rem;
+  }
+
+  .footer-bottom__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .footer-copy {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  .footer-bottom__links {
+    display: flex;
+    gap: 1.25rem;
+  }
+
+  .footer-bottom-link {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 180ms ease;
+  }
+
+  .footer-bottom-link:hover { color: var(--text); }
+
+  /* ── Responsive ── */
+  @media (max-width: 680px) {
+    .footer-inner {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .footer-brand {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .footer-inner {
+      grid-template-columns: 1fr;
+    }
+
+    .footer-bottom__links { display: none; }
+  }
+</style>

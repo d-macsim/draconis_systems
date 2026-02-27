@@ -1,22 +1,355 @@
 ---
 ---
-<section class="section">
-  <div class="container grid grid-2" style="align-items:center;">
-    <div class="stack reveal">
-      <span class="badge">Precision PC Engineering</span>
-      <h1>Modern custom systems built around your workload, not a generic SKU.</h1>
-      <p>
-        Draconis Systems designs high-performance gaming and creator PCs with stability testing, airflow validation,
-        and clear handoff documentation.
-      </p>
-      <div class="row">
-        <a href="/configurator" class="button primary">Start Configurator</a>
-        <a href="/projects" class="button secondary">View Projects</a>
-      </div>
-      <p class="small">Lead times currently average 7-12 working days based on parts availability.</p>
+<section class="hero" aria-label="Draconis Systems — Hero">
+
+  <!-- Background: concentric rings + atmospheric glow -->
+  <div class="hero-bg" aria-hidden="true">
+    <div class="hero-rings">
+      <div class="ring ring-1"></div>
+      <div class="ring ring-2"></div>
+      <div class="ring ring-3"></div>
+      <div class="ring ring-4"></div>
     </div>
-    <div class="surface reveal delay-1" style="padding:1.2rem;overflow:hidden;">
-      <img src="/images/logo-placeholder.svg" alt="Draconis Systems dragon logo placeholder" width="640" height="640" loading="eager" style="border-radius:1rem;aspect-ratio:1 / 1;object-fit:cover;max-height:460px;margin-inline:auto;" />
-    </div>
+    <div class="hero-glow-top"></div>
+    <div class="hero-glow-bottom"></div>
+    <div class="hero-scan"></div>
   </div>
+
+  <!-- Content -->
+  <div class="hero-content">
+
+    <div class="hero-eyebrow reveal">
+      <span class="hero-live-dot" title="Workshop active"></span>
+      <span class="eyebrow" style="margin:0;">Draconis Systems · Precision PC Engineering</span>
+    </div>
+
+    <h1 class="hero-headline reveal delay-1">
+      Custom&nbsp;PCs,<br />
+      obsessively<br />
+      <em class="hero-em">engineered.</em>
+    </h1>
+
+    <p class="hero-sub reveal delay-2">
+      High-performance gaming, creator, and workstation systems —
+      designed around your workflow, tested to exacting standards,
+      delivered with complete documentation.
+    </p>
+
+    <div class="hero-actions reveal delay-3">
+      <a href="/configurator" class="button primary hero-btn-primary">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M2 7h10M8 3l4 4-4 4"
+            stroke="currentColor" stroke-width="1.8"
+            stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Start Configurator
+      </a>
+      <a href="/projects" class="button secondary hero-btn-secondary">
+        View Projects
+      </a>
+    </div>
+
+    <p class="hero-trust reveal delay-4">
+      <span class="hero-trust__dot" aria-hidden="true"></span>
+      Lead times 7–12 working days · UK-based studio
+    </p>
+
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="hero-scroll" aria-hidden="true">
+    <div class="hero-scroll__track">
+      <div class="hero-scroll__dot"></div>
+    </div>
+    <span class="hero-scroll__label">Scroll</span>
+  </div>
+
 </section>
+
+<style>
+  /* ── Hero shell ── */
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding-block: clamp(5rem, 10vw, 9rem);
+  }
+
+  /* ── Background layer ── */
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  /* Concentric breathing rings */
+  .hero-rings {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid color-mix(in srgb, var(--brand) 14%, transparent);
+  }
+
+  .ring-1 {
+    width: 320px; height: 320px;
+    animation: ring-breathe 7s ease-in-out infinite;
+  }
+  .ring-2 {
+    width: 600px; height: 600px;
+    animation: ring-breathe 7s ease-in-out infinite 0.6s;
+    border-color: color-mix(in srgb, var(--brand) 8%, transparent);
+  }
+  .ring-3 {
+    width: 920px; height: 920px;
+    animation: ring-breathe 7s ease-in-out infinite 1.2s;
+    border-color: color-mix(in srgb, var(--brand) 5%, transparent);
+  }
+  .ring-4 {
+    width: 1280px; height: 1280px;
+    animation: ring-breathe 7s ease-in-out infinite 1.8s;
+    border-color: color-mix(in srgb, var(--brand) 3%, transparent);
+  }
+
+  @keyframes ring-breathe {
+    0%, 100% { opacity: 0.35; transform: scale(1); }
+    50%       { opacity: 0.75; transform: scale(1.025); }
+  }
+
+  /* Atmospheric glows */
+  .hero-glow-top {
+    position: absolute;
+    top: -20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
+    height: 50%;
+    background: radial-gradient(
+      ellipse at 50% 0%,
+      color-mix(in srgb, var(--brand) 8%, transparent),
+      transparent 60%
+    );
+    filter: blur(60px);
+  }
+
+  .hero-glow-bottom {
+    position: absolute;
+    bottom: -10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40%;
+    height: 40%;
+    background: radial-gradient(
+      circle,
+      color-mix(in srgb, var(--accent) 7%, transparent),
+      transparent 65%
+    );
+    filter: blur(80px);
+  }
+
+  /* Scanning line */
+  .hero-scan {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .hero-scan::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent 5%,
+      color-mix(in srgb, var(--brand) 65%, transparent) 45%,
+      color-mix(in srgb, var(--brand) 65%, transparent) 55%,
+      transparent 95%
+    );
+    animation: hero-scan-line 11s ease-in-out infinite;
+    animation-delay: 2s;
+    opacity: 0;
+  }
+
+  @keyframes hero-scan-line {
+    0%   { transform: translateY(0); opacity: 0; }
+    5%   { opacity: 0.5; }
+    95%  { opacity: 0.3; }
+    100% { transform: translateY(110vh); opacity: 0; }
+  }
+
+  /* ── Content ── */
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 900px;
+    padding-inline: 1.5rem;
+  }
+
+  /* Live eyebrow */
+  .hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 2rem;
+  }
+
+  .hero-live-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--ok);
+    flex-shrink: 0;
+    animation: pulse-ring 2.2s ease-out infinite;
+  }
+
+  /* Giant headline */
+  .hero-headline {
+    font-size: clamp(3.5rem, 9vw, 8rem);
+    line-height: 1.0;
+    letter-spacing: -0.04em;
+    margin-bottom: 1.75rem;
+    color: var(--text);
+  }
+
+  .hero-em {
+    font-style: italic;
+    color: var(--brand);
+    display: inline-block;
+  }
+
+  /* Sub-headline */
+  .hero-sub {
+    font-size: clamp(1rem, 1.6vw, 1.15rem);
+    color: var(--text-muted);
+    max-width: 52ch;
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+    font-weight: 400;
+  }
+
+  /* CTAs */
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.85rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .hero-btn-primary {
+    padding: 1rem 2rem;
+    font-size: 0.92rem;
+    gap: 0.6rem;
+  }
+
+  .hero-btn-secondary {
+    padding: 1rem 2rem;
+    font-size: 0.92rem;
+  }
+
+  /* Trust micro-line */
+  .hero-trust {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin: 0;
+    letter-spacing: 0.02em;
+  }
+
+  .hero-trust__dot {
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  /* ── Scroll indicator ── */
+  .hero-scroll {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 1;
+    opacity: 0.45;
+    animation: anim-reveal-up 1s ease forwards;
+    animation-delay: 1.2s;
+  }
+
+  .hero-scroll__track {
+    width: 24px;
+    height: 40px;
+    border: 1.5px solid var(--text-muted);
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    padding-top: 6px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-scroll__dot {
+    width: 4px;
+    height: 8px;
+    border-radius: 2px;
+    background: var(--text-muted);
+    animation: scroll-dot 2s ease-in-out infinite;
+  }
+
+  @keyframes scroll-dot {
+    0%   { transform: translateY(0); opacity: 1; }
+    60%  { transform: translateY(16px); opacity: 0; }
+    61%  { transform: translateY(-4px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+
+  .hero-scroll__label {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 640px) {
+    .hero {
+      min-height: calc(100svh - 60px);
+      padding-block: 4rem 6rem;
+    }
+
+    .hero-headline {
+      font-size: clamp(3rem, 12vw, 4.5rem);
+    }
+
+    .hero-scroll {
+      bottom: 1.5rem;
+    }
+  }
+</style>
