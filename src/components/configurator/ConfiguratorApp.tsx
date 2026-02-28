@@ -469,9 +469,9 @@ export default function ConfiguratorApp({
       )}
 
       {showQuestionnaire && (
-        <details className="surface" style={{ padding: "1rem" }}>
-          <summary style={{ cursor: "pointer", fontWeight: 700, color: "var(--text)" }}>
-            Not sure what to choose? Open the quick questionnaire for a full preconfigured recommendation.
+        <details className="surface" style={{ padding: "0.85rem 1rem" }}>
+          <summary style={{ cursor: "pointer", fontWeight: 600, fontSize: "0.85rem", color: "var(--text)" }}>
+            Not sure where to start? Use the quick questionnaire →
           </summary>
           <div style={{ marginTop: "1rem" }}>
             <BuildQuestionnaire catalog={catalog} rules={rules} />
@@ -479,44 +479,94 @@ export default function ConfiguratorApp({
         </details>
       )}
 
-      <div className="card" style={{ padding: "1rem" }}>
-        <p className="small">
-          Step {step + 1} of {categories.length}
-        </p>
-        <div className="row" style={{ gap: "0.4rem", flexWrap: "wrap" }}>
+      {/* Step navigator */}
+      <div style={{
+        background: "var(--bg-elev)",
+        border: "1px solid var(--line)",
+        borderRadius: "var(--radius-lg)",
+        padding: "0.65rem 0.85rem",
+      }}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.25rem", alignItems: "center" }}>
           {categories.map((category, index) => {
-            const disabled = !selection.profile && category.id !== "profile";
+            const isActive = index === step;
+            const isDone = Boolean(selection[category.id]);
+            const isDisabled = !selection.profile && category.id !== "profile";
             return (
               <button
                 key={category.id}
                 type="button"
-                className="button secondary"
-                disabled={disabled}
-                style={{
-                  padding: "0.45rem 0.65rem",
-                  borderColor: index === step ? "var(--brand)" : undefined,
-                  background: selection[category.id]
-                    ? "color-mix(in srgb, var(--brand) 12%, var(--bg-elev))"
-                    : undefined,
-                  opacity: disabled ? 0.55 : 1
-                }}
+                disabled={isDisabled}
                 onClick={() => setStep(index)}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.4rem",
+                  padding: "0.3rem 0.6rem",
+                  background: isActive
+                    ? "color-mix(in srgb, var(--brand) 12%, var(--bg-soft))"
+                    : "transparent",
+                  border: "1px solid",
+                  borderColor: isActive
+                    ? "var(--brand)"
+                    : isDone
+                      ? "color-mix(in srgb, var(--brand) 22%, var(--line))"
+                      : "transparent",
+                  borderRadius: "0.45rem",
+                  cursor: isDisabled ? "default" : "pointer",
+                  opacity: isDisabled ? 0.35 : 1,
+                  fontSize: "0.78rem",
+                  fontWeight: isActive ? 700 : 500,
+                  color: isActive ? "var(--brand)" : isDone ? "var(--text-soft)" : "var(--text-muted)",
+                  transition: "all 150ms ease",
+                  whiteSpace: "nowrap",
+                }}
               >
+                <span style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "17px",
+                  height: "17px",
+                  borderRadius: "50%",
+                  fontSize: "0.6rem",
+                  fontWeight: 700,
+                  flexShrink: 0,
+                  background: isActive
+                    ? "var(--brand)"
+                    : isDone
+                      ? "color-mix(in srgb, var(--brand) 18%, var(--bg-soft))"
+                      : "var(--line)",
+                  color: isActive ? "#fff" : isDone ? "var(--brand)" : "var(--text-muted)",
+                }}>
+                  {isDone
+                    ? <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2L7.5 2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                    : index + 1}
+                </span>
                 {category.label}
               </button>
             );
           })}
+          <span style={{ marginLeft: "auto", fontSize: "0.7rem", color: "var(--text-muted)", whiteSpace: "nowrap" }}>
+            {step + 1} / {categories.length}
+          </span>
         </div>
       </div>
 
       <div className="grid" style={{ gridTemplateColumns: "2fr 1fr", gap: "1rem", alignItems: "start" }}>
         <section className="card stack">
-          <h2 style={{ marginBottom: "0.2rem" }}>{currentCategory?.label}</h2>
-          <p className="small">
-            {currentCategory?.id === "profile"
-              ? "Pick your build tier first. Parts in later steps adapt to this profile."
-              : "Choose one option to continue. You can revisit any step later."}
-          </p>
+          <div>
+            <p style={{ margin: "0 0 0.2rem", fontSize: "0.68rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.14em", color: "var(--accent)" }}>
+              Step {step + 1} of {categories.length}
+            </p>
+            <p style={{ margin: "0 0 0.2rem", fontSize: "1.15rem", fontWeight: 700, color: "var(--text)", fontFamily: "var(--font-display)", letterSpacing: "-0.01em" }}>
+              {currentCategory?.label}
+            </p>
+            <p className="small" style={{ margin: 0 }}>
+              {currentCategory?.id === "profile"
+                ? "Pick your build tier first — parts in later steps adapt to this profile."
+                : "Select one option. You can revisit any step at any time."}
+            </p>
+          </div>
 
           {!selection.profile && currentCategory?.id !== "profile" && (
             <div className="surface" style={{ padding: "0.8rem" }}>
@@ -670,42 +720,56 @@ export default function ConfiguratorApp({
         </section>
 
         <aside className="card stack">
-          <h3 style={{ marginBottom: "0.2rem" }}>Build Summary</h3>
-          <ul className="clean stack small">
-            {categories.map((category) => {
-              const selected = getComponentById(effectiveCatalog, selection[category.id]);
-              return (
-                <li key={category.id}>
-                  <strong>{category.label}:</strong> {selected?.name ?? "Not selected"}
-                </li>
-              );
-            })}
-          </ul>
+          <p style={{ margin: 0, fontSize: "0.68rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.14em", color: "var(--text-muted)" }}>
+            Build Summary
+          </p>
 
+          {/* Only show selected components */}
+          {categories.some(c => selection[c.id]) ? (
+            <ul className="clean stack" style={{ gap: "0.4rem" }}>
+              {categories.filter(c => selection[c.id]).map((category) => {
+                const selected = getComponentById(effectiveCatalog, selection[category.id]);
+                return (
+                  <li key={category.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "0.5rem", fontSize: "0.82rem" }}>
+                    <span style={{ color: "var(--text-muted)", flexShrink: 0 }}>{category.label}</span>
+                    <span style={{ textAlign: "right", color: "var(--text)", fontWeight: 500 }}>{selected?.name}</span>
+                  </li>
+                );
+              })}
+            </ul>
+          ) : (
+            <p className="small" style={{ margin: 0, fontStyle: "italic" }}>
+              Select a build tier to begin.
+            </p>
+          )}
+
+          {/* Price + performance block */}
           <div className="surface" style={{ padding: "0.8rem" }}>
-            <p className="small">Estimated Price Range</p>
-            <p style={{ margin: 0, fontWeight: 800 }}>
-              {formatCurrency(estimated.min)}-{formatCurrency(estimated.max)}
+            <p style={{ margin: "0 0 0.3rem", fontSize: "0.68rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--text-muted)" }}>
+              Estimated Range
             </p>
-            <p className="small" style={{ marginTop: "0.5rem" }}>
-              Performance score: {performance > 0 ? `${performance}/100` : "Pending selections"}
+            <p style={{ margin: "0 0 0.6rem", fontWeight: 800, fontSize: "1.05rem" }}>
+              {formatCurrency(estimated.min)}–{formatCurrency(estimated.max)}
             </p>
-            <p className="small" style={{ marginTop: "0.3rem" }}>
-              Recommended PSU headroom target: {wattage}W
-            </p>
-            <p className="small" style={{ marginTop: "0.3rem" }}>
-              Estimate only. Final quote may vary by market availability and sourcing.
-            </p>
-            <p className="small" style={{ marginTop: "0.3rem" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.4rem 0.6rem" }}>
+              <div>
+                <p className="small" style={{ margin: "0 0 0.1rem", fontSize: "0.68rem" }}>Performance</p>
+                <p style={{ margin: 0, fontWeight: 700, fontSize: "0.85rem", color: performance > 0 ? "var(--text)" : "var(--text-muted)" }}>
+                  {performance > 0 ? `${performance}/100` : "—"}
+                </p>
+              </div>
+              <div>
+                <p className="small" style={{ margin: "0 0 0.1rem", fontSize: "0.68rem" }}>PSU target</p>
+                <p style={{ margin: 0, fontWeight: 700, fontSize: "0.85rem" }}>{wattage}W</p>
+              </div>
+            </div>
+            <p className="small" style={{ marginTop: "0.6rem", marginBottom: 0, fontSize: "0.72rem" }}>
               {marketLoading
-                ? "Refreshing live market prices for this step..."
-                : `Live prices synced on ${marketUpdatedAt ? new Date(marketUpdatedAt).toLocaleString() : "local defaults"}.`}
+                ? "Refreshing live prices…"
+                : marketError
+                  ? <span style={{ color: "var(--warn)" }}>{marketError}</span>
+                  : `Prices: ${marketUpdatedAt ? new Date(marketUpdatedAt).toLocaleDateString() : "local defaults"}`}
             </p>
-            {marketError && (
-              <p className="small" style={{ marginTop: "0.3rem", color: "var(--warn)" }}>
-                {marketError}
-              </p>
-            )}
           </div>
 
           {selectionDelayNotices.length > 0 && (
