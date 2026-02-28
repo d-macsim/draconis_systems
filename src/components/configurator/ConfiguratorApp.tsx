@@ -637,11 +637,13 @@ export default function ConfiguratorApp({
                       />
                     )}
                     <strong style={{ display: "block", marginBottom: "0.35rem" }}>{component.name}</strong>
-                    <span className="small">
-                      {component.priceMin !== null && component.priceMax !== null
-                        ? `${formatCurrency(component.priceMin)}-${formatCurrency(component.priceMax)}`
-                        : "Quote-only"}
-                    </span>
+                    {currentCategory.id !== "profile" && (
+                      <span className="small">
+                        {component.priceMin !== null && component.priceMax !== null
+                          ? `${formatCurrency(component.priceMin)}–${formatCurrency(component.priceMax)}`
+                          : "Quote-only"}
+                      </span>
+                    )}
                     {bottleneckTooltip && (
                       <p
                         className="small"
@@ -805,42 +807,45 @@ export default function ConfiguratorApp({
             </div>
           )}
 
-          <div className="surface stack" style={{ padding: "0.8rem" }}>
-            <label htmlFor="designer-note" style={{ margin: 0 }}>
-              Designer&apos;s Note
-            </label>
-            <p className="small" style={{ margin: 0 }}>
-              Tell us about your space. Is this for a minimalist studio or a high-octane gaming setup?
-            </p>
-            <textarea
-              id="designer-note"
-              rows={4}
-              maxLength={900}
-              value={selection.designerNote ?? ""}
-              onInput={(event) => setDesignerNote(event.currentTarget.value)}
-              placeholder="Share preferred aesthetics, noise goals, cable style, lighting mood, or room context."
-            />
-            <p className="small" style={{ margin: 0 }}>
-              {(selection.designerNote ?? "").length}/900 characters
-            </p>
-          </div>
-
-          <div className="surface" style={{ padding: "0.6rem 0.8rem", fontSize: "0.78rem", color: "var(--text-soft)" }}>
-            ✓ 1-year assembly warranty · Stress-tested · UK studio
-          </div>
+          <details className="surface" style={{ padding: "0.8rem" }}>
+            <summary style={{ cursor: "pointer", fontWeight: 600, fontSize: "0.82rem", color: "var(--text)" }}>
+              Add a designer&apos;s note
+            </summary>
+            <div className="stack" style={{ marginTop: "0.75rem" }}>
+              <p className="small" style={{ margin: 0 }}>
+                Share aesthetics, noise goals, cable style, or room context.
+              </p>
+              <textarea
+                id="designer-note"
+                rows={3}
+                maxLength={900}
+                value={selection.designerNote ?? ""}
+                onInput={(event) => setDesignerNote(event.currentTarget.value)}
+                placeholder="e.g. minimal and dark, no RGB, compact desk space."
+              />
+              <p className="small" style={{ margin: 0 }}>
+                {(selection.designerNote ?? "").length}/900
+              </p>
+            </div>
+          </details>
 
           <a className="button primary" href={quoteHref}>
             Export to Quote Request
           </a>
 
-          <button
-            type="button"
-            className="button secondary"
-            onClick={copyBuildUrl}
-            style={{ justifyContent: "center" }}
-          >
-            {copied ? "Copied!" : "Copy Build Link"}
-          </button>
+          <div className="row" style={{ gap: "0.5rem" }}>
+            <button
+              type="button"
+              className="button secondary"
+              onClick={copyBuildUrl}
+              style={{ justifyContent: "center", flex: 1 }}
+            >
+              {copied ? "Copied!" : "Copy Link"}
+            </button>
+            <span style={{ fontSize: "0.72rem", color: "var(--text-muted)", alignSelf: "center" }}>
+              ✓ 1-yr warranty · UK studio
+            </span>
+          </div>
         </aside>
       </div>
     </div>

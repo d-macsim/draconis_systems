@@ -51,8 +51,8 @@
       "id": "profile-budget",
       "category": "profile",
       "name": "Budget Build",
-      "priceMin": 0,
-      "priceMax": 0,
+      "priceMin": null,
+      "priceMax": null,
       "tags": [
         "budget",
         "1080p"
@@ -62,8 +62,8 @@
       "id": "profile-mid-range",
       "category": "profile",
       "name": "Mid Range Build",
-      "priceMin": 0,
-      "priceMax": 0,
+      "priceMin": null,
+      "priceMax": null,
       "tags": [
         "mid-range",
         "1440p"
@@ -73,8 +73,8 @@
       "id": "profile-high-end",
       "category": "profile",
       "name": "High End Build",
-      "priceMin": 0,
-      "priceMax": 0,
+      "priceMin": null,
+      "priceMax": null,
       "tags": [
         "high-end",
         "4k",
@@ -85,8 +85,8 @@
       "id": "cpu-i5-14400f",
       "category": "cpu",
       "name": "Intel Core i5-14400F",
-      "priceMin": 180,
-      "priceMax": 230,
+      "priceMin": 130,
+      "priceMax": 165,
       "socket": "LGA1700",
       "tdp": 148,
       "score": 76,
@@ -112,8 +112,8 @@
       "id": "cpu-r5-9600x",
       "category": "cpu",
       "name": "AMD Ryzen 5 9600X",
-      "priceMin": 125,
-      "priceMax": 170,
+      "priceMin": 165,
+      "priceMax": 205,
       "socket": "AM5",
       "tdp": 88,
       "score": 80,
@@ -145,8 +145,8 @@
       "id": "cpu-r5-7500f",
       "category": "cpu",
       "name": "AMD Ryzen 5 7500F",
-      "priceMin": 110,
-      "priceMax": 155,
+      "priceMin": 105,
+      "priceMax": 145,
       "socket": "AM5",
       "tdp": 88,
       "score": 72,
@@ -163,8 +163,8 @@
       "id": "cpu-r7-9700x",
       "category": "cpu",
       "name": "AMD Ryzen 7 9700X",
-      "priceMin": 260,
-      "priceMax": 330,
+      "priceMin": 250,
+      "priceMax": 310,
       "socket": "AM5",
       "tdp": 88,
       "score": 86,
@@ -191,8 +191,8 @@
       "id": "cpu-i7-14700k",
       "category": "cpu",
       "name": "Intel Core i7-14700K",
-      "priceMin": 300,
-      "priceMax": 380,
+      "priceMin": 255,
+      "priceMax": 330,
       "socket": "LGA1700",
       "tdp": 253,
       "score": 90,
@@ -220,7 +220,7 @@
       "category": "cpu",
       "name": "AMD Ryzen 7 9800X3D",
       "priceMin": 390,
-      "priceMax": 470,
+      "priceMax": 460,
       "socket": "AM5",
       "tdp": 120,
       "score": 96,
@@ -246,7 +246,7 @@
       "id": "cpu-r9-9900x",
       "category": "cpu",
       "name": "AMD Ryzen 9 9900X",
-      "priceMin": 310,
+      "priceMin": 320,
       "priceMax": 400,
       "socket": "AM5",
       "tdp": 170,
@@ -273,8 +273,8 @@
       "id": "cpu-i9-14900k",
       "category": "cpu",
       "name": "Intel Core i9-14900K",
-      "priceMin": 390,
-      "priceMax": 490,
+      "priceMin": 320,
+      "priceMax": 420,
       "socket": "LGA1700",
       "tdp": 253,
       "score": 95,
@@ -300,8 +300,8 @@
       "id": "gpu-rtx-4060-ti-8g",
       "category": "gpu",
       "name": "NVIDIA RTX 4060 Ti 8GB",
-      "priceMin": 330,
-      "priceMax": 430,
+      "priceMin": 275,
+      "priceMax": 355,
       "tdp": 165,
       "score": 74,
       "profiles": [
@@ -328,8 +328,8 @@
       "id": "gpu-rx-7700xt",
       "category": "gpu",
       "name": "AMD Radeon RX 7700 XT",
-      "priceMin": 320,
-      "priceMax": 420,
+      "priceMin": 265,
+      "priceMax": 340,
       "tdp": 245,
       "score": 78,
       "profiles": [
@@ -356,8 +356,8 @@
       "id": "gpu-rx-7600",
       "category": "gpu",
       "name": "AMD Radeon RX 7600",
-      "priceMin": 160,
-      "priceMax": 210,
+      "priceMin": 155,
+      "priceMax": 205,
       "tdp": 165,
       "score": 69,
       "profiles": [
@@ -388,8 +388,8 @@
       "id": "gpu-rtx-4060",
       "category": "gpu",
       "name": "NVIDIA RTX 4060",
-      "priceMin": 180,
-      "priceMax": 230,
+      "priceMin": 190,
+      "priceMax": 250,
       "tdp": 115,
       "score": 71,
       "profiles": [
@@ -421,8 +421,8 @@
       "id": "gpu-rtx-4070-super",
       "category": "gpu",
       "name": "NVIDIA RTX 4070 SUPER",
-      "priceMin": 460,
-      "priceMax": 560,
+      "priceMin": 430,
+      "priceMax": 540,
       "tdp": 220,
       "score": 86,
       "profiles": [
@@ -449,8 +449,8 @@
       "id": "gpu-rx-7800xt",
       "category": "gpu",
       "name": "AMD Radeon RX 7800 XT",
-      "priceMin": 410,
-      "priceMax": 520,
+      "priceMin": 325,
+      "priceMax": 415,
       "tdp": 263,
       "score": 84,
       "profiles": [
@@ -477,8 +477,8 @@
       "id": "gpu-rtx-5070",
       "category": "gpu",
       "name": "NVIDIA RTX 5070",
-      "priceMin": 540,
-      "priceMax": 680,
+      "priceMin": 550,
+      "priceMax": 700,
       "tdp": 250,
       "score": 90,
       "profiles": [
@@ -503,8 +503,8 @@
       "id": "gpu-rx-7900xt",
       "category": "gpu",
       "name": "AMD Radeon RX 7900 XT",
-      "priceMin": 570,
-      "priceMax": 760,
+      "priceMin": 510,
+      "priceMax": 660,
       "tdp": 315,
       "score": 91,
       "profiles": [
@@ -530,8 +530,8 @@
       "id": "gpu-rx-7900xtx",
       "category": "gpu",
       "name": "AMD Radeon RX 7900 XTX",
-      "priceMin": 700,
-      "priceMax": 910,
+      "priceMin": 610,
+      "priceMax": 790,
       "tdp": 355,
       "score": 95,
       "profiles": [
@@ -557,8 +557,8 @@
       "id": "gpu-rtx-5080",
       "category": "gpu",
       "name": "NVIDIA RTX 5080",
-      "priceMin": 1100,
-      "priceMax": 1390,
+      "priceMin": 1000,
+      "priceMax": 1340,
       "tdp": 360,
       "score": 99,
       "profiles": [
@@ -583,8 +583,8 @@
       "id": "mb-a620m-hdv",
       "category": "motherboard",
       "name": "ASRock A620M-HDV/M.2+",
-      "priceMin": 85,
-      "priceMax": 120,
+      "priceMin": 75,
+      "priceMax": 105,
       "socket": "AM5",
       "ramType": "DDR5",
       "profiles": [
@@ -600,8 +600,8 @@
       "id": "mb-b650m-pro-rs",
       "category": "motherboard",
       "name": "ASRock B650M Pro RS WiFi",
-      "priceMin": 110,
-      "priceMax": 150,
+      "priceMin": 100,
+      "priceMax": 140,
       "socket": "AM5",
       "ramType": "DDR5",
       "profiles": [
@@ -633,8 +633,8 @@
       "id": "mb-b650-atx-plus",
       "category": "motherboard",
       "name": "MSI B650 Gaming Plus WiFi",
-      "priceMin": 165,
-      "priceMax": 255,
+      "priceMin": 150,
+      "priceMax": 230,
       "socket": "AM5",
       "ramType": "DDR5",
       "profiles": [
@@ -666,8 +666,8 @@
       "id": "mb-b650e-steel-legend",
       "category": "motherboard",
       "name": "ASRock B650E Steel Legend WiFi",
-      "priceMin": 220,
-      "priceMax": 320,
+      "priceMin": 195,
+      "priceMax": 295,
       "socket": "AM5",
       "ramType": "DDR5",
       "profiles": [
@@ -684,8 +684,8 @@
       "id": "mb-x670e-tomahawk",
       "category": "motherboard",
       "name": "MSI MAG X670E Tomahawk",
-      "priceMin": 240,
-      "priceMax": 360,
+      "priceMin": 225,
+      "priceMax": 330,
       "socket": "AM5",
       "ramType": "DDR5",
       "profiles": [
@@ -716,8 +716,8 @@
       "id": "mb-x870e-aorus-elite",
       "category": "motherboard",
       "name": "Gigabyte X870E Aorus Elite WiFi7",
-      "priceMin": 310,
-      "priceMax": 450,
+      "priceMin": 290,
+      "priceMax": 420,
       "socket": "AM5",
       "ramType": "DDR5",
       "profiles": [
@@ -733,8 +733,8 @@
       "id": "mb-b760-gaming-x",
       "category": "motherboard",
       "name": "Gigabyte B760 Gaming X AX",
-      "priceMin": 145,
-      "priceMax": 220,
+      "priceMin": 135,
+      "priceMax": 200,
       "socket": "LGA1700",
       "ramType": "DDR5",
       "profiles": [
@@ -765,8 +765,8 @@
       "id": "mb-z790-gaming-plus",
       "category": "motherboard",
       "name": "MSI Z790 Gaming Plus WiFi",
-      "priceMin": 180,
-      "priceMax": 270,
+      "priceMin": 165,
+      "priceMax": 250,
       "socket": "LGA1700",
       "ramType": "DDR5",
       "profiles": [
@@ -798,8 +798,8 @@
       "id": "mb-z790-aorus-elite",
       "category": "motherboard",
       "name": "Gigabyte Z790 Aorus Elite AX",
-      "priceMin": 230,
-      "priceMax": 330,
+      "priceMin": 210,
+      "priceMax": 300,
       "socket": "LGA1700",
       "ramType": "DDR5",
       "profiles": [
@@ -816,8 +816,8 @@
       "id": "mb-z790-creator",
       "category": "motherboard",
       "name": "ASUS ProArt Z790-Creator WiFi",
-      "priceMin": 300,
-      "priceMax": 430,
+      "priceMin": 270,
+      "priceMax": 400,
       "socket": "LGA1700",
       "ramType": "DDR5",
       "profiles": [
@@ -833,8 +833,8 @@
       "id": "ram-16-ddr5",
       "category": "ram",
       "name": "16GB DDR5-5600 (Non-RGB)",
-      "priceMin": 55,
-      "priceMax": 85,
+      "priceMin": 40,
+      "priceMax": 65,
       "ramType": "DDR5",
       "sizeGB": 16,
       "profiles": [
@@ -850,8 +850,8 @@
       "id": "ram-32-ddr5",
       "category": "ram",
       "name": "32GB DDR5-6000 (Non-RGB)",
-      "priceMin": 70,
-      "priceMax": 100,
+      "priceMin": 55,
+      "priceMax": 80,
       "ramType": "DDR5",
       "sizeGB": 32,
       "profiles": [
@@ -885,8 +885,8 @@
       "id": "ram-32-ddr5-rgb",
       "category": "ram",
       "name": "32GB DDR5-6000 RGB",
-      "priceMin": 210,
-      "priceMax": 430,
+      "priceMin": 65,
+      "priceMax": 95,
       "ramType": "DDR5",
       "sizeGB": 32,
       "profiles": [
@@ -919,8 +919,8 @@
       "id": "ram-64-ddr5-rgb",
       "category": "ram",
       "name": "64GB DDR5-6000 RGB",
-      "priceMin": 420,
-      "priceMax": 820,
+      "priceMin": 100,
+      "priceMax": 150,
       "ramType": "DDR5",
       "sizeGB": 64,
       "profiles": [
@@ -953,8 +953,8 @@
       "id": "ram-96-ddr5-rgb",
       "category": "ram",
       "name": "96GB DDR5-6000 RGB",
-      "priceMin": 760,
-      "priceMax": 1250,
+      "priceMin": 155,
+      "priceMax": 230,
       "ramType": "DDR5",
       "sizeGB": 96,
       "profiles": [
@@ -985,8 +985,8 @@
       "id": "ram-48-ddr5",
       "category": "ram",
       "name": "48GB DDR5-6000 (Non-RGB)",
-      "priceMin": 220,
-      "priceMax": 360,
+      "priceMin": 75,
+      "priceMax": 110,
       "ramType": "DDR5",
       "sizeGB": 48,
       "profiles": [
@@ -1019,8 +1019,8 @@
       "id": "ram-64-ddr5",
       "category": "ram",
       "name": "64GB DDR5-6000 (Non-RGB)",
-      "priceMin": 320,
-      "priceMax": 620,
+      "priceMin": 90,
+      "priceMax": 135,
       "ramType": "DDR5",
       "sizeGB": 64,
       "profiles": [
@@ -1053,8 +1053,8 @@
       "id": "ram-96-ddr5",
       "category": "ram",
       "name": "96GB DDR5-6000 (Creator Class)",
-      "priceMin": 540,
-      "priceMax": 980,
+      "priceMin": 135,
+      "priceMax": 200,
       "ramType": "DDR5",
       "sizeGB": 96,
       "profiles": [
@@ -1084,8 +1084,8 @@
       "id": "storage-1tb-nvme-budget",
       "category": "storage",
       "name": "1TB NVMe Gen4 (Value)",
-      "priceMin": 60,
-      "priceMax": 90,
+      "priceMin": 50,
+      "priceMax": 75,
       "profiles": [
         "profile-budget",
         "profile-mid-range",
@@ -1115,8 +1115,8 @@
       "id": "storage-2tb-nvme-mainstream",
       "category": "storage",
       "name": "2TB NVMe Gen4 (Value)",
-      "priceMin": 75,
-      "priceMax": 105,
+      "priceMin": 65,
+      "priceMax": 95,
       "profiles": [
         "profile-budget",
         "profile-mid-range",
@@ -1146,8 +1146,8 @@
       "id": "storage-2tb-nvme-premium",
       "category": "storage",
       "name": "2TB NVMe Gen4 Premium",
-      "priceMin": 300,
-      "priceMax": 520,
+      "priceMin": 90,
+      "priceMax": 140,
       "profiles": [
         "profile-mid-range",
         "profile-high-end"
@@ -1176,8 +1176,8 @@
       "id": "storage-1tb-nvme-premium",
       "category": "storage",
       "name": "1TB NVMe Gen4 Premium",
-      "priceMin": 170,
-      "priceMax": 280,
+      "priceMin": 65,
+      "priceMax": 105,
       "profiles": [
         "profile-mid-range",
         "profile-high-end"
@@ -1207,8 +1207,8 @@
       "id": "storage-2tb-nvme-ultra",
       "category": "storage",
       "name": "2TB NVMe Gen4 Ultra",
-      "priceMin": 340,
-      "priceMax": 560,
+      "priceMin": 110,
+      "priceMax": 165,
       "profiles": [
         "profile-high-end"
       ],
@@ -1237,8 +1237,8 @@
       "id": "storage-4tb-nvme-mainstream",
       "category": "storage",
       "name": "4TB NVMe Gen4 (Mainstream)",
-      "priceMin": 430,
-      "priceMax": 700,
+      "priceMin": 155,
+      "priceMax": 230,
       "profiles": [
         "profile-mid-range",
         "profile-high-end"
@@ -1267,8 +1267,8 @@
       "id": "storage-4tb-nvme-premium",
       "category": "storage",
       "name": "4TB NVMe Gen4 Premium",
-      "priceMin": 560,
-      "priceMax": 980,
+      "priceMin": 210,
+      "priceMax": 330,
       "profiles": [
         "profile-high-end"
       ],
@@ -1322,7 +1322,7 @@
       "id": "psu-750-gold",
       "category": "psu",
       "name": "750W 80+ Gold",
-      "priceMin": 70,
+      "priceMin": 65,
       "priceMax": 95,
       "wattage": 750,
       "profiles": [
@@ -1349,8 +1349,8 @@
       "id": "psu-850-gold",
       "category": "psu",
       "name": "850W 80+ Gold",
-      "priceMin": 130,
-      "priceMax": 210,
+      "priceMin": 90,
+      "priceMax": 145,
       "wattage": 850,
       "profiles": [
         "profile-mid-range",
@@ -1375,8 +1375,8 @@
       "id": "psu-1000-gold",
       "category": "psu",
       "name": "1000W 80+ Gold",
-      "priceMin": 165,
-      "priceMax": 260,
+      "priceMin": 130,
+      "priceMax": 195,
       "wattage": 1000,
       "profiles": [
         "profile-high-end"
@@ -1400,8 +1400,8 @@
       "id": "psu-1200-platinum",
       "category": "psu",
       "name": "1200W 80+ Platinum",
-      "priceMin": 230,
-      "priceMax": 340,
+      "priceMin": 185,
+      "priceMax": 280,
       "wattage": 1200,
       "profiles": [
         "profile-high-end"
@@ -1411,8 +1411,8 @@
       "id": "case-airflow-core",
       "category": "case",
       "name": "Airflow Core Mid Tower",
-      "priceMin": 50,
-      "priceMax": 65,
+      "priceMin": 45,
+      "priceMax": 70,
       "profiles": [
         "profile-budget",
         "profile-mid-range"
@@ -1422,8 +1422,8 @@
       "id": "case-fractal-pop-air",
       "category": "case",
       "name": "Fractal Pop Air",
-      "priceMin": 110,
-      "priceMax": 180,
+      "priceMin": 80,
+      "priceMax": 120,
       "profiles": [
         "profile-mid-range",
         "profile-high-end"
@@ -1447,8 +1447,8 @@
       "id": "case-lancool-216",
       "category": "case",
       "name": "Lian Li Lancool 216",
-      "priceMin": 130,
-      "priceMax": 210,
+      "priceMin": 90,
+      "priceMax": 135,
       "profiles": [
         "profile-mid-range",
         "profile-high-end"
@@ -1472,8 +1472,8 @@
       "id": "case-nzxt-h6-flow",
       "category": "case",
       "name": "NZXT H6 Flow",
-      "priceMin": 130,
-      "priceMax": 210,
+      "priceMin": 90,
+      "priceMax": 135,
       "profiles": [
         "profile-mid-range",
         "profile-high-end"
@@ -1497,8 +1497,8 @@
       "id": "case-showcase-premium",
       "category": "case",
       "name": "Premium Showcase Tower",
-      "priceMin": 190,
-      "priceMax": 320,
+      "priceMin": 145,
+      "priceMax": 235,
       "profiles": [
         "profile-high-end"
       ]
@@ -1507,8 +1507,8 @@
       "id": "cooling-air-120",
       "category": "cooling",
       "name": "120mm Tower Air Cooler",
-      "priceMin": 25,
-      "priceMax": 45,
+      "priceMin": 20,
+      "priceMax": 40,
       "profiles": [
         "profile-budget",
         "profile-mid-range"
@@ -1518,8 +1518,8 @@
       "id": "cooling-air-dual",
       "category": "cooling",
       "name": "Dual Tower Air Cooler",
-      "priceMin": 35,
-      "priceMax": 55,
+      "priceMin": 40,
+      "priceMax": 70,
       "profiles": [
         "profile-budget",
         "profile-mid-range",
@@ -1530,8 +1530,8 @@
       "id": "cooling-aio-240",
       "category": "cooling",
       "name": "240mm AIO Liquid Cooler",
-      "priceMin": 90,
-      "priceMax": 170,
+      "priceMin": 65,
+      "priceMax": 125,
       "profiles": [
         "profile-mid-range",
         "profile-high-end"
@@ -1555,8 +1555,8 @@
       "id": "cooling-aio-360",
       "category": "cooling",
       "name": "360mm AIO Liquid Cooler",
-      "priceMin": 120,
-      "priceMax": 240,
+      "priceMin": 90,
+      "priceMax": 180,
       "profiles": [
         "profile-high-end"
       ],
@@ -1579,8 +1579,8 @@
       "id": "cooling-aio-360-premium",
       "category": "cooling",
       "name": "Premium 360mm AIO",
-      "priceMin": 190,
-      "priceMax": 320,
+      "priceMin": 140,
+      "priceMax": 240,
       "profiles": [
         "profile-high-end"
       ]
