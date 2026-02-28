@@ -1,0 +1,143 @@
+---
+---
+
+<div class="use-case-grid">
+
+  <!-- Gaming -->
+  <a href="/configurator?profile=profile-mid-range" class="use-case-tile">
+    <div class="use-case-tile__icon" aria-hidden="true">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+        <circle cx="11" cy="11" r="9.5" stroke="currentColor" stroke-width="1.5" fill="none"/>
+        <circle cx="11" cy="11" r="3" stroke="currentColor" stroke-width="1.5" fill="none"/>
+        <path d="M11 1.5v4M11 16.5v4M1.5 11h4M16.5 11h4" stroke="currentColor"
+          stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <h3 class="use-case-tile__title">High-FPS Gaming</h3>
+    <p class="use-case-tile__sub">1080p–4K builds tuned for frame consistency</p>
+    <span class="use-case-tile__arrow" aria-hidden="true">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.7"
+          stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+  </a>
+
+  <!-- Creator -->
+  <a href="/configurator?profile=profile-high-end" class="use-case-tile">
+    <div class="use-case-tile__icon" aria-hidden="true">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+        <rect x="2" y="5" width="18" height="13" rx="1.5" stroke="currentColor" stroke-width="1.5" fill="none"/>
+        <path d="M7 5V3.5a.5.5 0 01.5-.5h7a.5.5 0 01.5.5V5" stroke="currentColor"
+          stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M2 9h18M6 13h3M13 13h3" stroke="currentColor" stroke-width="1.5"
+          stroke-linecap="round"/>
+      </svg>
+    </div>
+    <h3 class="use-case-tile__title">Content Creation</h3>
+    <p class="use-case-tile__sub">Render throughput, timeline scrubbing, codec-optimised</p>
+    <span class="use-case-tile__arrow" aria-hidden="true">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.7"
+          stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+  </a>
+
+  <!-- Workstation -->
+  <a href="/configurator?profile=profile-high-end" class="use-case-tile">
+    <div class="use-case-tile__icon" aria-hidden="true">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+        <rect x="2" y="2" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.5" fill="none"/>
+        <rect x="12" y="2" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.5" fill="none"/>
+        <rect x="2" y="12" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.5" fill="none"/>
+        <rect x="12" y="12" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.5" fill="none"/>
+      </svg>
+    </div>
+    <h3 class="use-case-tile__title">Professional Workstation</h3>
+    <p class="use-case-tile__sub">CAD, simulation, multi-app reliability</p>
+    <span class="use-case-tile__arrow" aria-hidden="true">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.7"
+          stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+  </a>
+
+</div>
+
+<style>
+  .use-case-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+  }
+
+  .use-case-tile {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    background: var(--bg-elev);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-xl, 1rem);
+    text-decoration: none;
+    color: inherit;
+    transition:
+      border-color 250ms ease,
+      box-shadow 250ms ease,
+      transform 250ms ease;
+  }
+
+  .use-case-tile:hover {
+    border-color: color-mix(in srgb, var(--brand) 45%, var(--line));
+    box-shadow: var(--shadow-lg), var(--glow-sm);
+    transform: translateY(-2px);
+  }
+
+  .use-case-tile:hover .use-case-tile__arrow {
+    opacity: 1;
+    transform: translateX(3px);
+  }
+
+  .use-case-tile__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--brand) 10%, var(--bg-soft));
+    border: 1px solid color-mix(in srgb, var(--brand) 18%, var(--line));
+    color: var(--brand);
+    margin-bottom: 0.25rem;
+  }
+
+  .use-case-tile__title {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    margin: 0;
+    line-height: 1.25;
+  }
+
+  .use-case-tile__sub {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+    margin: 0;
+    flex: 1;
+  }
+
+  .use-case-tile__arrow {
+    position: absolute;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    color: var(--brand);
+    opacity: 0.5;
+    transition: opacity 250ms ease, transform 250ms ease;
+  }
+</style>

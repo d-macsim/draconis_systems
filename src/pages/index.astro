@@ -5,6 +5,7 @@ import Hero from "@/components/Hero.astro";
 import ServiceGrid from "@/components/ServiceGrid.astro";
 import UpdatesFeed from "@/components/UpdatesFeed.astro";
 import FeaturedProjects from "@/components/FeaturedProjects.astro";
+import SocialProof from "@/components/SocialProof.astro";
 import services from "@/data/services.json";
 import type { ProjectEntry, ServiceEntry, UpdateEntry } from "@/lib/types";
 
@@ -89,14 +90,14 @@ const stats = [
   <Hero />
 
   <!-- ═══════════════════════════════════════════════════════════════════
-       DISPATCH LOG
-  ════════════════════════════════════════════════════════════════════ -->
-  <UpdatesFeed updates={updates} />
-
-  <!-- ═══════════════════════════════════════════════════════════════════
-       FEATURED PROJECTS
+       FEATURED PROJECTS  ← moved above dispatch log
   ════════════════════════════════════════════════════════════════════ -->
   <FeaturedProjects projects={featuredProjects} />
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       SOCIAL PROOF  ← new
+  ════════════════════════════════════════════════════════════════════ -->
+  <SocialProof />
 
   <!-- ═══════════════════════════════════════════════════════════════════
        STATS STRIP
@@ -162,6 +163,11 @@ const stats = [
 
     </div>
   </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       DISPATCH LOG  ← moved below process
+  ════════════════════════════════════════════════════════════════════ -->
+  <UpdatesFeed updates={updates} />
 
   <!-- ═══════════════════════════════════════════════════════════════════
        FINAL CTA — Apple "Ready?" moment

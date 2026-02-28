@@ -51,8 +51,15 @@
 
     <p class="hero-trust reveal delay-4">
       <span class="hero-trust__dot" aria-hidden="true"></span>
-      Lead times 7–12 working days · UK-based studio
+      Lead times 7–12 working days · UK-based studio · 1-year assembly warranty
     </p>
+
+    <!-- Testimonial pull-quote -->
+    <blockquote class="hero-quote reveal delay-4">
+      <!-- TODO: replace with real client quote -->
+      <p class="hero-quote__text">"Every detail was considered — from the cable routing to the thermal tuning. The documentation alone was worth it."</p>
+      <cite class="hero-quote__attr">Competitive Esports Rig · Mid-Range Tier</cite>
+    </blockquote>
 
   </div>
 
@@ -284,6 +291,35 @@
     border-radius: 50%;
     background: var(--accent);
     flex-shrink: 0;
+  }
+
+  /* Testimonial pull-quote */
+  .hero-quote {
+    margin: 1.75rem 0 0;
+    padding: 0.9rem 1.25rem;
+    border-left: 2px solid color-mix(in srgb, var(--brand) 45%, transparent);
+    background: color-mix(in srgb, var(--brand) 5%, transparent);
+    border-radius: 0 0.5rem 0.5rem 0;
+    text-align: left;
+    max-width: 46ch;
+  }
+
+  .hero-quote__text {
+    font-size: 0.82rem;
+    font-style: italic;
+    color: var(--text-soft);
+    line-height: 1.65;
+    margin: 0 0 0.5rem;
+  }
+
+  .hero-quote__attr {
+    display: block;
+    font-size: 0.7rem;
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
   }
 
   /* ── Scroll indicator ── */

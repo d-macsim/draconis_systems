@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "preact/hooks";
+import { useCallback, useEffect, useMemo, useState } from "preact/hooks";
 import type {
   BuildSelection,
   ComponentCatalog,
@@ -42,6 +42,28 @@ interface MarketPriceResponse {
 
 const STORAGE_KEY = "draconis-configurator-selection";
 const MARKET_PRICES_ENDPOINT = "/.netlify/functions/market-prices";
+
+function parseMaxLeadDays(leadTime: string): number {
+  const match = leadTime.match(/(\d+)/g);
+  return match ? Math.max(...match.map(Number)) : 14;
+}
+
+function addWorkingDays(date: Date, days: number): Date {
+  const result = new Date(date);
+  let added = 0;
+  while (added < days) {
+    result.setDate(result.getDate() + 1);
+    const day = result.getDay();
+    if (day !== 0 && day !== 6) {
+      added++;
+    }
+  }
+  return result;
+}
+
+function formatDispatchDate(date: Date): string {
+  return date.toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" });
+}
 
 interface PriceRange {
   min: number;
@@ -179,6 +201,20 @@ export default function ConfiguratorApp({
   const [marketError, setMarketError] = useState<string | null>(null);
   const [marketUpdatedAt, setMarketUpdatedAt] = useState<string | null>(null);
   const [marketLoading, setMarketLoading] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const dispatchLabel = useMemo(() => {
+    if (!queueStatus) return null;
+    const days = parseMaxLeadDays(queueStatus.estimated_lead_time);
+    return formatDispatchDate(addWorkingDays(new Date(), days));
+  }, [queueStatus]);
+
+  const copyBuildUrl = useCallback(() => {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  }, []);
 
   const effectiveCatalog = useMemo(
     () => mergeCatalogPrices(catalog, priceOverrides),
@@ -423,7 +459,11 @@ export default function ConfiguratorApp({
           </div>
           <div className="row" style={{ gap: "0.55rem" }}>
             <span className="small">Lead time: {queueStatus.estimated_lead_time}</span>
-            <span className="small">Stage: {queueStatus.current_stage}</span>
+            {dispatchLabel && (
+              <span className="small" style={{ color: "var(--text-muted)" }}>
+                Est. dispatch: <strong style={{ color: "var(--text)" }}>{dispatchLabel}</strong>
+              </span>
+            )}
           </div>
         </div>
       )}
@@ -721,9 +761,22 @@ export default function ConfiguratorApp({
             </p>
           </div>
 
+          <div className="surface" style={{ padding: "0.6rem 0.8rem", fontSize: "0.78rem", color: "var(--text-soft)" }}>
+            ✓ 1-year assembly warranty · Stress-tested · UK studio
+          </div>
+
           <a className="button primary" href={quoteHref}>
             Export to Quote Request
           </a>
+
+          <button
+            type="button"
+            className="button secondary"
+            onClick={copyBuildUrl}
+            style={{ justifyContent: "center" }}
+          >
+            {copied ? "Copied!" : "Copy Build Link"}
+          </button>
         </aside>
       </div>
     </div>

@@ -1,6 +1,8 @@
 ---
+import { getCollection } from "astro:content";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import ConfiguratorApp from "@/components/configurator/ConfiguratorApp";
+import UseCaseTiles from "@/components/UseCaseTiles.astro";
 import catalog from "@/data/configurator/components.json";
 import queueStatusData from "@/data/queue-status.json";
 import rules from "@/data/configurator/rules.json";
@@ -9,6 +11,25 @@ import type { ComponentCatalog, ConfiguratorRules, QueueStatus } from "@/lib/typ
 const typedCatalog = catalog as ComponentCatalog;
 const typedRules = rules as ConfiguratorRules;
 const queueStatus = queueStatusData as QueueStatus;
+
+function tierToProfile(tier: string): string {
+  return tier === "entry" || tier === "mid" ? "profile-mid-range" : "profile-high-end";
+}
+
+const startingPointsRaw = (await getCollection("projects"))
+  .filter((p) => p.data.featured)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
+const startingPoints = startingPointsRaw.map((p) => ({
+  slug: p.slug,
+  title: p.data.title,
+  cpu: p.data.cpu,
+  gpu: p.data.gpu,
+  useCase: p.data.useCase,
+  budgetTier: p.data.budgetTier,
+  profile: tierToProfile(p.data.budgetTier),
+}));
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -29,20 +50,61 @@ const jsonLd = {
 
   <section class="section">
     <div class="container stack">
-      <p class="eyebrow">Guided Estimator</p>
-      <h1>Custom PC Configurator</h1>
-      <p>
-        Build your system in steps, check core compatibility, and export your selection to a quote request.
-        Estimates are non-binding and finalized during sourcing.
-      </p>
 
-      <div id="configurator-builder" class="stack" style="gap: 0.35rem">
-        <h2 style="margin-bottom: 0">Build It Manually</h2>
-        <p class="small" style="margin: 0">
-          Prefer direct control? Use the full step-by-step configurator.
+      <!-- Page intro -->
+      <div class="config-intro">
+        <p class="eyebrow">Guided Estimator</p>
+        <h1>Build your system.</h1>
+        <p class="config-intro__sub">
+          Describe your workload, pick your tier, and export a quote. Every build comes with
+          1-year assembly warranty, 24-hr stress validation, and complete handoff documentation.
         </p>
       </div>
 
+      <!-- Use-case entry tiles -->
+      <div class="config-section-hd">
+        <span class="eyebrow">Where do you want to start?</span>
+      </div>
+      <UseCaseTiles />
+
+      <!-- Starting points from featured projects -->
+      {startingPoints.length > 0 && (
+        <div class="starting-points">
+          <span class="eyebrow">Starting Points — build similar</span>
+          <div class="starting-points__grid">
+            {startingPoints.map((project) => (
+              <a
+                href={`/configurator?profile=${project.profile}`}
+                class="starting-point-card"
+                title={`Configure a system similar to ${project.title}`}
+              >
+                <div class="starting-point-card__body">
+                  <div class="starting-point-card__meta">
+                    <span class="badge">{project.useCase}</span>
+                    <span class="badge">{project.budgetTier}</span>
+                  </div>
+                  <strong class="starting-point-card__name">{project.title}</strong>
+                  {(project.cpu || project.gpu) && (
+                    <dl class="starting-point-specs">
+                      {project.cpu && <><dt>CPU</dt><dd>{project.cpu}</dd></>}
+                      {project.gpu && <><dt>GPU</dt><dd>{project.gpu}</dd></>}
+                    </dl>
+                  )}
+                </div>
+                <span class="starting-point-card__cta">
+                  Build Similar
+                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+                    <path d="M2 6.5h9M7.5 3l3.5 3.5L7.5 10" stroke="currentColor"
+                      stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <!-- Main configurator -->
       <ConfiguratorApp
         client:visible
         catalog={typedCatalog}
@@ -50,6 +112,111 @@ const jsonLd = {
         showQuestionnaire={true}
         queueStatus={queueStatus}
       />
+
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .config-intro {
+    max-width: 60ch;
+  }
+
+  .config-intro__sub {
+    font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+    color: var(--text-muted);
+    line-height: 1.75;
+    margin: 0;
+  }
+
+  .config-section-hd {
+    margin-bottom: -0.5rem;
+  }
+
+  /* ── Starting points ── */
+  .starting-points {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .starting-points__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 0.75rem;
+  }
+
+  .starting-point-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 1.1rem 1.25rem;
+    background: var(--bg-elev);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-xl, 1rem);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 220ms ease, box-shadow 220ms ease;
+  }
+
+  .starting-point-card:hover {
+    border-color: color-mix(in srgb, var(--brand) 40%, var(--line));
+    box-shadow: var(--shadow-lg);
+  }
+
+  .starting-point-card:hover .starting-point-card__cta {
+    gap: 0.65rem;
+  }
+
+  .starting-point-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .starting-point-card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+  }
+
+  .starting-point-card__name {
+    font-size: 0.9rem;
+    color: var(--text);
+    line-height: 1.3;
+  }
+
+  .starting-point-specs {
+    display: grid;
+    grid-template-columns: auto 1fr auto 1fr;
+    column-gap: 0.4rem;
+    row-gap: 0.2rem;
+    align-items: center;
+    margin: 0;
+  }
+
+  .starting-point-specs dt {
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+  }
+
+  .starting-point-specs dd {
+    margin: 0;
+    font-size: 0.75rem;
+    color: var(--text-soft);
+  }
+
+  .starting-point-card__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--brand);
+    transition: gap 200ms ease;
+  }
+</style>
